@@ -1,0 +1,1510 @@
+---
+title: "MEAQ-ACO"
+date: "`r format(Sys.time(), '%d/%m/%y')`"
+output: 
+  html_document: 
+    theme: yeti 
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+.libPaths(Sys.getenv("R_LIBS_USER"))
+
+knitr::opts_chunk$set(echo = TRUE)
+
+# detach all libraries
+
+detachAllPackages <- function() {
+  basic.packages <- c("package:stats", "package:graphics", "package:grDevices", "package:utils", "package:datasets", "package:methods", "package:base")
+  package.list <- search()[ifelse(unlist(gregexpr("package:", search()))==1, TRUE, FALSE)]
+  package.list <- setdiff(package.list, basic.packages)
+  if (length(package.list)>0)  for (package in package.list) detach(package,  character.only=TRUE)
+}
+detachAllPackages()
+
+# function to load libraries
+
+pkgTest <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[,  "Package"])]
+  if (length(new.pkg)) 
+    install.packages(new.pkg,  dependencies = TRUE)
+  sapply(pkg,  require,  character.only = TRUE)
+}
+
+# knitr
+
+knitr::knit_hooks$set(output = function(x, options){
+  if(!is.null(options$max_height)){
+    paste('<pre style = "max-height:', options$max_height, '; float: left; width: 910px; overflow-y: auto;">', x, "</pre>", sep = "")
+  }else{
+    x
+  }
+  
+})
+
+# loading packages 
+
+lapply(c("car"),pkgTest)
+lapply(c("corrplot"),pkgTest)
+lapply(c("data.table"),pkgTest)
+lapply(c("foreign"),pkgTest)
+lapply(c("ggraph"),pkgTest)
+lapply(c("ggplot2"),pkgTest)
+lapply(c("GPArotation"),pkgTest)
+lapply(c("gridExtra"),pkgTest)
+lapply(c("Hmisc"),pkgTest)
+lapply(c("kableExtra"),pkgTest)
+lapply(c("lavaan"),pkgTest)
+lapply(c("magrittr"),pkgTest)
+lapply(c("proxy"),pkgTest)
+lapply(c("psych"),pkgTest)
+lapply(c("Rmisc"),pkgTest)
+lapply(c("semPlot"),pkgTest)
+lapply(c("semTools"),pkgTest)
+lapply(c("sjPlot"),pkgTest)
+lapply(c("stats"),pkgTest)
+lapply(c("stuart"),pkgTest)
+lapply(c("tidyverse"),pkgTest)
+lapply(c("xtable"),pkgTest)
+
+library(car)
+library(corrplot)
+library(data.table)
+library(foreign)
+library(ggraph)
+library(ggplot2)
+library(GPArotation)
+library(gridExtra)
+library(Hmisc)
+library(kableExtra)
+library(lavaan)
+library(magrittr)
+library(proxy)
+library(psych)
+library(Rmisc)
+library(semPlot)
+library(semTools)
+library(sjPlot)
+library(stats)
+library(stuart)
+library(tidyverse)
+library(xtable)
+
+# function for removing trailing zeros 
+round_df <- function(x, digits) { 
+  numeric_columns <- sapply(x, mode) == 'numeric'
+  x[numeric_columns] <-  round(x[numeric_columns], digits)
+  x
+}
+
+# set working directory 
+# setwd("/Users/kdlee/Desktop/MEAQ-ACO/data")
+# setwd("/Users/carolinelee/Desktop/First Year Project/MEAQ-ACO/data")
+# setwd("/Users/48909138/OneDrive - Southern Methodist University/Desktop/MEAQ-ACO/data")
+
+```
+
+```{r, include=FALSE}
+options(width = 60)
+local({
+  hook_output <- knitr::knit_hooks$get('output')
+  knitr::knit_hooks$set(output = function(x, options) {
+    if (!is.null(options$max.height)) options$attr.output <- c(
+      options$attr.output,
+      sprintf('style="max-height: %s;"', options$max.height)
+    )
+    hook_output(x, options)
+  })
+})
+```
+
+```{css, echo=FALSE}
+<style type="text/css">
+
+body, td {
+   font-size: 14px;
+}
+code.r{
+  font-size: 12px;
+}
+pre {
+  font-size: 12px
+}
+</style>
+```
+
+```{css, echo=FALSE}
+  #TOC {
+    max-width: fit-content;
+    white-space: nowrap;
+  }
+  
+  div:has(> #TOC) {
+    display: flex;
+    flex-direction: row-reverse;
+}
+```
+
+## Data Cleaning 
+
+### Importing Datasets
+
+```{r, warning=FALSE, results='hide'}
+# importing datasets 
+
+CAMD_MTurk <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/CAMD_MTurk.csv")
+ 
+CAMD_Undergrad_SMU <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/CAMD_Undergrad_SMU.csv")
+
+EAI_MTurk <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/EAI_MTurk.csv")
+
+EAI_Undergrad_SMU <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/EAI_Undergrad_SMU.csv")
+
+LTC_MTurk_T1 <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/LTC_MTurk_T1.csv")
+
+LTC_Undergrad_SMU_T1 <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/LTC_Undergrad_SMU_T1.csv")
+
+MEAQ_AAQ_MTurk_T1 <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/MEAQ_AAQ_MTurk_T1.csv")
+
+MEAQ_AAQ_Undergrad_SMU_T1 <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/MEAQ_AAQ_Undergrad_SMU_T1.csv")
+
+MEAQ_Dev_Outpatient_Clinical <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/MEAQ_Dev_Outpatient_Clinical.csv")
+
+MEAQ_Dev_Undergrad_Iowa <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/MEAQ_Dev_Undergrad_Iowa.csv")
+
+MEAQ_New_Community <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/MEAQ_New_Community.csv")
+
+MEAQ_New_Patient_S1 <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/MEAQ_New_Patient_S1.csv")
+
+MEAQ_New_Patient_S2 <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/MEAQ_New_Patient_S2.csv")
+
+MEAQ_New_Undergrad <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/MEAQ_New_Undergrad.csv")
+
+MEAQ_Dev_Phase3_Patient <- read_csv("https://raw.githubusercontent.com/carolinelee78/maple-aster/main/data/MEAQ_Dev_Phase3_Patient.csv")
+```
+
+### Cleaning for Inattentive Responding 
+
+```{r, results = 'hide'}
+### Committed Action Measure Development (MTurk)
+
+colnames(CAMD_MTurk)
+
+table(CAMD_MTurk$Check1) # FC1, correct = 1
+table(CAMD_MTurk$Check2) # FC2, correct = 1
+table(CAMD_MTurk$Check3) # FC3, correct = 1
+table(CAMD_MTurk$CheckPass) # 2 or more FCs correct = 1
+table(CAMD_MTurk$CheckTime) # 5 minutes or more = 1 
+table(CAMD_MTurk$CheckPass2) # 2 or more FCs correct and time 5 minutes or more = 1
+
+CAMD_MTurk_Clean <- CAMD_MTurk[CAMD_MTurk$CheckPass2 != 0, ]
+
+### Committed Action Measure Development (SMU) 
+
+table(CAMD_Undergrad_SMU$FCheck1)
+table(CAMD_Undergrad_SMU$FCheck2)
+table(CAMD_Undergrad_SMU$FCheck3)
+table(CAMD_Undergrad_SMU$FCheckPass) # passed FC = 3
+
+CAMD_Undergrad_SMU_Clean <- CAMD_Undergrad_SMU[CAMD_Undergrad_SMU$FCheckPass != 2, ]
+
+### EA Incremental Validity (MTurk) - already cleaned 
+
+### EA Incremental Validity (SMU) - already cleaned
+
+### Learning to Change (MTurk) - no check for attentive responding
+
+### Learning to Change (SMU) - no check for attentive responding
+
+### MEAQ vs. AAQ (MTurk) - no check for attentive responding
+
+### MEAQ vs. AAQ (SMU) - no check for attentive responding
+
+### MEAQ Development (Outpatient Clinical) - no check for attentive responding
+
+### MEAQ Development (Iowa) - no check for attentive responding
+
+### MEAQ New Community - no check for attentive responding
+
+### MEAQ New Patient S1 - no check for attentive responding
+
+### MEAQ New Patient S2 - no check for attentive responding
+
+### MEAQ New Undergrad - no check for attentive responding
+
+```
+
+### Subsetting for MEAQ 
+```{r, results='hide'}
+### Committed Action Measure Development - MTurk ###
+
+which(colnames(CAMD_MTurk) == "MEAQ_1")
+which(colnames(CAMD_MTurk) == "MEAQ_62")
+
+CAMD_MTurk_MEAQ_Clean <- CAMD_MTurk_Clean[,c(135:196)] # subsetting CAMD_MTurk_MEAQ dataset for MEAQ-62
+# CAMD_MTurk_MEAQ dataset already in standard format, no need to clean format 
+```
+
+```{r}
+### Committed Action Measure Development - Undergrad (SMU) ### 
+
+which(colnames(CAMD_Undergrad_SMU) == "MEAQ_1")
+which(colnames(CAMD_Undergrad_SMU) == "MEAQ_62")
+
+CAMD_Undergrad_SMU_MEAQ_Clean <- CAMD_Undergrad_SMU_Clean[,c(320:381)] # subsetting CAMD_Undergrad_SMU dataset for MEAQ-62
+
+# CAMD_Undergrad_SMU_MEAQ dataset already in standard format, no need to clean format
+```
+
+```{r}
+### EA Incremental Validity - MTurk ###
+
+which(colnames(EAI_MTurk) == "meaq1")
+which(colnames(EAI_MTurk) == "meaq62")
+
+EAI_MTurk_MEAQ <- EAI_MTurk[,c(19:80)] # subsetting EAI_MTurk dataset for MEAQ-62
+
+EAI_MTurk_MEAQ <- rename(EAI_MTurk_MEAQ, MEAQ_1 = meaq1, # renaming EAI_MTurk_MEAQ dataset variables to match standard format 
+                               MEAQ_2 = meaq2, 
+                               MEAQ_3 = meaq3, 
+                               MEAQ_4 = meaq4, 
+                               MEAQ_5 = meaq5, 
+                               MEAQ_6 = meaq6, 
+                               MEAQ_7 = meaq7, 
+                               MEAQ_8 = meaq8, 
+                               MEAQ_9 = meaq9, 
+                               MEAQ_10 = meaq10, 
+                               MEAQ_11 = meaq11, 
+                               MEAQ_12 = meaq12, 
+                               MEAQ_13 = meaq13, 
+                               MEAQ_14 = meaq14,
+                               MEAQ_15 = meaq15, 
+                               MEAQ_16 = meaq16, 
+                               MEAQ_17 = meaq17, 
+                               MEAQ_18 = meaq18, 
+                               MEAQ_19 = meaq19, 
+                               MEAQ_20 = meaq20, 
+                               MEAQ_21 = meaq21, 
+                               MEAQ_22 = meaq22, 
+                               MEAQ_23 = meaq23, 
+                               MEAQ_24 = meaq24, 
+                               MEAQ_25 = meaq25, 
+                               MEAQ_26 = meaq26, 
+                               MEAQ_27 = meaq27, 
+                               MEAQ_28 = meaq28, 
+                               MEAQ_29 = meaq29, 
+                               MEAQ_30 = meaq30, 
+                               MEAQ_31 = meaq31, 
+                               MEAQ_32 = meaidas2, 
+                               MEAQ_33 = meatai, 
+                               MEAQ_34 = meaq34, 
+                               MEAQ_35 = meaq35, 
+                               MEAQ_36 = meaq36, 
+                               MEAQ_37 = meaq37, 
+                               MEAQ_38 = meaq38, 
+                               MEAQ_39 = meaq39, 
+                               MEAQ_40 = meaq40, 
+                               MEAQ_41 = meaq41, 
+                               MEAQ_42 = meaq42, 
+                               MEAQ_43 = meaq43, 
+                               MEAQ_44 = meaq44, 
+                               MEAQ_45 = meaq45, 
+                               MEAQ_46 = meaq46, 
+                               MEAQ_47 = meaq47,
+                               MEAQ_48 = meaq48,
+                               MEAQ_49 = meaq49, 
+                               MEAQ_50 = meaq50, 
+                               MEAQ_51 = meaq51, 
+                               MEAQ_52 = meaq52, 
+                               MEAQ_53 = meaq53, 
+                               MEAQ_54 = meaq54, 
+                               MEAQ_55 = meaq55, 
+                               MEAQ_56 = meaq56, 
+                               MEAQ_57 = meaq57, 
+                               MEAQ_58 = meaq58, 
+                               MEAQ_59 = meaq59, 
+                               MEAQ_60 = meaq60, 
+                               MEAQ_61 = meaq61,
+                               MEAQ_62 = meaq62) 
+```
+
+```{r}
+### EA Incremental Validity - SMU ### 
+which(colnames(EAI_Undergrad_SMU) == "meaq1")
+which(colnames(EAI_Undergrad_SMU) == "meaq62")
+
+EAI_Undergrad_SMU_MEAQ <- EAI_Undergrad_SMU[,c(19:80)] # subsetting EAI_Undergrad_SMU dataset for MEAQ-62
+
+EAI_Undergrad_SMU_MEAQ <- rename(EAI_Undergrad_SMU_MEAQ, MEAQ_1 = meaq1, # renaming EAI_MTurk_MEAQ dataset variables to match standard format 
+                               MEAQ_2 = meaq2, 
+                               MEAQ_3 = meaq3, 
+                               MEAQ_4 = meaq4, 
+                               MEAQ_5 = meaq5, 
+                               MEAQ_6 = meaq6, 
+                               MEAQ_7 = meaq7, 
+                               MEAQ_8 = meaq8, 
+                               MEAQ_9 = meaq9, 
+                               MEAQ_10 = meaq10, 
+                               MEAQ_11 = meaq11, 
+                               MEAQ_12 = meaq12, 
+                               MEAQ_13 = meaq13, 
+                               MEAQ_14 = meaq14,
+                               MEAQ_15 = meaq15, 
+                               MEAQ_16 = meaq16, 
+                               MEAQ_17 = meaq17, 
+                               MEAQ_18 = meaq18, 
+                               MEAQ_19 = meaq19, 
+                               MEAQ_20 = meaq20, 
+                               MEAQ_21 = meaq21, 
+                               MEAQ_22 = meaq22, 
+                               MEAQ_23 = meaq23, 
+                               MEAQ_24 = meaq24, 
+                               MEAQ_25 = meaq25, 
+                               MEAQ_26 = meaq26, 
+                               MEAQ_27 = meaq27, 
+                               MEAQ_28 = meaq28, 
+                               MEAQ_29 = meaq29, 
+                               MEAQ_30 = meaq30, 
+                               MEAQ_31 = meaq31, 
+                               MEAQ_32 = meaidas2, 
+                               MEAQ_33 = meatai, 
+                               MEAQ_34 = meaq34, 
+                               MEAQ_35 = meaq35, 
+                               MEAQ_36 = meaq36, 
+                               MEAQ_37 = meaq37, 
+                               MEAQ_38 = meaq38, 
+                               MEAQ_39 = meaq39, 
+                               MEAQ_40 = meaq40, 
+                               MEAQ_41 = meaq41, 
+                               MEAQ_42 = meaq42, 
+                               MEAQ_43 = meaq43, 
+                               MEAQ_44 = meaq44, 
+                               MEAQ_45 = meaq45, 
+                               MEAQ_46 = meaq46, 
+                               MEAQ_47 = meaq47,
+                               MEAQ_48 = meaq48,
+                               MEAQ_49 = meaq49, 
+                               MEAQ_50 = meaq50, 
+                               MEAQ_51 = meaq51, 
+                               MEAQ_52 = meaq52, 
+                               MEAQ_53 = meaq53, 
+                               MEAQ_54 = meaq54, 
+                               MEAQ_55 = meaq55, 
+                               MEAQ_56 = meaq56, 
+                               MEAQ_57 = meaq57, 
+                               MEAQ_58 = meaq58, 
+                               MEAQ_59 = meaq59, 
+                               MEAQ_60 = meaq60, 
+                               MEAQ_61 = meaq61,
+                               MEAQ_62 = meaq62) 
+
+EAI_Undergrad_SMU_MEAQ <- round_df(EAI_Undergrad_SMU_MEAQ, 0) # removing trailing zeros
+```
+
+```{r}
+### Learning to Change - MTurk ### 
+which(colnames(LTC_MTurk_T1) == "Q18_1")
+which(colnames(LTC_MTurk_T1) == "Q18_61")
+
+LTC_MTurk_T1_MEAQ <- LTC_MTurk_T1[,c(289:349)] # subsetting LTC_MTurk_T1 dataset for MEAQ-62
+
+LTC_MTurk_T1_MEAQ <- rename(LTC_MTurk_T1_MEAQ, MEAQ_1 = Q18_1, # renaming LTC_MTurk_T1_MEAQ dataset variables to match standard format 
+                            MEAQ_2 = Q18_2, 
+                            MEAQ_3 = Q18_3, 
+                            MEAQ_4 = Q18_4, 
+                            MEAQ_5 = Q18_5, 
+                            MEAQ_6 = Q18_6, 
+                            MEAQ_7 = Q18_7, 
+                            MEAQ_8 = Q18_8, 
+                            MEAQ_9 = Q18_9, 
+                            MEAQ_10 = Q18_10, 
+                            MEAQ_11 = Q18_11, 
+                            MEAQ_12 = Q18_12, 
+                            MEAQ_13 = Q18_13, 
+                            MEAQ_14 = Q18_14,
+                            MEAQ_15 = Q18_15, 
+                            MEAQ_16 = Q18_16, 
+                            MEAQ_17 = Q18_17, 
+                            MEAQ_18 = Q18_18, 
+                            MEAQ_19 = Q18_19, 
+                            MEAQ_20 = Q18_20, 
+                            MEAQ_21 = Q18_21, 
+                            MEAQ_22 = Q18_22, 
+                            MEAQ_23 = Q18_23, 
+                            MEAQ_24 = Q18_24, 
+                            MEAQ_25 = Q18_25, 
+                            MEAQ_26 = Q18_26, 
+                            MEAQ_27 = Q18_27, 
+                            MEAQ_28 = Q18_28, 
+                            MEAQ_29 = Q18_29, 
+                            MEAQ_30 = Q18_30, 
+                            MEAQ_31 = Q18_31, 
+                            MEAQ_32 = Q18_32, 
+                            MEAQ_33 = Q18_33, 
+                            MEAQ_34 = Q18_34, 
+                            MEAQ_35 = Q18_35, 
+                            MEAQ_36 = Q18_36, 
+                            MEAQ_37 = Q18_37, 
+                            MEAQ_38 = Q18_38, 
+                            MEAQ_39 = Q18_39, 
+                            MEAQ_40 = Q18_40, 
+                            MEAQ_41 = Q18_41, 
+                            MEAQ_42 = Q18_42, 
+                            MEAQ_43 = Q18_43, 
+                            MEAQ_44 = Q18_44, 
+                            MEAQ_45 = Q18_45, 
+                            MEAQ_46 = Q18_46, 
+                            MEAQ_47 = Q18_47,
+                            MEAQ_48 = Q18_48,
+                            MEAQ_49 = Q18_49, 
+                            MEAQ_50 = Q18_50, 
+                            MEAQ_51 = Q18_51, 
+                            MEAQ_52 = Q18_52, 
+                            MEAQ_53 = Q18_53, 
+                            MEAQ_54 = Q18_54, 
+                            MEAQ_55 = Q18_55, 
+                            MEAQ_56 = Q18_56, 
+                            MEAQ_57 = Q18_57, 
+                            MEAQ_58 = Q18_58, 
+                            MEAQ_59 = Q18_59, 
+                            MEAQ_61 = Q18_60, 
+                            MEAQ_62 = Q18_61) 
+
+LTC_MTurk_T1_MEAQ <- LTC_MTurk_T1_MEAQ %>% 
+  add_column(MEAQ_60 = NA) # adding column of NAs for missing item in LTC_MTurk_T1_MEAQ dataset
+
+LTC_MTurk_T1_MEAQ <- LTC_MTurk_T1_MEAQ[,c(1:59, 62, 60, 61)] # reordering columns in LTC_MTurk_T1_MEAQ dataset to match standard format 
+```
+
+```{r}
+### Learning to Change - SMU ###
+which(colnames(LTC_Undergrad_SMU_T1) == "Q18_1")
+which(colnames(LTC_Undergrad_SMU_T1) == "Q18_61")
+
+LTC_Undergrad_SMU_T1_MEAQ <- LTC_Undergrad_SMU_T1[,c(248:308)] # subsetting LTC_Undergrad_SMU_T1 dataset for MEAQ-62
+
+LTC_Undergrad_SMU_T1_MEAQ <- rename(LTC_Undergrad_SMU_T1_MEAQ, MEAQ_1 = Q18_1, # renaming variables in LTC_Undergrad_SMU_T1_MEAQ dataset to match standard format 
+                                    MEAQ_2 = Q18_2, 
+                                    MEAQ_3 = Q18_3, 
+                                    MEAQ_4 = Q18_4, 
+                                    MEAQ_5 = Q18_5, 
+                                    MEAQ_6 = Q18_6, 
+                                    MEAQ_7 = Q18_7, 
+                                    MEAQ_8 = Q18_8, 
+                                    MEAQ_9 = Q18_9, 
+                                    MEAQ_10 = Q18_10, 
+                                    MEAQ_11 = Q18_11, 
+                                    MEAQ_12 = Q18_12, 
+                                    MEAQ_13 = Q18_13, 
+                                    MEAQ_14 = Q18_14,
+                                    MEAQ_15 = Q18_15, 
+                                    MEAQ_16 = Q18_16, 
+                                    MEAQ_17 = Q18_17, 
+                                    MEAQ_18 = Q18_18, 
+                                    MEAQ_19 = Q18_19, 
+                                    MEAQ_20 = Q18_20, 
+                                    MEAQ_21 = Q18_21, 
+                                    MEAQ_22 = Q18_22, 
+                                    MEAQ_23 = Q18_23, 
+                                    MEAQ_24 = Q18_24, 
+                                    MEAQ_25 = Q18_25, 
+                                    MEAQ_26 = Q18_26, 
+                                    MEAQ_27 = Q18_27, 
+                                    MEAQ_28 = Q18_28, 
+                                    MEAQ_29 = Q18_29, 
+                                    MEAQ_30 = Q18_30, 
+                                    MEAQ_31 = Q18_31, 
+                                    MEAQ_32 = Q18_32, 
+                                    MEAQ_33 = Q18_33, 
+                                    MEAQ_34 = Q18_34, 
+                                    MEAQ_35 = Q18_35, 
+                                    MEAQ_36 = Q18_36, 
+                                    MEAQ_37 = Q18_37, 
+                                    MEAQ_38 = Q18_38, 
+                                    MEAQ_39 = Q18_39, 
+                                    MEAQ_40 = Q18_40, 
+                                    MEAQ_41 = Q18_41, 
+                                    MEAQ_42 = Q18_42, 
+                                    MEAQ_43 = Q18_43, 
+                                    MEAQ_44 = Q18_44, 
+                                    MEAQ_45 = Q18_45, 
+                                    MEAQ_46 = Q18_46, 
+                                    MEAQ_47 = Q18_47,
+                                    MEAQ_48 = Q18_48,
+                                    MEAQ_49 = Q18_49, 
+                                    MEAQ_50 = Q18_50, 
+                                    MEAQ_51 = Q18_51, 
+                                    MEAQ_52 = Q18_52, 
+                                    MEAQ_53 = Q18_53, 
+                                    MEAQ_54 = Q18_54, 
+                                    MEAQ_55 = Q18_55, 
+                                    MEAQ_56 = Q18_56, 
+                                    MEAQ_57 = Q18_57, 
+                                    MEAQ_58 = Q18_58, 
+                                    MEAQ_59 = Q18_59, 
+                                    MEAQ_61 = Q18_60, 
+                                    MEAQ_62 = Q18_61) 
+
+LTC_Undergrad_SMU_T1_MEAQ <- LTC_Undergrad_SMU_T1_MEAQ %>% 
+  add_column(MEAQ_60 = NA) # adding column of NAs for missing item in LTC_Undergrad_SMU_T1_MEAQ dataset
+
+LTC_Undergrad_SMU_T1_MEAQ <- LTC_Undergrad_SMU_T1_MEAQ[,c(1:59, 62, 60, 61)] # reordering columns in LTC_Undergrad_SMU_T1_MEAQ dataset to match standard format 
+```
+
+```{r}
+### MEAQ vs. AAQ - MTurk T1 ###
+which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_1i")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_62i")
+
+MEAQ_AAQ_MTurk_T1_MEAQ <- MEAQ_AAQ_MTurk_T1[,c(98:159)] # subsetting MEAQ_AAQ_MTurk_T1 dataset for MEAQ-62
+
+MEAQ_AAQ_MTurk_T1_MEAQ <- rename(MEAQ_AAQ_MTurk_T1_MEAQ, MEAQ_1 = MEAQ_1i, # renaming variables in the MEAQ_AAQ_MTurk_T1_MEAQ dataset to match standard format 
+                                 MEAQ_2 = MEAQ_2i, 
+                                 MEAQ_3 = MEAQ_3i, 
+                                 MEAQ_4 = MEAQ_4i, 
+                                 MEAQ_5 = MEAQ_5i, 
+                                 MEAQ_6 = MEAQ_6i, 
+                                 MEAQ_7 = MEAQ_7i, 
+                                 MEAQ_8 = MEAQ_8i, 
+                                 MEAQ_9 = MEAQ_9i, 
+                                 MEAQ_10 = MEAQ_10i, 
+                                 MEAQ_11 = MEAQ_11i, 
+                                 MEAQ_12 = MEAQ_12i, 
+                                 MEAQ_13 = MEAQ_13i, 
+                                 MEAQ_14 = MEAQ_14i,
+                                 MEAQ_15 = MEAQ_15i, 
+                                 MEAQ_16 = MEAQ_16i, 
+                                 MEAQ_17 = MEAQ_17i, 
+                                 MEAQ_18 = MEAQ_18i, 
+                                 MEAQ_19 = MEAQ_19i, 
+                                 MEAQ_20 = MEAQ_20i, 
+                                 MEAQ_21 = MEAQ_21i, 
+                                 MEAQ_22 = MEAQ_22i, 
+                                 MEAQ_23 = MEAQ_23i, 
+                                 MEAQ_24 = MEAQ_24i, 
+                                 MEAQ_25 = MEAQ_25i, 
+                                 MEAQ_26 = MEAQ_26i, 
+                                 MEAQ_27 = MEAQ_27i, 
+                                 MEAQ_28 = MEAQ_28i, 
+                                 MEAQ_29 = MEAQ_29i, 
+                                 MEAQ_30 = MEAQ_30i, 
+                                 MEAQ_31 = MEAQ_31i, 
+                                 MEAQ_32 = MEAQ_32i, 
+                                 MEAQ_33 = MEAQ_33i, 
+                                 MEAQ_34 = MEAQ_34i, 
+                                 MEAQ_35 = MEAQ_35i, 
+                                 MEAQ_36 = MEAQ_36i, 
+                                 MEAQ_37 = MEAQ_37i, 
+                                 MEAQ_38 = MEAQ_38i, 
+                                 MEAQ_39 = MEAQ_39i, 
+                                 MEAQ_40 = MEAQ_40i, 
+                                 MEAQ_41 = MEAQ_41i, 
+                                 MEAQ_42 = MEAQ_42i, 
+                                 MEAQ_43 = MEAQ_43i, 
+                                 MEAQ_44 = MEAQ_44i, 
+                                 MEAQ_45 = MEAQ_45i, 
+                                 MEAQ_46 = MEAQ_46i, 
+                                 MEAQ_47 = MEAQ_47i,
+                                 MEAQ_48 = MEAQ_48i,
+                                 MEAQ_49 = MEAQ_49i, 
+                                 MEAQ_50 = MEAQ_50i, 
+                                 MEAQ_51 = MEAQ_51i, 
+                                 MEAQ_52 = MEAQ_52i, 
+                                 MEAQ_53 = MEAQ_53i, 
+                                 MEAQ_54 = MEAQ_54i, 
+                                 MEAQ_55 = MEAQ_55i, 
+                                 MEAQ_56 = MEAQ_56i, 
+                                 MEAQ_57 = MEAQ_57i, 
+                                 MEAQ_58 = MEAQ_58i, 
+                                 MEAQ_59 = MEAQ_59i, 
+                                 MEAQ_60 = MEAQ_60i, 
+                                 MEAQ_61 = MEAQ_61i,
+                                 MEAQ_62 = MEAQ_62i) 
+
+MEAQ_AAQ_Undergrad_SMU_T1_MEAQ <- MEAQ_AAQ_Undergrad_SMU_T1[,c(237:298)] # subsetting MEAQ_AAQ_Undergrad_SMU_T1 dataset for MEAQ-62
+
+MEAQ_AAQ_Undergrad_SMU_T1_MEAQ <- round_df(MEAQ_AAQ_Undergrad_SMU_T1_MEAQ, 0) # removing trailing zeros
+```
+
+```{r}
+### MEAQ Development - Outpatient Clinical ### 
+
+MEAQ_Dev_Outpatient_Clinical_MEAQ <- MEAQ_Dev_Outpatient_Clinical[,c(17:78)] # subsetting MEAQ_Dev_Outpatient_Clinical dataset for MEAQ-62
+# MEAQ_AAQ_Undergrad_SMU_T1_MEAQ dataset already in standard format, no need to clean format 
+
+MEAQ_Dev_Outpatient_Clinical_MEAQ <- rename(MEAQ_Dev_Outpatient_Clinical_MEAQ, MEAQ_1 = MEAQ1, # renaming variables in MEAQ_Dev_Outpatient_Clinical_MEAQ dataset to match standard format 
+                                            MEAQ_2 = MEAQ2, 
+                                            MEAQ_3 = MEAQ3, 
+                                            MEAQ_4 = MEAQ4, 
+                                            MEAQ_5 = MEAQ5, 
+                                            MEAQ_6 = MEAQ6, 
+                                            MEAQ_7 = MEAQ7, 
+                                            MEAQ_8 = MEAQ8, 
+                                            MEAQ_9 = MEAQ9, 
+                                            MEAQ_10 = MEAQ10, 
+                                            MEAQ_11 = MEAQ11, 
+                                            MEAQ_12 = MEAQ12, 
+                                            MEAQ_13 = MEAQ13, 
+                                            MEAQ_14 = MEAQ14B,
+                                            MEAQ_15 = MEAQ15, 
+                                            MEAQ_16 = MEAQ16, 
+                                            MEAQ_17 = MEAQ17, 
+                                            MEAQ_18 = MEAQ18, 
+                                            MEAQ_19 = MEAQ19, 
+                                            MEAQ_20 = MEAQ20, 
+                                            MEAQ_21 = MEAQ21, 
+                                            MEAQ_22 = MEAQ22, 
+                                            MEAQ_23 = MEAQ23, 
+                                            MEAQ_24 = MEAQ24, 
+                                            MEAQ_25 = MEAQ25B, 
+                                            MEAQ_26 = MEAQ26, 
+                                            MEAQ_27 = MEAQ27B, 
+                                            MEAQ_28 = MEAQ28, 
+                                            MEAQ_29 = MEAQ29B, 
+                                            MEAQ_30 = MEAQ30, 
+                                            MEAQ_31 = MEAQ31, 
+                                            MEAQ_32 = MEAQ32B, 
+                                            MEAQ_33 = MEAQ33B, 
+                                            MEAQ_34 = MEAQ34, 
+                                            MEAQ_35 = MEAQ35, 
+                                            MEAQ_36 = MEAQ36B, 
+                                            MEAQ_37 = MEAQ37, 
+                                            MEAQ_38 = MEAQ38, 
+                                            MEAQ_39 = MEAQ39, 
+                                            MEAQ_40 = MEAQ40, 
+                                            MEAQ_41 = MEAQ41B, 
+                                            MEAQ_42 = MEAQ42B, 
+                                            MEAQ_43 = MEAQ43, 
+                                            MEAQ_44 = MEAQ44B, 
+                                            MEAQ_45 = MEAQ45B, 
+                                            MEAQ_46 = MEAQ46, 
+                                            MEAQ_47 = MEAQ47,
+                                            MEAQ_48 = MEAQ48,
+                                            MEAQ_49 = MEAQ49, 
+                                            MEAQ_50 = MEAQ50B, 
+                                            MEAQ_51 = MEAQ51, 
+                                            MEAQ_52 = MEAQ52, 
+                                            MEAQ_53 = MEAQ53, 
+                                            MEAQ_54 = MEAQ54, 
+                                            MEAQ_55 = MEAQ55, 
+                                            MEAQ_56 = MEAQ56B, 
+                                            MEAQ_57 = MEAQ57, 
+                                            MEAQ_58 = MEAQ58B, 
+                                            MEAQ_59 = MEAQ59B, 
+                                            MEAQ_60 = MEAQ60, 
+                                            MEAQ_61 = MEAQ61,
+                                            MEAQ_62 = MEAQ62) 
+
+# reordering columns in MEAQ_Dev_Outpatient_Clinical_MEAQ dataset to match standard format 
+new_order <- c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",
+               "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", 
+               "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", 
+               "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", 
+               "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", 
+               "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", 
+               "MEAQ_61", "MEAQ_62")
+
+MEAQ_Dev_Outpatient_Clinical_MEAQ <- MEAQ_Dev_Outpatient_Clinical_MEAQ[, new_order]  
+
+MEAQ_Dev_Undergrad_Iowa_MEAQ <- MEAQ_Dev_Undergrad_Iowa[,c(6:67)] # subsetting MEAQ_Dev_Undergrad_Iowa dataset for MEAQ-62
+
+MEAQ_Dev_Undergrad_Iowa_MEAQ <- rename(MEAQ_Dev_Undergrad_Iowa_MEAQ, MEAQ_1 = MEAQ1, # renaming variables in MEAQ_Dev_Undergrad_Iowa_MEAQ dataset to match standard format 
+                                       MEAQ_2 = MEAQ2, 
+                                       MEAQ_3 = MEAQ3, 
+                                       MEAQ_4 = MEAQ4, 
+                                       MEAQ_5 = MEAQ5, 
+                                       MEAQ_6 = MEAQ6, 
+                                       MEAQ_7 = MEAQ7, 
+                                       MEAQ_8 = MEAQ8, 
+                                       MEAQ_9 = MEAQ9, 
+                                       MEAQ_10 = MEAQ10, 
+                                       MEAQ_11 = MEAQ11, 
+                                       MEAQ_12 = MEAQ12, 
+                                       MEAQ_13 = MEAQ13, 
+                                       MEAQ_14 = MEAQ14B,
+                                       MEAQ_15 = MEAQ15, 
+                                       MEAQ_16 = MEAQ16, 
+                                       MEAQ_17 = MEAQ17, 
+                                       MEAQ_18 = MEAQ18, 
+                                       MEAQ_19 = MEAQ19, 
+                                       MEAQ_20 = MEAQ20, 
+                                       MEAQ_21 = MEAQ21, 
+                                       MEAQ_22 = MEAQ22, 
+                                       MEAQ_23 = MEAQ23, 
+                                       MEAQ_24 = MEAQ24, 
+                                       MEAQ_25 = MEAQ25B, 
+                                       MEAQ_26 = MEAQ26, 
+                                       MEAQ_27 = MEAQ27B, 
+                                       MEAQ_28 = MEAQ28, 
+                                       MEAQ_29 = MEAQ29B, 
+                                       MEAQ_30 = MEAQ30, 
+                                       MEAQ_31 = MEAQ31, 
+                                       MEAQ_32 = MEAQ32B, 
+                                       MEAQ_33 = MEAQ33B, 
+                                       MEAQ_34 = MEAQ34, 
+                                       MEAQ_35 = MEAQ35, 
+                                       MEAQ_36 = MEAQ36B, 
+                                       MEAQ_37 = MEAQ37, 
+                                       MEAQ_38 = MEAQ38, 
+                                       MEAQ_39 = MEAQ39, 
+                                       MEAQ_40 = MEAQ40, 
+                                       MEAQ_41 = MEAQ41B, 
+                                       MEAQ_42 = MEAQ42B, 
+                                       MEAQ_43 = MEAQ43, 
+                                       MEAQ_44 = MEAQ44B, 
+                                       MEAQ_45 = MEAQ45B, 
+                                       MEAQ_46 = MEAQ46, 
+                                       MEAQ_47 = MEAQ47,
+                                       MEAQ_48 = MEAQ48,
+                                       MEAQ_49 = MEAQ49, 
+                                       MEAQ_50 = MEAQ50B, 
+                                       MEAQ_51 = MEAQ51, 
+                                       MEAQ_52 = MEAQ52, 
+                                       MEAQ_53 = MEAQ53, 
+                                       MEAQ_54 = MEAQ54, 
+                                       MEAQ_55 = MEAQ55, 
+                                       MEAQ_56 = MEAQ56B, 
+                                       MEAQ_57 = MEAQ57, 
+                                       MEAQ_58 = MEAQ58B, 
+                                       MEAQ_59 = MEAQ59B, 
+                                       MEAQ_60 = MEAQ60, 
+                                       MEAQ_61 = MEAQ61,
+                                       MEAQ_62 = MEAQ62) 
+
+MEAQ_Dev_Undergrad_Iowa_MEAQ <- MEAQ_Dev_Undergrad_Iowa_MEAQ[, new_order] # reordering columns in MEAQ_Dev_Undergrad_Iowa_MEAQ dataset to match standard format 
+
+MEAQ_New_Community_MEAQ <- MEAQ_New_Community[,c(11:72)] # subsetting MEAQ_New_Community dataset for MEAQ-62
+
+MEAQ_New_Community_MEAQ <- rename(MEAQ_New_Community_MEAQ, MEAQ_1 = eas01, # renaming variables in MEAQ_New_Community_MEAQ dataset to match standard format 
+                                  MEAQ_2 = eas02, 
+                                  MEAQ_3 = eas03, 
+                                  MEAQ_4 = eas04, 
+                                  MEAQ_5 = eas05, 
+                                  MEAQ_6 = eas06, 
+                                  MEAQ_7 = eas07, 
+                                  MEAQ_8 = eas08, 
+                                  MEAQ_9 = eas09, 
+                                  MEAQ_10 = eas10, 
+                                  MEAQ_11 = eas11, 
+                                  MEAQ_12 = eas12, 
+                                  MEAQ_13 = eas13, 
+                                  MEAQ_14 = eas14,
+                                  MEAQ_15 = eas15, 
+                                  MEAQ_16 = eas16, 
+                                  MEAQ_17 = eas17, 
+                                  MEAQ_18 = eas18, 
+                                  MEAQ_19 = eas19, 
+                                  MEAQ_20 = eas20, 
+                                  MEAQ_21 = eas21, 
+                                  MEAQ_22 = eas22, 
+                                  MEAQ_23 = eas23, 
+                                  MEAQ_24 = eas24, 
+                                  MEAQ_25 = eas25, 
+                                  MEAQ_26 = eas26, 
+                                  MEAQ_27 = eas27, 
+                                  MEAQ_28 = eas28, 
+                                  MEAQ_29 = eas29, 
+                                  MEAQ_30 = eas30, 
+                                  MEAQ_31 = eas31, 
+                                  MEAQ_32 = eas32, 
+                                  MEAQ_33 = eas33, 
+                                  MEAQ_34 = eas34, 
+                                  MEAQ_35 = eas35, 
+                                  MEAQ_36 = eas36, 
+                                  MEAQ_37 = eas37, 
+                                  MEAQ_38 = eas38, 
+                                  MEAQ_39 = eas39, 
+                                  MEAQ_40 = eas40, 
+                                  MEAQ_41 = eas41, 
+                                  MEAQ_42 = eas42, 
+                                  MEAQ_43 = eas43, 
+                                  MEAQ_44 = eas44, 
+                                  MEAQ_45 = eas45, 
+                                  MEAQ_46 = eas46, 
+                                  MEAQ_47 = eas47,
+                                  MEAQ_48 = eas48,
+                                  MEAQ_49 = eas49, 
+                                  MEAQ_50 = eas50, 
+                                  MEAQ_51 = eas51, 
+                                  MEAQ_52 = eas52, 
+                                  MEAQ_53 = eas53, 
+                                  MEAQ_54 = eas54, 
+                                  MEAQ_55 = eas55, 
+                                  MEAQ_56 = eas56, 
+                                  MEAQ_57 = eas57, 
+                                  MEAQ_58 = eas58, 
+                                  MEAQ_59 = eas59, 
+                                  MEAQ_60 = eas60, 
+                                  MEAQ_61 = eas61,
+                                  MEAQ_62 = eas62) 
+
+MEAQ_New_Community_MEAQ <- round_df(MEAQ_New_Community_MEAQ, 0) # removing trailing zeros
+
+MEAQ_New_Patient_S1_MEAQ <- MEAQ_New_Patient_S1[,c(10:71)] # subsetting MEAQ_New_Patient_S1 dataset for MEAQ-62
+
+MEAQ_New_Patient_S1_MEAQ <- rename(MEAQ_New_Patient_S1_MEAQ, MEAQ_1 = MEAQ01, # renaming variables in MEAQ_New_Patient_S1_MEAQ dataset to match standard format 
+                                   MEAQ_2 = MEAQ02, 
+                                   MEAQ_3 = MEAQ03, 
+                                   MEAQ_4 = MEAQ04, 
+                                   MEAQ_5 = MEAQ05, 
+                                   MEAQ_6 = MEAQ06, 
+                                   MEAQ_7 = MEAQ07, 
+                                   MEAQ_8 = MEAQ08, 
+                                   MEAQ_9 = MEAQ09, 
+                                   MEAQ_10 = meaq10, 
+                                   MEAQ_11 = meaq11, 
+                                   MEAQ_12 = meaq12, 
+                                   MEAQ_13 = meaq13, 
+                                   MEAQ_14 = meaq14,
+                                   MEAQ_15 = meaq15, 
+                                   MEAQ_16 = meaq16, 
+                                   MEAQ_17 = meaq17, 
+                                   MEAQ_18 = meaq18, 
+                                   MEAQ_19 = meaq19, 
+                                   MEAQ_20 = meaq20, 
+                                   MEAQ_21 = meaq21, 
+                                   MEAQ_22 = meaq22, 
+                                   MEAQ_23 = meaq23, 
+                                   MEAQ_24 = meaq24, 
+                                   MEAQ_25 = meaq25, 
+                                   MEAQ_26 = meaq26, 
+                                   MEAQ_27 = meaq27, 
+                                   MEAQ_28 = meaq28, 
+                                   MEAQ_29 = meaq29, 
+                                   MEAQ_30 = meaq30, 
+                                   MEAQ_31 = meaq31, 
+                                   MEAQ_32 = meaq32, 
+                                   MEAQ_33 = meaq33, 
+                                   MEAQ_34 = meaq34, 
+                                   MEAQ_35 = meaq35, 
+                                   MEAQ_36 = meaq36, 
+                                   MEAQ_37 = meaq37, 
+                                   MEAQ_38 = meaq38, 
+                                   MEAQ_39 = meaq39, 
+                                   MEAQ_40 = meaq40, 
+                                   MEAQ_41 = meaq41, 
+                                   MEAQ_42 = meaq42, 
+                                   MEAQ_43 = meaq43, 
+                                   MEAQ_44 = meaq44, 
+                                   MEAQ_45 = meaq45, 
+                                   MEAQ_46 = meaq46, 
+                                   MEAQ_47 = meaq47,
+                                   MEAQ_48 = meaq48,
+                                   MEAQ_49 = meaq49, 
+                                   MEAQ_50 = meaq50, 
+                                   MEAQ_51 = meaq51, 
+                                   MEAQ_52 = meaq52, 
+                                   MEAQ_53 = meaq53, 
+                                   MEAQ_54 = meaq54, 
+                                   MEAQ_55 = meaq55, 
+                                   MEAQ_56 = meaq56, 
+                                   MEAQ_57 = meaq57, 
+                                   MEAQ_58 = meaq58, 
+                                   MEAQ_59 = meaq59, 
+                                   MEAQ_60 = meaq60, 
+                                   MEAQ_61 = meaq61,
+                                   MEAQ_62 = meaq62) 
+
+MEAQ_New_Patient_S1_MEAQ <- round_df(MEAQ_New_Patient_S1_MEAQ, 0) # removing trailing zeros
+
+MEAQ_New_Patient_S2_MEAQ <- MEAQ_New_Patient_S2[,c(2:63)] # subsetting MEAQ_New_Patient_S2 dataset for MEAQ-62
+
+MEAQ_New_Patient_S2_MEAQ <- rename(MEAQ_New_Patient_S2_MEAQ, MEAQ_1 = meaq01, # renaming variables in MEAQ_New_Patient_S2_MEAQ dataset to match standard format 
+                                   MEAQ_2 = meaq02, 
+                                   MEAQ_3 = meaq03, 
+                                   MEAQ_4 = meaq04, 
+                                   MEAQ_5 = meaq05, 
+                                   MEAQ_6 = meaq06, 
+                                   MEAQ_7 = meaq07, 
+                                   MEAQ_8 = meaq08, 
+                                   MEAQ_9 = meaq09, 
+                                   MEAQ_10 = meaq10, 
+                                   MEAQ_11 = meaq11, 
+                                   MEAQ_12 = meaq12, 
+                                   MEAQ_13 = meaq13, 
+                                   MEAQ_14 = meaq14,
+                                   MEAQ_15 = meaq15, 
+                                   MEAQ_16 = meaq16, 
+                                   MEAQ_17 = meaq17, 
+                                   MEAQ_18 = meaq18, 
+                                   MEAQ_19 = meaq19, 
+                                   MEAQ_20 = meaq20, 
+                                   MEAQ_21 = meaq21, 
+                                   MEAQ_22 = meaq22, 
+                                   MEAQ_23 = meaq23, 
+                                   MEAQ_24 = meaq24, 
+                                   MEAQ_25 = meaq25, 
+                                   MEAQ_26 = meaq26, 
+                                   MEAQ_27 = meaq27, 
+                                   MEAQ_28 = meaq28, 
+                                   MEAQ_29 = meaq29, 
+                                   MEAQ_30 = meaq30, 
+                                   MEAQ_31 = meaq31, 
+                                   MEAQ_32 = meaq32, 
+                                   MEAQ_33 = meaq33, 
+                                   MEAQ_34 = meaq34, 
+                                   MEAQ_35 = meaq35, 
+                                   MEAQ_36 = meaq36, 
+                                   MEAQ_37 = meaq37, 
+                                   MEAQ_38 = meaq38, 
+                                   MEAQ_39 = meaq39, 
+                                   MEAQ_40 = meaq40, 
+                                   MEAQ_41 = meaq41, 
+                                   MEAQ_42 = meaq42, 
+                                   MEAQ_43 = meaq43, 
+                                   MEAQ_44 = meaq44, 
+                                   MEAQ_45 = meaq45, 
+                                   MEAQ_46 = meaq46, 
+                                   MEAQ_47 = meaq47,
+                                   MEAQ_48 = meaq48,
+                                   MEAQ_49 = meaq49, 
+                                   MEAQ_50 = meaq50, 
+                                   MEAQ_51 = meaq51, 
+                                   MEAQ_52 = meaq52, 
+                                   MEAQ_53 = meaq53, 
+                                   MEAQ_54 = meaq54, 
+                                   MEAQ_55 = meaq55, 
+                                   MEAQ_56 = meaq56, 
+                                   MEAQ_57 = meaq57, 
+                                   MEAQ_58 = meaq58, 
+                                   MEAQ_59 = meaq59, 
+                                   MEAQ_60 = meaq60, 
+                                   MEAQ_61 = meaq61,
+                                   MEAQ_62 = meaq62) 
+
+MEAQ_New_Undergrad_MEAQ <- MEAQ_New_Undergrad[,c(8:69)] # subsetting MEAQ_New_Undergrad dataset for MEAQ-62
+
+MEAQ_New_Undergrad_MEAQ <- rename(MEAQ_New_Undergrad_MEAQ, MEAQ_1 = MEAQ01, # renaming variables in MEAQ_New_Undergrad_MEAQ dataset to match standard format 
+                                  MEAQ_2 = MEAQ02, 
+                                  MEAQ_3 = MEAQ03, 
+                                  MEAQ_4 = MEAQ04, 
+                                  MEAQ_5 = MEAQ05, 
+                                  MEAQ_6 = MEAQ06, 
+                                  MEAQ_7 = MEAQ07, 
+                                  MEAQ_8 = MEAQ08, 
+                                  MEAQ_9 = MEAQ09, 
+                                  MEAQ_10 = MEAQ10, 
+                                  MEAQ_11 = MEAQ11, 
+                                  MEAQ_12 = MEAQ12, 
+                                  MEAQ_13 = MEAQ13, 
+                                  MEAQ_14 = MEAQ14,
+                                  MEAQ_15 = MEAQ15, 
+                                  MEAQ_16 = MEAQ16, 
+                                  MEAQ_17 = MEAQ17, 
+                                  MEAQ_18 = MEAQ18, 
+                                  MEAQ_19 = MEAQ19, 
+                                  MEAQ_20 = MEAQ20, 
+                                  MEAQ_21 = MEAQ21, 
+                                  MEAQ_22 = MEAQ22, 
+                                  MEAQ_23 = MEAQ23, 
+                                  MEAQ_24 = MEAQ24, 
+                                  MEAQ_25 = MEAQ25, 
+                                  MEAQ_26 = MEAQ26, 
+                                  MEAQ_27 = MEAQ27, 
+                                  MEAQ_28 = MEAQ28, 
+                                  MEAQ_29 = MEAQ29, 
+                                  MEAQ_30 = MEAQ30, 
+                                  MEAQ_31 = MEAQ31, 
+                                  MEAQ_32 = MEAQ32, 
+                                  MEAQ_33 = MEAQ33, 
+                                  MEAQ_34 = MEAQ34, 
+                                  MEAQ_35 = MEAQ35, 
+                                  MEAQ_36 = MEAQ36, 
+                                  MEAQ_37 = MEAQ37, 
+                                  MEAQ_38 = MEAQ38, 
+                                  MEAQ_39 = MEAQ39, 
+                                  MEAQ_40 = MEAQ40, 
+                                  MEAQ_41 = MEAQ41, 
+                                  MEAQ_42 = MEAQ42, 
+                                  MEAQ_43 = MEAQ43, 
+                                  MEAQ_44 = MEAQ44, 
+                                  MEAQ_45 = MEAQ45, 
+                                  MEAQ_46 = MEAQ46, 
+                                  MEAQ_47 = MEAQ47,
+                                  MEAQ_48 = MEAQ48,
+                                  MEAQ_49 = MEAQ49, 
+                                  MEAQ_50 = MEAQ50, 
+                                  MEAQ_51 = MEAQ51, 
+                                  MEAQ_52 = MEAQ52, 
+                                  MEAQ_53 = MEAQ53, 
+                                  MEAQ_54 = MEAQ54, 
+                                  MEAQ_55 = MEAQ55, 
+                                  MEAQ_56 = MEAQ56, 
+                                  MEAQ_57 = MEAQ57, 
+                                  MEAQ_58 = MEAQ58, 
+                                  MEAQ_59 = MEAQ59, 
+                                  MEAQ_60 = MEAQ60, 
+                                  MEAQ_61 = MEAQ61,
+                                  MEAQ_62 = MEAQ62) 
+
+MEAQ_New_Undergrad_MEAQ <- round_df(MEAQ_New_Undergrad_MEAQ, 0) # removing trailing zeros
+
+MEAQ_Dev_Phase3_Patient_MEAQ <- MEAQ_Dev_Phase3_Patient[,c(188:249)]  
+
+# renaming MEAQ variables in MEAQ_Dev_Phase3_Patient dataset to match standard format 
+MEAQ_Dev_Phase3_Patient_MEAQ <- rename(MEAQ_Dev_Phase3_Patient_MEAQ, MEAQ_1 = meaq01, 
+                                  MEAQ_2 = meaq02, 
+                                  MEAQ_3 = meaq03, 
+                                  MEAQ_4 = meaq04, 
+                                  MEAQ_5 = meaq05, 
+                                  MEAQ_6 = meaq06, 
+                                  MEAQ_7 = meaq07, 
+                                  MEAQ_8 = meaq08, 
+                                  MEAQ_9 = meaq09, 
+                                  MEAQ_10 = meaq10, 
+                                  MEAQ_11 = meaq11, 
+                                  MEAQ_12 = meaq12, 
+                                  MEAQ_13 = meaq13, 
+                                  MEAQ_14 = meaq14,
+                                  MEAQ_15 = meaq15, 
+                                  MEAQ_16 = meaq16, 
+                                  MEAQ_17 = meaq17, 
+                                  MEAQ_18 = meaq18, 
+                                  MEAQ_19 = meaq19, 
+                                  MEAQ_20 = meaq20, 
+                                  MEAQ_21 = meaq21, 
+                                  MEAQ_22 = meaq22, 
+                                  MEAQ_23 = meaq23, 
+                                  MEAQ_24 = meaq24, 
+                                  MEAQ_25 = meaq25, 
+                                  MEAQ_26 = meaq26, 
+                                  MEAQ_27 = meaq27, 
+                                   MEAQ_28 = meaq28, 
+                                   MEAQ_29 = meaq29, 
+                                   MEAQ_30 = meaq30, 
+                                   MEAQ_31 = meaq31, 
+                                   MEAQ_32 = meaq32, 
+                                   MEAQ_33 = meaq33, 
+                                   MEAQ_34 = meaq34, 
+                                   MEAQ_35 = meaq35, 
+                                   MEAQ_36 = meaq36, 
+                                   MEAQ_37 = meaq37, 
+                                   MEAQ_38 = meaq38, 
+                                   MEAQ_39 = meaq39, 
+                                   MEAQ_40 = meaq40, 
+                                   MEAQ_41 = meaq41, 
+                                   MEAQ_42 = meaq42, 
+                                   MEAQ_43 = meaq43, 
+                                   MEAQ_44 = meaq44, 
+                                   MEAQ_45 = meaq45, 
+                                   MEAQ_46 = meaq46, 
+                                   MEAQ_47 = meaq47,
+                                   MEAQ_48 = meaq48,
+                                   MEAQ_49 = meaq49, 
+                                   MEAQ_50 = meaq50, 
+                                   MEAQ_51 = meaq51, 
+                                   MEAQ_52 = meaq52, 
+                                   MEAQ_53 = meaq53, 
+                                   MEAQ_54 = meaq54, 
+                                   MEAQ_55 = meaq55, 
+                                   MEAQ_56 = meaq56, 
+                                   MEAQ_57 = meaq57, 
+                                   MEAQ_58 = meaq58, 
+                                   MEAQ_59 = meaq59, 
+                                   MEAQ_60 = meaq60, 
+                                   MEAQ_61 = meaq61,
+                                   MEAQ_62 = meaq62) 
+```
+
+### Aggregating Cleaned Datasets for Construction
+
+```{r, results = 'hide'}
+CAMD_MTurk_MEAQ_Clean$SampleName <- rep("CAMD_MTurk", nrow(CAMD_MTurk_MEAQ_Clean))
+
+CAMD_Undergrad_SMU_MEAQ_Clean$SampleName <- rep("CAMD_Undergrad_SMU", nrow(CAMD_Undergrad_SMU_MEAQ_Clean))
+
+EAI_MTurk_MEAQ$SampleName <- rep("EAI_MTurk", nrow(EAI_MTurk_MEAQ))
+
+EAI_Undergrad_SMU_MEAQ$SampleName <- rep("EAI_Undergrad_SMU", nrow(EAI_Undergrad_SMU_MEAQ))
+
+LTC_MTurk_T1_MEAQ$SampleName <- rep("LTC_MTurk_T1", nrow(LTC_MTurk_T1_MEAQ))
+
+LTC_Undergrad_SMU_T1_MEAQ$SampleName <- rep("LTC_Undergrad_SMU_T1", nrow(LTC_Undergrad_SMU_T1_MEAQ))
+
+MEAQ_AAQ_MTurk_T1_MEAQ$SampleName <- rep("MEAQ_AAQ_MTurk_T1", nrow(MEAQ_AAQ_MTurk_T1_MEAQ))
+
+MEAQ_AAQ_Undergrad_SMU_T1_MEAQ$SampleName <- rep("MEAQ_AAQ_Undergrad_SMU_T1", nrow(MEAQ_AAQ_Undergrad_SMU_T1_MEAQ))
+
+MEAQ_New_Community_MEAQ$SampleName <- rep("MEAQ_New_Community", nrow(MEAQ_New_Community_MEAQ))
+
+MEAQ_New_Patient_S1_MEAQ$SampleName <- rep("MEAQ_New_Patient_S1", nrow(MEAQ_New_Patient_S1_MEAQ))
+
+MEAQ_New_Patient_S2_MEAQ$SampleName <- rep("MEAQ_New_Patient_S2", nrow(MEAQ_New_Patient_S2_MEAQ))
+
+MEAQ_New_Undergrad_MEAQ$SampleName <- rep("MEAQ_New_Undergrad", nrow(MEAQ_New_Undergrad_MEAQ))
+
+MEAQ_Dev_Outpatient_Clinical_MEAQ$SampleName <- rep("MEAQ_Dev_Outpatient_Clinical", nrow(MEAQ_Dev_Outpatient_Clinical_MEAQ))
+
+MEAQ_Dev_Undergrad_Iowa_MEAQ$SampleName <- rep("MEAQ_Dev_Undergrad_Iowa", nrow(MEAQ_Dev_Undergrad_Iowa_MEAQ))
+
+MEAQ_Dev_Phase3_Patient_MEAQ$SampleName <- rep("MEAQ_Dev_Phase3_Patient", nrow(MEAQ_Dev_Phase3_Patient_MEAQ))
+```
+
+```{r}
+Aggregated_MEAQ_Const <- rbind(CAMD_MTurk_MEAQ_Clean, CAMD_Undergrad_SMU_MEAQ_Clean, EAI_MTurk_MEAQ, EAI_Undergrad_SMU_MEAQ, LTC_MTurk_T1_MEAQ, LTC_Undergrad_SMU_T1_MEAQ, MEAQ_AAQ_MTurk_T1_MEAQ, MEAQ_AAQ_Undergrad_SMU_T1_MEAQ, MEAQ_New_Community_MEAQ, MEAQ_New_Patient_S1_MEAQ, MEAQ_New_Patient_S2_MEAQ, MEAQ_New_Undergrad_MEAQ, MEAQ_Dev_Phase3_Patient_MEAQ)
+
+Aggregated_MEAQ_Const <- as.data.frame(Aggregated_MEAQ_Const)
+
+Aggregated_MEAQ_Valid <- rbind(MEAQ_Dev_Outpatient_Clinical_MEAQ, MEAQ_Dev_Undergrad_Iowa_MEAQ)
+
+Aggregated_MEAQ_Valid <- as.data.frame(Aggregated_MEAQ_Valid)
+```
+
+### Reverse Code 
+
+```{r, results = 'hide'}
+Aggregated_MEAQ_Const$MEAQ_23_r <- dplyr::case_when(
+  Aggregated_MEAQ_Const$MEAQ_23 %in% 1 ~ 6, 
+  Aggregated_MEAQ_Const$MEAQ_23 %in% 2 ~ 5, 
+  Aggregated_MEAQ_Const$MEAQ_23 %in% 3 ~ 4,   
+  Aggregated_MEAQ_Const$MEAQ_23 %in% 4 ~ 3,   
+  Aggregated_MEAQ_Const$MEAQ_23 %in% 5 ~ 2, 
+  Aggregated_MEAQ_Const$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(Aggregated_MEAQ_Const$MEAQ_23)
+) 
+
+Aggregated_MEAQ_Const$MEAQ_30_r <- dplyr::case_when(
+  Aggregated_MEAQ_Const$MEAQ_30 %in% 1 ~ 6, 
+  Aggregated_MEAQ_Const$MEAQ_30 %in% 2 ~ 5, 
+  Aggregated_MEAQ_Const$MEAQ_30 %in% 3 ~ 4,   
+  Aggregated_MEAQ_Const$MEAQ_30 %in% 4 ~ 3,   
+  Aggregated_MEAQ_Const$MEAQ_30 %in% 5 ~ 2, 
+  Aggregated_MEAQ_Const$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(Aggregated_MEAQ_Const$MEAQ_30)
+)
+
+Aggregated_MEAQ_Valid$MEAQ_23_r <- dplyr::case_when(
+  Aggregated_MEAQ_Valid$MEAQ_23 %in% 1 ~ 6, 
+  Aggregated_MEAQ_Valid$MEAQ_23 %in% 2 ~ 5, 
+  Aggregated_MEAQ_Valid$MEAQ_23 %in% 3 ~ 4,   
+  Aggregated_MEAQ_Valid$MEAQ_23 %in% 4 ~ 3,     
+  Aggregated_MEAQ_Valid$MEAQ_23 %in% 5 ~ 2, 
+  Aggregated_MEAQ_Valid$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(Aggregated_MEAQ_Valid$MEAQ_23)
+) 
+
+Aggregated_MEAQ_Valid$MEAQ_30_r <- dplyr::case_when(
+  Aggregated_MEAQ_Valid$MEAQ_30 %in% 1 ~ 6, 
+  Aggregated_MEAQ_Valid$MEAQ_30 %in% 2 ~ 5, 
+  Aggregated_MEAQ_Valid$MEAQ_30 %in% 3 ~ 4,   
+  Aggregated_MEAQ_Valid$MEAQ_30 %in% 4 ~ 3, 
+  Aggregated_MEAQ_Valid$MEAQ_30 %in% 5 ~ 2,  
+  Aggregated_MEAQ_Valid$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(Aggregated_MEAQ_Valid$MEAQ_30)
+)
+
+new_order2 <- c("SampleName", "MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10","MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_23_r", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_30_r", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62")
+
+Aggregated_MEAQ_Const <- Aggregated_MEAQ_Const[, new_order2]  
+
+Aggregated_MEAQ_Valid <- Aggregated_MEAQ_Valid[, new_order2]
+```
+
+### Cleaning Missing Data 
+
+```{r, results='asis'}
+########## comparing sample size for subsamples before & after dropping NAs ##########
+
+# CAMD_MTurk_MEAQ_Clean
+# Before dropping >10% NAs (N=264) >> After dropping >10% NAs (N=264)
+
+nrow(CAMD_MTurk_MEAQ_Clean)
+
+nrow(CAMD_MTurk_MEAQ_Clean) - length(which(rowMeans(is.na(CAMD_MTurk_MEAQ_Clean)) > 0.1))
+```
+
+```{r}
+# CAMD_Undergrad_SMU_MEAQ_Clean
+# Before dropping >10% NAs (N=214) >> After dropping >10% NAs (N=214)
+
+nrow(CAMD_Undergrad_SMU_MEAQ_Clean)
+
+nrow(CAMD_Undergrad_SMU_MEAQ_Clean) - length(which(rowMeans(is.na(CAMD_Undergrad_SMU_MEAQ_Clean)) > 0.1))
+```
+
+```{r}
+# EAI_MTurk_MEAQ
+# Before dropping >10% NAs (N=645) >> After dropping >10% NAs (N=602)
+
+nrow(EAI_MTurk_MEAQ)
+
+nrow(EAI_MTurk_MEAQ) - length(which(rowMeans(is.na(EAI_MTurk_MEAQ)) > 0.1))
+```
+
+```{r}
+# EAI_Undergrad_SMU_MEAQ 
+# Before dropping >10% NAs (N=488) >> After dropping >10% NAs (N=481)
+
+nrow(EAI_Undergrad_SMU_MEAQ)
+
+nrow(EAI_Undergrad_SMU_MEAQ) - length(which(rowMeans(is.na(EAI_Undergrad_SMU_MEAQ)) > 0.1))
+```
+
+```{r}
+# LTC_MTurk_T1_MEAQ
+# Before dropping >10% NAs (N=3520) >> After dropping >10% NAs (N=1793)
+
+nrow(LTC_MTurk_T1_MEAQ)
+
+nrow(LTC_MTurk_T1_MEAQ) - length(which(rowMeans(is.na(LTC_MTurk_T1_MEAQ)) > 0.1))
+```
+
+```{r}
+# LTC_Undergrad_SMU_T1_MEAQ 
+# Before dropping >10% NAs (N=293) >> After dropping >10% NAs (N=72)
+
+nrow(LTC_Undergrad_SMU_T1_MEAQ)
+
+nrow(LTC_Undergrad_SMU_T1_MEAQ) - length(which(rowMeans(is.na(LTC_Undergrad_SMU_T1_MEAQ)) > 0.1))
+```
+
+```{r}
+# MEAQ_AAQ_MTurk_T1_MEAQ
+# Before dropping >10% NAs (N=1052) >> After dropping >10% NAs (N=860)
+
+nrow(MEAQ_AAQ_MTurk_T1_MEAQ)
+
+nrow(MEAQ_AAQ_MTurk_T1_MEAQ) - length(which(rowMeans(is.na(MEAQ_AAQ_MTurk_T1_MEAQ)) > 0.1))
+```
+
+```{r}
+# MEAQ_AAQ_Undergrad_SMU_T1_MEAQ
+# Before dropping >10% NAs (N=364) >> After dropping >10% NAs (N=345)
+
+nrow(MEAQ_AAQ_Undergrad_SMU_T1_MEAQ)
+
+nrow(MEAQ_AAQ_Undergrad_SMU_T1_MEAQ) - length(which(rowMeans(is.na(MEAQ_AAQ_Undergrad_SMU_T1_MEAQ)) > 0.1))
+```
+
+```{r}
+# MEAQ_Dev_Outpatient_Clinical_MEAQ
+# Before dropping >10% NAs (N=201) >> After dropping >10% NAs (N=201)
+
+nrow(MEAQ_Dev_Outpatient_Clinical_MEAQ)
+
+nrow(MEAQ_Dev_Outpatient_Clinical_MEAQ) - length(which(rowMeans(is.na(MEAQ_Dev_Outpatient_Clinical_MEAQ)) > 0.1))
+```
+
+```{r}
+# MEAQ_Dev_Undergrad_Iowa_MEAQ
+# Before dropping >10% NAs (N=314) >> After dropping >10% NAs (N=314)
+
+nrow(MEAQ_Dev_Undergrad_Iowa_MEAQ)
+
+nrow(MEAQ_Dev_Undergrad_Iowa_MEAQ) - length(which(rowMeans(is.na(MEAQ_Dev_Undergrad_Iowa_MEAQ)) > 0.1))
+```
+
+```{r}
+# MEAQ_New_Community_MEAQ
+# Before dropping >10% NAs (N=217) >> After dropping >10% NAs (N=215)
+
+nrow(MEAQ_New_Community_MEAQ)
+
+nrow(MEAQ_New_Community_MEAQ) - length(which(rowMeans(is.na(MEAQ_New_Community_MEAQ)) > 0.1))
+```
+
+```{r}
+# MEAQ_New_Patient_S1_MEAQ
+# Before dropping >10% NAs (N=128) >> After dropping >10% NAs (N=125)
+
+nrow(MEAQ_New_Patient_S1_MEAQ)
+
+nrow(MEAQ_New_Patient_S1_MEAQ) - length(which(rowMeans(is.na(MEAQ_New_Patient_S1_MEAQ)) > 0.1))
+```
+
+```{r}
+# MEAQ_New_Patient_S2_MEAQ
+# Before dropping >10% NAs (N=265) >> After dropping >10% NAs (N=265)
+
+nrow(MEAQ_New_Patient_S2_MEAQ)
+
+nrow(MEAQ_New_Patient_S2_MEAQ) - length(which(rowMeans(is.na(MEAQ_New_Patient_S2_MEAQ)) > 0.1))
+```
+
+```{r}
+# MEAQ_New_Undergrad_MEAQ
+# Before dropping >10% NAs (N=363) >> After dropping >10% NAs (N=363)
+
+nrow(MEAQ_New_Undergrad_MEAQ)
+
+nrow(MEAQ_New_Undergrad_MEAQ) - length(which(rowMeans(is.na(MEAQ_New_Undergrad_MEAQ)) > 0.1))
+```
+
+```{r}
+# MEAQ_Dev_Phase3_Patient_MEAQ
+# Before dropping >10% NAs (N=297) >> After dropping >10% NAs (N=288)
+
+nrow(MEAQ_Dev_Phase3_Patient_MEAQ)
+
+nrow(MEAQ_Dev_Phase3_Patient_MEAQ) - length(which(rowMeans(is.na(MEAQ_Dev_Phase3_Patient_MEAQ)) > 0.1))
+```
+
+```{r, results='hide'}
+########## dropping cases with >10% NAs ########## 
+
+# Aggregated_MEAQ_Const
+# Before dropping >10% NAs (N=8110) >> After dropping >10% NAs (N=5887)
+
+nrow(Aggregated_MEAQ_Const)
+
+length(which(rowMeans(!is.na(Aggregated_MEAQ_Const)) > 0.1))
+
+NA_Cleaned_Construction <- Aggregated_MEAQ_Const[which(rowMeans(!is.na(Aggregated_MEAQ_Const)) > 0.1), ]
+```
+
+```{r, results='asis'}
+const_samples <- table(NA_Cleaned_Construction$SampleName) %>%
+  as.data.frame()
+
+colnames(const_samples)[colnames(const_samples) == "Var1"] = "SampleName"
+
+colnames(const_samples)[colnames(const_samples) == "Freq"] = "SampleSize"
+
+const_samples %>%
+  kbl(caption="Sample sizes for subsamples in construction sample after cleaning for cases with >10% missing data") %>% 
+  kable_material_dark()
+```
+
+```{r, results='hide'}
+# Aggregated_MEAQ_Valid (MEAQ_Dev_Outpatient_Clinical_MEAQ + MEAQ_Dev_Undergrad_Iowa_MEAQ)
+# Before dropping >10% NAs (N=515) >> After dropping >10% NAs (N=515)
+
+nrow(Aggregated_MEAQ_Valid)
+
+length(which(rowMeans(!is.na(Aggregated_MEAQ_Valid)) > 0.1))
+
+NA_Cleaned_Validation <- Aggregated_MEAQ_Valid[which(rowMeans(!is.na(Aggregated_MEAQ_Valid)) > 0.1), ]
+```
+
+```{r, results='asis'}
+valid_samples <- table(NA_Cleaned_Validation$SampleName) %>% 
+  as.data.frame()
+
+colnames(valid_samples)[colnames(valid_samples) == "Var1"] = "SampleName"
+
+colnames(valid_samples)[colnames(valid_samples) == "Freq"] = "SampleSize"
+
+valid_samples %>%
+  kbl(caption="Sample sizes for subsamples in validation sample after cleaning for cases with >10% missing data") %>% 
+  kable_material_dark()
+```
+
+## Ant Colony Optimization (ACO) for Facet-Level Short Form
+
+```{r, results='asis'}
+# DEFINING FACETS 
+
+# BA = Behavioral Avoidance 
+# DA = Distress Aversion 
+# PR = Procrastination 
+# DS = Distraction & Suppression 
+# RD = Repression & Denial 
+# DE = Distress Endurance 
+
+fs <- list(BA = c('MEAQ_1', 'MEAQ_8', 'MEAQ_14', 'MEAQ_20', 'MEAQ_26', 'MEAQ_32', 'MEAQ_39', 'MEAQ_45', 'MEAQ_51', 'MEAQ_55', 'MEAQ_59'),
+           DA = c('MEAQ_2', 'MEAQ_7', 'MEAQ_13', 'MEAQ_19', 'MEAQ_25', 'MEAQ_31', 'MEAQ_34', 'MEAQ_38', 'MEAQ_44', 'MEAQ_50', 'MEAQ_54', 'MEAQ_58', 'MEAQ_61'),
+           PR = c('MEAQ_5', 'MEAQ_11', 'MEAQ_17', 'MEAQ_30_r', 'MEAQ_36', 'MEAQ_42', 'MEAQ_47'),
+           DS = c('MEAQ_3', 'MEAQ_9', 'MEAQ_15', 'MEAQ_22', 'MEAQ_27', 'MEAQ_33', 'MEAQ_40'),
+           RD = c('MEAQ_4', 'MEAQ_10', 'MEAQ_16', 'MEAQ_21', 'MEAQ_23_r', 'MEAQ_28', 'MEAQ_35', 'MEAQ_41', 'MEAQ_46', 'MEAQ_49', 'MEAQ_52', 'MEAQ_56', 'MEAQ_60'),
+           DE = c('MEAQ_6', 'MEAQ_12', 'MEAQ_18', 'MEAQ_24', 'MEAQ_29', 'MEAQ_37', 'MEAQ_43', 'MEAQ_48', 'MEAQ_53', 'MEAQ_57', 'MEAQ_62')
+)
+```
+
+```{r, results='asis'}
+cap <- list(5, 6, 3, 3, 6, 5)
+```
+
+
+```{r, results='hide'}
+seeds <- sample(1:99999, 1)
+
+for (i in seeds) {
+  results <- mmas(NA_Cleaned_Construction, fs, cap, ants = 200, colonies = 120, cores = 128, seed = i)
+  saveRDS(results, paste0('mmas_run', i, '.rds'))
+}
+
+saveRDS(seeds, "seeds.rds")
+seeds <- readRDS("seeds.rds")
+files <- paste0('mmas_run', seeds, '.rds')
+runs <- lapply(files, readRDS) 
+```
+
+
+```{r, results='asis'}
+# Unique solutions
+logs <- lapply(runs, `[[`, 'log') %>% rbindlist(., idcol = 'mmas') %>% 
+  group_by(mmas) %>% mutate(best_phe = max(pheromone))
+
+nrow(unique(logs[, -c(1, 2)]))
+```
+
+```{r, results='asis'}
+nrow(unique(logs[, -c(1, 2)])) / combinations(NA_Cleaned_Construction, fs, cap)
+```
+
+```{r, results='asis'}
+sum(is.na(logs$chisq)) / nrow(logs)
+```
+
+```{r, results='asis'}
+# probability of item use
+BA_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[1]]))
+DA_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[2]]))
+PR_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[3]]))
+DS_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[4]]))
+RD_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[5]]))
+DE_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[6]]))
+
+results_df <- as.data.frame(do.call(rbind, lapply(runs, function(x) x$log[which.max(x$log$pheromone), ])))
+  
+results_df %>%
+  kbl() %>%
+  kable_paper("hover", full_width = F)
+  
+```
+
+```{r, results='asis'}
+colMeans(BA_selection)
+```
+
+```{r, results='asis'}
+colMeans(DA_selection)
+```
+
+```{r, results='asis'}
+colMeans(PR_selection)
+```
+
+```{r, results='asis'}
+colMeans(DS_selection)
+```
+
+```{r, results='asis'}
+colMeans(RD_selection)
+```
+
+```{r, results='asis'}
+colMeans(DE_selection)
+```
+
+```{r, results='asis'}
+# Jaccard Similarity
+uni_selection <- cbind(BA_selection, DA_selection, PR_selection, DS_selection, RD_selection, DE_selection)
+mean(dist(uni_selection, method = 'binary'))
+```
+
+```{r, results='asis'}
+sd(dist(uni_selection, method = 'binary'))
+```
+
+```{r, results='asis'}
+facet_mmas_solution1 <- runs[[1]]
+summary(facet_mmas_solution1)
+```
+
+```{r, results='asis'}
+facet_mmas_solution1$subtests
+```
+
+ 
