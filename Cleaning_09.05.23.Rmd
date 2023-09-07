@@ -3535,7 +3535,8 @@ which(colnames(MEAQ_New_Patient_S1) == "bfi_neuro")
 
 BFIN_Validation_S9 <- MEAQ_New_Patient_S1[,c(10:71, 6)]
 
-BFIN_Validation_S9 <- rename(BFIN_Validation_S9, MEAQ_1 = MEAQ01,
+BFIN_Validation_S9 <- rename(BFIN_Validation_S9, BFI_N = bfi_neuro,
+                                   MEAQ_1 = MEAQ01,
                                    MEAQ_2 = MEAQ02, 
                                    MEAQ_3 = MEAQ03, 
                                    MEAQ_4 = MEAQ04, 
@@ -3610,9 +3611,10 @@ which(colnames(MEAQ_Dev_Phase3_Patient) == "meaq01")
 which(colnames(MEAQ_Dev_Phase3_Patient) == "meaq62")
 which(colnames(MEAQ_Dev_Phase3_Patient) == "bfi_neuro")
 
-BFIN_Validation_S10 <- MEAQ_New_Community[,c(188:249, 393)]
+BFIN_Validation_S10 <- MEAQ_Dev_Phase3_Patient[,c(188:249, 393)]
 
-BFIN_Validation_S10 <- rename(BFIN_Validation_S10, MEAQ_1 = meaq01, 
+BFIN_Validation_S10 <- rename(BFIN_Validation_S10, BFI_N = bfi_neuro,
+                                  MEAQ_1 = meaq01, 
                                   MEAQ_2 = meaq02, 
                                   MEAQ_3 = meaq03, 
                                   MEAQ_4 = meaq04, 
@@ -3680,7 +3682,7 @@ BFIN_Validation_S10 <- BFIN_Validation_S10 %>%
 ```
 
 ```{r}
-BFIN_Validation <- rbind(BFIN_Validation, BFIN_Validatio_S9, BFIN_Validation_S10)
+BFIN_Validation <- rbind(BFIN_Validation, BFIN_Validation_S9, BFIN_Validation_S10)
 
 BFIN_Validation <- na.omit(BFIN_Validation) 
 
@@ -3925,4 +3927,25 @@ rcorr(as.matrix(BFIN_Validation3),type="pearson")
 ```{r}
 rcorr(as.matrix(BFIN_Validation4),type="pearson") 
 ```
+
+```{r}
+# BFI2 Neuroticism Scale ==============================
+
+# EAI_Undergrad_SMU (N=488 before cleaning missing data for MEAQ & validation measures)
+
+colnames(EAI_Undergrad_SMU)
+ 
+
+BFIN2_Validation_S1 <- BFIN2_Validation_S1[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23_r", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30_r", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "BEAQ", "MEAQACO_BF_BA", "MEAQACO_BF_DA", "MEAQACO_BF_PR", "MEAQACO_BF_DS", "MEAQACO_BF_RD", "MEAQACO_BF_DE", "MEAQACO_UF_BA", "MEAQACO_UF_DA", "MEAQACO_UF_PR", "MEAQACO_UF_DS", "MEAQACO_UF_RD", "MEAQACO_UF_DE", "BFI2_4R", "BFI2_9R", "BFI2_14", "BFI2_19", "BFI2_24R", "BFI2_29R", "BFI2_34", "BFI2_39", "BFI2_44R", "BFI2_49R", "BFI2_54", "BFI2_59")]
+
+```
+
+
+
+
+
+
+
+
+
 
