@@ -3494,7 +3494,124 @@ BFIN_Validation_S8 <- BFIN_Validation_S8[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_
 ```
 
 ```{r}
-BFIN_Validation <- rbind(BFIN_Validation_S1, BFIN_Validation_S2, BFIN_Validation_S3, BFIN_Validation_S4, BFIN_Validation_S5, BFIN_Validation_S6, BFIN_Validation_S7, BFIN_Validation_S8)
+### EAI Undergrad SMU ### 
+
+colnames(EAI_Undergrad_SMU)
+which(colnames(EAI_Undergrad_SMU) == "meaq1")
+which(colnames(EAI_Undergrad_SMU) == "meaq62")
+which(colnames(EAI_Undergrad_SMU) == "bfi4")
+which(colnames(EAI_Undergrad_SMU) == "bfi9")
+which(colnames(EAI_Undergrad_SMU) == "bfi14")
+which(colnames(EAI_Undergrad_SMU) == "bfi19")
+which(colnames(EAI_Undergrad_SMU) == "bfi24")
+which(colnames(EAI_Undergrad_SMU) == "bfi29")
+which(colnames(EAI_Undergrad_SMU) == "bfi34")
+which(colnames(EAI_Undergrad_SMU) == "bfi39")
+
+BFIN_Validation_S9 <- EAI_Undergrad_SMU[,c(19:80,91,96,101,106,111,116,121,126)]
+
+BFIN_Validation_S9 <- rename(BFIN_Validation_S9, 
+                                       BFI4 = bfi4,
+                                       BFI9 = bfi9, 
+                                       BFI14 = bfi14, 
+                                       BFI19 = bfi19,
+                                       BFI24 = bfi24, 
+                                       BFI29 = bfi29,
+                                       BFI34 = bfi34, 
+                                       BFI39 = bfi39)
+
+BFIN_Validation_S9 <- rename(BFIN_Validation_S9, MEAQ_1 = meaq1, 
+                               MEAQ_2 = meaq2, 
+                               MEAQ_3 = meaq3, 
+                               MEAQ_4 = meaq4, 
+                               MEAQ_5 = meaq5, 
+                               MEAQ_6 = meaq6, 
+                               MEAQ_7 = meaq7, 
+                               MEAQ_8 = meaq8, 
+                               MEAQ_9 = meaq9, 
+                               MEAQ_10 = meaq10, 
+                               MEAQ_11 = meaq11, 
+                               MEAQ_12 = meaq12, 
+                               MEAQ_13 = meaq13, 
+                               MEAQ_14 = meaq14,
+                               MEAQ_15 = meaq15, 
+                               MEAQ_16 = meaq16, 
+                               MEAQ_17 = meaq17, 
+                               MEAQ_18 = meaq18, 
+                               MEAQ_19 = meaq19, 
+                               MEAQ_20 = meaq20, 
+                               MEAQ_21 = meaq21, 
+                               MEAQ_22 = meaq22, 
+                               MEAQ_23 = meaq23, 
+                               MEAQ_24 = meaq24, 
+                               MEAQ_25 = meaq25, 
+                               MEAQ_26 = meaq26, 
+                               MEAQ_27 = meaq27, 
+                               MEAQ_28 = meaq28, 
+                               MEAQ_29 = meaq29, 
+                               MEAQ_30 = meaq30, 
+                               MEAQ_31 = meaq31, 
+                               MEAQ_32 = meaidas2, 
+                               MEAQ_33 = meatai, 
+                               MEAQ_34 = meaq34, 
+                               MEAQ_35 = meaq35, 
+                               MEAQ_36 = meaq36, 
+                               MEAQ_37 = meaq37, 
+                               MEAQ_38 = meaq38, 
+                               MEAQ_39 = meaq39, 
+                               MEAQ_40 = meaq40, 
+                               MEAQ_41 = meaq41, 
+                               MEAQ_42 = meaq42, 
+                               MEAQ_43 = meaq43, 
+                               MEAQ_44 = meaq44, 
+                               MEAQ_45 = meaq45, 
+                               MEAQ_46 = meaq46, 
+                               MEAQ_47 = meaq47,
+                               MEAQ_48 = meaq48,
+                               MEAQ_49 = meaq49, 
+                               MEAQ_50 = meaq50, 
+                               MEAQ_51 = meaq51, 
+                               MEAQ_52 = meaq52, 
+                               MEAQ_53 = meaq53, 
+                               MEAQ_54 = meaq54, 
+                               MEAQ_55 = meaq55, 
+                               MEAQ_56 = meaq56, 
+                               MEAQ_57 = meaq57, 
+                               MEAQ_58 = meaq58, 
+                               MEAQ_59 = meaq59, 
+                               MEAQ_60 = meaq60, 
+                               MEAQ_61 = meaq61,
+                               MEAQ_62 = meaq62)
+
+BFIN_Validation_S9$BFI9_r <- dplyr::case_when(
+  BFIN_Validation_S9$BFI9 %in% 1 ~ 5, 
+  BFIN_Validation_S9$BFI9 %in% 2 ~ 4, 
+  BFIN_Validation_S9$BFI9 %in% 4 ~ 2, 
+  BFIN_Validation_S9$BFI9 %in% 5 ~ 1,
+  TRUE ~ as.numeric(BFIN_Validation_S9$BFI9)
+) 
+
+BFIN_Validation_S9$BFI24_r <- dplyr::case_when(
+  BFIN_Validation_S9$BFI24 %in% 1 ~ 5, 
+  BFIN_Validation_S9$BFI24 %in% 2 ~ 4, 
+  BFIN_Validation_S9$BFI24 %in% 4 ~ 2,   
+  BFIN_Validation_S9$BFI24 %in% 5 ~ 1,   
+  TRUE ~ as.numeric(BFIN_Validation_S9$BFI24)
+) 
+
+BFIN_Validation_S9$BFI34_r <- dplyr::case_when(
+  BFIN_Validation_S9$BFI34 %in% 1 ~ 5, 
+  BFIN_Validation_S9$BFI34 %in% 2 ~ 4, 
+  BFIN_Validation_S9$BFI34 %in% 4 ~ 2, 
+  BFIN_Validation_S9$BFI34 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(BFIN_Validation_S9$BFI34)
+) 
+
+BFIN_Validation_S9 <- BFIN_Validation_S9[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "BFI4", "BFI9_r", "BFI14", "BFI19", "BFI24_r", "BFI29", "BFI34_r", "BFI39")]
+```
+
+```{r}
+BFIN_Validation <- rbind(BFIN_Validation_S1, BFIN_Validation_S2, BFIN_Validation_S3, BFIN_Validation_S4, BFIN_Validation_S5, BFIN_Validation_S6, BFIN_Validation_S7, BFIN_Validation_S8, BFIN_Validation_S9)
 ```
 
 ```{r}
@@ -3533,9 +3650,9 @@ which(colnames(MEAQ_New_Patient_S1) == "MEAQ01")
 which(colnames(MEAQ_New_Patient_S1) == "meaq62")
 which(colnames(MEAQ_New_Patient_S1) == "bfi_neuro")
 
-BFIN_Validation_S9 <- MEAQ_New_Patient_S1[,c(10:71, 6)]
+BFIN_Validation_S10 <- MEAQ_New_Patient_S1[,c(10:71, 6)]
 
-BFIN_Validation_S9 <- rename(BFIN_Validation_S9, BFI_N = bfi_neuro,
+BFIN_Validation_S10 <- rename(BFIN_Validation_S10, BFI_N = bfi_neuro,
                                    MEAQ_1 = MEAQ01,
                                    MEAQ_2 = MEAQ02, 
                                    MEAQ_3 = MEAQ03, 
@@ -3599,7 +3716,7 @@ BFIN_Validation_S9 <- rename(BFIN_Validation_S9, BFI_N = bfi_neuro,
                                    MEAQ_61 = meaq61,
                                    MEAQ_62 = meaq62) 
 
-BFIN_Validation_S9 <- BFIN_Validation_S9 %>%
+BFIN_Validation_S10 <- BFIN_Validation_S10 %>%
   select("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "BFI_N")
 ```
 
@@ -3611,9 +3728,9 @@ which(colnames(MEAQ_Dev_Phase3_Patient) == "meaq01")
 which(colnames(MEAQ_Dev_Phase3_Patient) == "meaq62")
 which(colnames(MEAQ_Dev_Phase3_Patient) == "bfi_neuro")
 
-BFIN_Validation_S10 <- MEAQ_Dev_Phase3_Patient[,c(188:249, 393)]
+BFIN_Validation_S11 <- MEAQ_Dev_Phase3_Patient[,c(188:249, 393)]
 
-BFIN_Validation_S10 <- rename(BFIN_Validation_S10, BFI_N = bfi_neuro,
+BFIN_Validation_S11 <- rename(BFIN_Validation_S11, BFI_N = bfi_neuro,
                                   MEAQ_1 = meaq01, 
                                   MEAQ_2 = meaq02, 
                                   MEAQ_3 = meaq03, 
@@ -3677,12 +3794,12 @@ BFIN_Validation_S10 <- rename(BFIN_Validation_S10, BFI_N = bfi_neuro,
                                    MEAQ_61 = meaq61,
                                    MEAQ_62 = meaq62) 
 
-BFIN_Validation_S10 <- BFIN_Validation_S10 %>%
+BFIN_Validation_S11 <- BFIN_Validation_S11 %>%
   select("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "BFI_N")
 ```
 
 ```{r}
-BFIN_Validation <- rbind(BFIN_Validation, BFIN_Validation_S9, BFIN_Validation_S10)
+BFIN_Validation <- rbind(BFIN_Validation, BFIN_Validation_S10, BFIN_Validation_S11)
 
 BFIN_Validation <- na.omit(BFIN_Validation) 
 
@@ -3927,25 +4044,3 @@ rcorr(as.matrix(BFIN_Validation3),type="pearson")
 ```{r}
 rcorr(as.matrix(BFIN_Validation4),type="pearson") 
 ```
-
-```{r}
-# BFI2 Neuroticism Scale ==============================
-
-# EAI_Undergrad_SMU (N=488 before cleaning missing data for MEAQ & validation measures)
-
-colnames(EAI_Undergrad_SMU)
- 
-
-BFIN2_Validation_S1 <- BFIN2_Validation_S1[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23_r", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30_r", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "BEAQ", "MEAQACO_BF_BA", "MEAQACO_BF_DA", "MEAQACO_BF_PR", "MEAQACO_BF_DS", "MEAQACO_BF_RD", "MEAQACO_BF_DE", "MEAQACO_UF_BA", "MEAQACO_UF_DA", "MEAQACO_UF_PR", "MEAQACO_UF_DS", "MEAQACO_UF_RD", "MEAQACO_UF_DE", "BFI2_4R", "BFI2_9R", "BFI2_14", "BFI2_19", "BFI2_24R", "BFI2_29R", "BFI2_34", "BFI2_39", "BFI2_44R", "BFI2_49R", "BFI2_54", "BFI2_59")]
-
-```
-
-
-
-
-
-
-
-
-
-
