@@ -45,7 +45,7 @@ knitr::knit_hooks$set(output = function(x, options){
 
 # loading packages 
 
-lapply(c("car"),pkgTest)
+lapply(c("ltm"),pkgTest)
 lapply(c("corrplot"),pkgTest)
 lapply(c("data.table"),pkgTest)
 lapply(c("foreign"),pkgTest)
@@ -68,7 +68,7 @@ lapply(c("stuart"),pkgTest)
 lapply(c("tidyverse"),pkgTest)
 lapply(c("xtable"),pkgTest)
 
-library(car)
+library(ltm)
 library(corrplot)
 library(data.table)
 library(foreign)
@@ -90,6 +90,10 @@ library(stats)
 library(stuart)
 library(tidyverse)
 library(xtable)
+
+# install.packages("devtools")
+devtools::install_github("MateusPsi/esemComp", build_vignettes = TRUE)
+library(esemComp)
 
 # function for removing trailing zeros 
 round_df <- function(x, digits) { 
@@ -239,6 +243,7 @@ CAMD_Undergrad_SMU_Clean <- CAMD_Undergrad_SMU[CAMD_Undergrad_SMU$FCheckPass != 
 ```{r, results='hide'}
 ### Committed Action Measure Development - MTurk ###
 
+colnames(CAMD_MTurk)
 which(colnames(CAMD_MTurk) == "MEAQ_1")
 which(colnames(CAMD_MTurk) == "MEAQ_62")
 
@@ -260,6 +265,7 @@ CAMD_Undergrad_SMU_MEAQ_Clean <- CAMD_Undergrad_SMU_Clean[,c(320:381)] # subsett
 ```{r}
 ### EA Incremental Validity - MTurk ###
 
+colnames(EAI_MTurk)
 which(colnames(EAI_MTurk) == "meaq1")
 which(colnames(EAI_MTurk) == "meaq62")
 
@@ -331,6 +337,8 @@ EAI_MTurk_MEAQ <- rename(EAI_MTurk_MEAQ, MEAQ_1 = meaq1, # renaming EAI_MTurk_ME
 
 ```{r}
 ### EA Incremental Validity - SMU ### 
+
+colnames(EAI_Undergrad_SMU)
 which(colnames(EAI_Undergrad_SMU) == "meaq1")
 which(colnames(EAI_Undergrad_SMU) == "meaq62")
 
@@ -404,6 +412,8 @@ EAI_Undergrad_SMU_MEAQ <- round_df(EAI_Undergrad_SMU_MEAQ, 0) # removing trailin
 
 ```{r}
 ### Learning to Change - MTurk ### 
+
+colnames(LTC_MTurk_T1)
 which(colnames(LTC_MTurk_T1) == "Q18_1")
 which(colnames(LTC_MTurk_T1) == "Q18_61")
 
@@ -479,6 +489,8 @@ LTC_MTurk_T1_MEAQ <- LTC_MTurk_T1_MEAQ[,c(1:59, 62, 60, 61)] # reordering column
 
 ```{r}
 ### Learning to Change - SMU ###
+
+colnames(LTC_Undergrad_SMU_T1)
 which(colnames(LTC_Undergrad_SMU_T1) == "Q18_1")
 which(colnames(LTC_Undergrad_SMU_T1) == "Q18_61")
 
@@ -554,12 +566,15 @@ LTC_Undergrad_SMU_T1_MEAQ <- LTC_Undergrad_SMU_T1_MEAQ[,c(1:59, 62, 60, 61)] # r
 
 ```{r}
 ### MEAQ vs. AAQ - MTurk T1 ###
+
+colnames(MEAQ_AAQ_MTurk_T1)
 which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_1i")
 which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_62i")
 
 MEAQ_AAQ_MTurk_T1_MEAQ <- MEAQ_AAQ_MTurk_T1[,c(98:159)] # subsetting MEAQ_AAQ_MTurk_T1 dataset for MEAQ-62
 
-MEAQ_AAQ_MTurk_T1_MEAQ <- rename(MEAQ_AAQ_MTurk_T1_MEAQ, MEAQ_1 = MEAQ_1i, # renaming variables in the MEAQ_AAQ_MTurk_T1_MEAQ dataset to match standard format 
+# renaming variables in the MEAQ_AAQ_MTurk_T1_MEAQ dataset to match standard format 
+MEAQ_AAQ_MTurk_T1_MEAQ <- rename(MEAQ_AAQ_MTurk_T1_MEAQ, MEAQ_1 = MEAQ_1i, 
                                  MEAQ_2 = MEAQ_2i, 
                                  MEAQ_3 = MEAQ_3i, 
                                  MEAQ_4 = MEAQ_4i, 
@@ -621,8 +636,18 @@ MEAQ_AAQ_MTurk_T1_MEAQ <- rename(MEAQ_AAQ_MTurk_T1_MEAQ, MEAQ_1 = MEAQ_1i, # ren
                                  MEAQ_60 = MEAQ_60i, 
                                  MEAQ_61 = MEAQ_61i,
                                  MEAQ_62 = MEAQ_62i) 
+```
+
+```{r}
+### MEAQ vs. AAQ - SMU ### 
+
+colnames(MEAQ_AAQ_Undergrad_SMU_T1)
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "MEAQ_1")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "MEAQ_62")
 
 MEAQ_AAQ_Undergrad_SMU_T1_MEAQ <- MEAQ_AAQ_Undergrad_SMU_T1[,c(237:298)] # subsetting MEAQ_AAQ_Undergrad_SMU_T1 dataset for MEAQ-62
+
+# MEAQ_AAQ_Undergrad_SMU_T1_MEAQ dataset already in standard format, no need to clean format 
 
 MEAQ_AAQ_Undergrad_SMU_T1_MEAQ <- round_df(MEAQ_AAQ_Undergrad_SMU_T1_MEAQ, 0) # removing trailing zeros
 ```
@@ -630,10 +655,15 @@ MEAQ_AAQ_Undergrad_SMU_T1_MEAQ <- round_df(MEAQ_AAQ_Undergrad_SMU_T1_MEAQ, 0) # 
 ```{r}
 ### MEAQ Development - Outpatient Clinical ### 
 
-MEAQ_Dev_Outpatient_Clinical_MEAQ <- MEAQ_Dev_Outpatient_Clinical[,c(17:78)] # subsetting MEAQ_Dev_Outpatient_Clinical dataset for MEAQ-62
-# MEAQ_AAQ_Undergrad_SMU_T1_MEAQ dataset already in standard format, no need to clean format 
+colnames(MEAQ_Dev_Outpatient_Clinical)
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "MEAQ1")
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "MEAQ39")
 
-MEAQ_Dev_Outpatient_Clinical_MEAQ <- rename(MEAQ_Dev_Outpatient_Clinical_MEAQ, MEAQ_1 = MEAQ1, # renaming variables in MEAQ_Dev_Outpatient_Clinical_MEAQ dataset to match standard format 
+MEAQ_Dev_Outpatient_Clinical_MEAQ <- MEAQ_Dev_Outpatient_Clinical[,c(18:79)] # subsetting MEAQ_Dev_Outpatient_Clinical dataset for MEAQ-62
+
+# renaming variables in MEAQ_Dev_Outpatient_Clinical_MEAQ dataset to match standard format 
+MEAQ_Dev_Outpatient_Clinical_MEAQ <- rename(MEAQ_Dev_Outpatient_Clinical_MEAQ, 
+                                            MEAQ_1 = MEAQ1, 
                                             MEAQ_2 = MEAQ2, 
                                             MEAQ_3 = MEAQ3, 
                                             MEAQ_4 = MEAQ4, 
@@ -706,6 +736,14 @@ new_order <- c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ
                "MEAQ_61", "MEAQ_62")
 
 MEAQ_Dev_Outpatient_Clinical_MEAQ <- MEAQ_Dev_Outpatient_Clinical_MEAQ[, new_order]  
+```
+
+```{r}
+### MEAQ Development - Undergrad (Iowa) ##3 
+
+colnames(MEAQ_Dev_Undergrad_Iowa)
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "MEAQ1")
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "MEAQ39")
 
 MEAQ_Dev_Undergrad_Iowa_MEAQ <- MEAQ_Dev_Undergrad_Iowa[,c(6:67)] # subsetting MEAQ_Dev_Undergrad_Iowa dataset for MEAQ-62
 
@@ -773,10 +811,19 @@ MEAQ_Dev_Undergrad_Iowa_MEAQ <- rename(MEAQ_Dev_Undergrad_Iowa_MEAQ, MEAQ_1 = ME
                                        MEAQ_62 = MEAQ62) 
 
 MEAQ_Dev_Undergrad_Iowa_MEAQ <- MEAQ_Dev_Undergrad_Iowa_MEAQ[, new_order] # reordering columns in MEAQ_Dev_Undergrad_Iowa_MEAQ dataset to match standard format 
+```
+
+```{r}
+### MEAQ New Community Sample ### 
+
+colnames(MEAQ_New_Community)
+which(colnames(MEAQ_New_Community) == "eas01")
+which(colnames(MEAQ_New_Community) == "eas62")
 
 MEAQ_New_Community_MEAQ <- MEAQ_New_Community[,c(11:72)] # subsetting MEAQ_New_Community dataset for MEAQ-62
 
-MEAQ_New_Community_MEAQ <- rename(MEAQ_New_Community_MEAQ, MEAQ_1 = eas01, # renaming variables in MEAQ_New_Community_MEAQ dataset to match standard format 
+# renaming variables in MEAQ_New_Community_MEAQ dataset to match standard format 
+MEAQ_New_Community_MEAQ <- rename(MEAQ_New_Community_MEAQ, MEAQ_1 = eas01, 
                                   MEAQ_2 = eas02, 
                                   MEAQ_3 = eas03, 
                                   MEAQ_4 = eas04, 
@@ -840,10 +887,19 @@ MEAQ_New_Community_MEAQ <- rename(MEAQ_New_Community_MEAQ, MEAQ_1 = eas01, # ren
                                   MEAQ_62 = eas62) 
 
 MEAQ_New_Community_MEAQ <- round_df(MEAQ_New_Community_MEAQ, 0) # removing trailing zeros
+```
+
+```{r}
+### MEAQ New Patient S1 ### 
+
+colnames(MEAQ_New_Patient_S1)
+which(colnames(MEAQ_New_Patient_S1) == "MEAQ01")
+which(colnames(MEAQ_New_Patient_S1) == "MEAQ62")
 
 MEAQ_New_Patient_S1_MEAQ <- MEAQ_New_Patient_S1[,c(10:71)] # subsetting MEAQ_New_Patient_S1 dataset for MEAQ-62
 
-MEAQ_New_Patient_S1_MEAQ <- rename(MEAQ_New_Patient_S1_MEAQ, MEAQ_1 = MEAQ01, # renaming variables in MEAQ_New_Patient_S1_MEAQ dataset to match standard format 
+# renaming variables in MEAQ_New_Patient_S1_MEAQ dataset to match standard format 
+MEAQ_New_Patient_S1_MEAQ <- rename(MEAQ_New_Patient_S1_MEAQ, MEAQ_1 = MEAQ01, 
                                    MEAQ_2 = MEAQ02, 
                                    MEAQ_3 = MEAQ03, 
                                    MEAQ_4 = MEAQ04, 
@@ -907,10 +963,19 @@ MEAQ_New_Patient_S1_MEAQ <- rename(MEAQ_New_Patient_S1_MEAQ, MEAQ_1 = MEAQ01, # 
                                    MEAQ_62 = meaq62) 
 
 MEAQ_New_Patient_S1_MEAQ <- round_df(MEAQ_New_Patient_S1_MEAQ, 0) # removing trailing zeros
+```
+
+```{r}
+### MEAQ New Patient S2 ### 
+
+colnames(MEAQ_New_Patient_S2)
+which(colnames(MEAQ_New_Patient_S2) == "meaq01")
+which(colnames(MEAQ_New_Patient_S2) == "meaq62")
 
 MEAQ_New_Patient_S2_MEAQ <- MEAQ_New_Patient_S2[,c(2:63)] # subsetting MEAQ_New_Patient_S2 dataset for MEAQ-62
 
-MEAQ_New_Patient_S2_MEAQ <- rename(MEAQ_New_Patient_S2_MEAQ, MEAQ_1 = meaq01, # renaming variables in MEAQ_New_Patient_S2_MEAQ dataset to match standard format 
+# renaming variables in MEAQ_New_Patient_S2_MEAQ dataset to match standard format 
+MEAQ_New_Patient_S2_MEAQ <- rename(MEAQ_New_Patient_S2_MEAQ, MEAQ_1 = meaq01, 
                                    MEAQ_2 = meaq02, 
                                    MEAQ_3 = meaq03, 
                                    MEAQ_4 = meaq04, 
@@ -972,10 +1037,19 @@ MEAQ_New_Patient_S2_MEAQ <- rename(MEAQ_New_Patient_S2_MEAQ, MEAQ_1 = meaq01, # 
                                    MEAQ_60 = meaq60, 
                                    MEAQ_61 = meaq61,
                                    MEAQ_62 = meaq62) 
+```
+
+```{r}
+### MEAQ New Undergrad Sample ### 
+
+colnames(MEAQ_New_Undergrad)
+which(colnames(MEAQ_New_Undergrad) == "MEAQ01")
+which(colnames(MEAQ_New_Undergrad) == "MEAQ62")
 
 MEAQ_New_Undergrad_MEAQ <- MEAQ_New_Undergrad[,c(8:69)] # subsetting MEAQ_New_Undergrad dataset for MEAQ-62
 
-MEAQ_New_Undergrad_MEAQ <- rename(MEAQ_New_Undergrad_MEAQ, MEAQ_1 = MEAQ01, # renaming variables in MEAQ_New_Undergrad_MEAQ dataset to match standard format 
+# renaming variables in MEAQ_New_Undergrad_MEAQ dataset to match standard format 
+MEAQ_New_Undergrad_MEAQ <- rename(MEAQ_New_Undergrad_MEAQ, MEAQ_1 = MEAQ01, 
                                   MEAQ_2 = MEAQ02, 
                                   MEAQ_3 = MEAQ03, 
                                   MEAQ_4 = MEAQ04, 
@@ -1039,6 +1113,14 @@ MEAQ_New_Undergrad_MEAQ <- rename(MEAQ_New_Undergrad_MEAQ, MEAQ_1 = MEAQ01, # re
                                   MEAQ_62 = MEAQ62) 
 
 MEAQ_New_Undergrad_MEAQ <- round_df(MEAQ_New_Undergrad_MEAQ, 0) # removing trailing zeros
+```
+
+```{r}
+### MEAQ Development Phase 3 - Patient ### 
+
+colnames(MEAQ_Dev_Phase3_Patient)
+which(colnames(MEAQ_Dev_Phase3_Patient) == "meaq01")
+which(colnames(MEAQ_Dev_Phase3_Patient) == "meaq62")
 
 MEAQ_Dev_Phase3_Patient_MEAQ <- MEAQ_Dev_Phase3_Patient[,c(188:249)]  
 
@@ -1353,19 +1435,6 @@ length(which(rowMeans(!is.na(Aggregated_MEAQ_Const)) > 0.1))
 NA_Cleaned_Construction <- Aggregated_MEAQ_Const[which(rowMeans(!is.na(Aggregated_MEAQ_Const)) > 0.1), ]
 ```
 
-```{r, results='asis'}
-const_samples <- table(NA_Cleaned_Construction$SampleName) %>%
-  as.data.frame()
-
-colnames(const_samples)[colnames(const_samples) == "Var1"] = "SampleName"
-
-colnames(const_samples)[colnames(const_samples) == "Freq"] = "SampleSize"
-
-const_samples %>%
-  kbl(caption="Sample sizes for subsamples in construction sample after cleaning for cases with >10% missing data") %>% 
-  kable_material_dark()
-```
-
 ```{r, results='hide'}
 # Aggregated_MEAQ_Valid (MEAQ_Dev_Outpatient_Clinical_MEAQ + MEAQ_Dev_Undergrad_Iowa_MEAQ)
 # Before dropping >10% NAs (N=515) >> After dropping >10% NAs (N=515)
@@ -1377,134 +1446,963 @@ length(which(rowMeans(!is.na(Aggregated_MEAQ_Valid)) > 0.1))
 NA_Cleaned_Validation <- Aggregated_MEAQ_Valid[which(rowMeans(!is.na(Aggregated_MEAQ_Valid)) > 0.1), ]
 ```
 
-```{r, results='asis'}
-valid_samples <- table(NA_Cleaned_Validation$SampleName) %>% 
-  as.data.frame()
+### Reliability 
 
-colnames(valid_samples)[colnames(valid_samples) == "Var1"] = "SampleName"
+```{r}
+MEAQ_DF <- rbind(NA_Cleaned_Construction, NA_Cleaned_Validation)
 
-colnames(valid_samples)[colnames(valid_samples) == "Freq"] = "SampleSize"
+MEAQ_DF <- na.omit(MEAQ_DF)
 
-valid_samples %>%
-  kbl(caption="Sample sizes for subsamples in validation sample after cleaning for cases with >10% missing data") %>% 
-  kable_material_dark()
+cronbach.alpha(MEAQ_DF)
+
+0.908/(65+((0.908)*(1-65))) #AIC
 ```
 
-## Ant Colony Optimization (ACO) for Facet-Level Short Form
+```{r}
+# MEAQ-62 =================
+MEAQ_DF$MEAQ62_BA <- MEAQ_DF$MEAQ_1 + MEAQ_DF$MEAQ_8 + MEAQ_DF$MEAQ_14 +  MEAQ_DF$MEAQ_20 + MEAQ_DF$MEAQ_26 + MEAQ_DF$MEAQ_32 + MEAQ_DF$MEAQ_39 + MEAQ_DF$MEAQ_45 + MEAQ_DF$MEAQ_51 + MEAQ_DF$MEAQ_55 + MEAQ_DF$MEAQ_59
 
-```{r, results='asis'}
-# DEFINING FACETS 
+MEAQ_DF$MEAQ62_DA <- MEAQ_DF$MEAQ_2 + MEAQ_DF$MEAQ_7 + MEAQ_DF$MEAQ_13 + MEAQ_DF$MEAQ_19 + MEAQ_DF$MEAQ_25 + MEAQ_DF$MEAQ_31 + MEAQ_DF$MEAQ_34 + MEAQ_DF$MEAQ_38 + MEAQ_DF$MEAQ_44 + MEAQ_DF$MEAQ_50 + MEAQ_DF$MEAQ_54 + MEAQ_DF$MEAQ_58 + MEAQ_DF$MEAQ_61
 
-# BA = Behavioral Avoidance 
-# DA = Distress Aversion 
-# PR = Procrastination 
-# DS = Distraction & Suppression 
-# RD = Repression & Denial 
-# DE = Distress Endurance 
+MEAQ_DF$MEAQ62_PR <- MEAQ_DF$MEAQ_5 + MEAQ_DF$MEAQ_11 + MEAQ_DF$MEAQ_17 + MEAQ_DF$MEAQ_30_r + MEAQ_DF$MEAQ_36 + MEAQ_DF$MEAQ_42 + MEAQ_DF$MEAQ_47 
 
-fs <- list(BA = c('MEAQ_1', 'MEAQ_8', 'MEAQ_14', 'MEAQ_20', 'MEAQ_26', 'MEAQ_32', 'MEAQ_39', 'MEAQ_45', 'MEAQ_51', 'MEAQ_55', 'MEAQ_59'),
-           DA = c('MEAQ_2', 'MEAQ_7', 'MEAQ_13', 'MEAQ_19', 'MEAQ_25', 'MEAQ_31', 'MEAQ_34', 'MEAQ_38', 'MEAQ_44', 'MEAQ_50', 'MEAQ_54', 'MEAQ_58', 'MEAQ_61'),
-           PR = c('MEAQ_5', 'MEAQ_11', 'MEAQ_17', 'MEAQ_30_r', 'MEAQ_36', 'MEAQ_42', 'MEAQ_47'),
-           DS = c('MEAQ_3', 'MEAQ_9', 'MEAQ_15', 'MEAQ_22', 'MEAQ_27', 'MEAQ_33', 'MEAQ_40'),
-           RD = c('MEAQ_4', 'MEAQ_10', 'MEAQ_16', 'MEAQ_21', 'MEAQ_23_r', 'MEAQ_28', 'MEAQ_35', 'MEAQ_41', 'MEAQ_46', 'MEAQ_49', 'MEAQ_52', 'MEAQ_56', 'MEAQ_60'),
-           DE = c('MEAQ_6', 'MEAQ_12', 'MEAQ_18', 'MEAQ_24', 'MEAQ_29', 'MEAQ_37', 'MEAQ_43', 'MEAQ_48', 'MEAQ_53', 'MEAQ_57', 'MEAQ_62')
-)
-```
+MEAQ_DF$MEAQ62_DS <- MEAQ_DF$MEAQ_3 + MEAQ_DF$MEAQ_9 + MEAQ_DF$MEAQ_15 + MEAQ_DF$MEAQ_22 + MEAQ_DF$MEAQ_27 + MEAQ_DF$MEAQ_33 + MEAQ_DF$MEAQ_40 
 
-```{r, results='asis'}
-cap <- list(5, 6, 3, 3, 6, 5)
-```
+MEAQ_DF$MEAQ62_RD <- MEAQ_DF$MEAQ_4 + MEAQ_DF$MEAQ_10 + MEAQ_DF$MEAQ_16 + MEAQ_DF$MEAQ_21 + MEAQ_DF$MEAQ_23_r + MEAQ_DF$MEAQ_28 + MEAQ_DF$MEAQ_35 + MEAQ_DF$MEAQ_41 + MEAQ_DF$MEAQ_46 + MEAQ_DF$MEAQ_49 + MEAQ_DF$MEAQ_52 + MEAQ_DF$MEAQ_56 + MEAQ_DF$MEAQ_60
 
+MEAQ_DF$MEAQ62_DE <- MEAQ_DF$MEAQ_6 + MEAQ_DF$MEAQ_12 + MEAQ_DF$MEAQ_18 + MEAQ_DF$MEAQ_24 + MEAQ_DF$MEAQ_29 + MEAQ_DF$MEAQ_37 + MEAQ_DF$MEAQ_43 + MEAQ_DF$MEAQ_48 + MEAQ_DF$MEAQ_53 + MEAQ_DF$MEAQ_57 + MEAQ_DF$MEAQ_62
 
-```{r, results='hide'}
-seeds <- sample(1:99999, 1)
+MEAQ_DF$MEAQ62_Total <- MEAQ_DF$MEAQ62_BA + MEAQ_DF$MEAQ62_DA + MEAQ_DF$MEAQ62_PR + MEAQ_DF$MEAQ62_DS + MEAQ_DF$MEAQ62_RD + (77 - MEAQ_DF$MEAQ62_DE)
+# =========================
 
-for (i in seeds) {
-  results <- mmas(NA_Cleaned_Construction, fs, cap, ants = 200, colonies = 120, cores = 128, seed = i)
-  saveRDS(results, paste0('mmas_run', i, '.rds'))
-}
+# MEAQ-GA =================
+MEAQ_DF$MEAQGA_BA <- MEAQ_DF$MEAQ_1 + MEAQ_DF$MEAQ_8 + MEAQ_DF$MEAQ_39 + MEAQ_DF$MEAQ_51 + MEAQ_DF$MEAQ_55
 
-saveRDS(seeds, "seeds.rds")
-seeds <- readRDS("seeds.rds")
-files <- paste0('mmas_run', seeds, '.rds')
-runs <- lapply(files, readRDS) 
-```
+MEAQ_DF$MEAQGA_DA <- MEAQ_DF$MEAQ_2 + MEAQ_DF$MEAQ_7 + MEAQ_DF$MEAQ_25 + MEAQ_DF$MEAQ_31 + MEAQ_DF$MEAQ_44 
 
-
-```{r, results='asis'}
-# Unique solutions
-logs <- lapply(runs, `[[`, 'log') %>% rbindlist(., idcol = 'mmas') %>% 
-  group_by(mmas) %>% mutate(best_phe = max(pheromone))
-
-nrow(unique(logs[, -c(1, 2)]))
-```
-
-```{r, results='asis'}
-nrow(unique(logs[, -c(1, 2)])) / combinations(NA_Cleaned_Construction, fs, cap)
-```
-
-```{r, results='asis'}
-sum(is.na(logs$chisq)) / nrow(logs)
-```
-
-```{r, results='asis'}
-# probability of item use
-BA_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[1]]))
-DA_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[2]]))
-PR_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[3]]))
-DS_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[4]]))
-RD_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[5]]))
-DE_selection <- do.call(rbind, lapply(runs, function(x) x$solution[[6]]))
-
-results_df <- as.data.frame(do.call(rbind, lapply(runs, function(x) x$log[which.max(x$log$pheromone), ])))
+MEAQ_DF$MEAQGA_PR <- MEAQ_DF$MEAQ_5 + MEAQ_DF$MEAQ_17 + MEAQ_DF$MEAQ_30_r + MEAQ_DF$MEAQ_36 + MEAQ_DF$MEAQ_42 
   
-results_df %>%
-  kbl() %>%
-  kable_paper("hover", full_width = F)
+MEAQ_DF$MEAQGA_DS <- MEAQ_DF$MEAQ_9 + MEAQ_DF$MEAQ_22 + MEAQ_DF$MEAQ_27 + MEAQ_DF$MEAQ_33 + MEAQ_DF$MEAQ_40
   
+MEAQ_DF$MEAQGA_RD <- MEAQ_DF$MEAQ_35 + MEAQ_DF$MEAQ_41 + MEAQ_DF$MEAQ_52 + MEAQ_DF$MEAQ_56 + MEAQ_DF$MEAQ_60 
+  
+MEAQ_DF$MEAQGA_DE <- MEAQ_DF$MEAQ_12 + MEAQ_DF$MEAQ_13 + MEAQ_DF$MEAQ_43 + MEAQ_DF$MEAQ_57 + MEAQ_DF$MEAQ_62
+# =========================
+
+# BEAQ ==================== 
+MEAQ_DF$BEAQ <-  MEAQ_DF$MEAQ_58 +  MEAQ_DF$MEAQ_59 + MEAQ_DF$MEAQ_33 + MEAQ_DF$MEAQ_56 + MEAQ_DF$MEAQ_42 + MEAQ_DF$MEAQ_29 + MEAQ_DF$MEAQ_44 + MEAQ_DF$MEAQ_14 + MEAQ_DF$MEAQ_41 + MEAQ_DF$MEAQ_36 + MEAQ_DF$MEAQ_45 + MEAQ_DF$MEAQ_25 + MEAQ_DF$MEAQ_27 + MEAQ_DF$MEAQ_32 + MEAQ_DF$MEAQ_50
+# =========================
+
+# MEAQ-ACO-SF ============= 
+MEAQ_DF$MEAQACOSF_BA <- MEAQ_DF$MEAQ_14 + MEAQ_DF$MEAQ_26 + MEAQ_DF$MEAQ_32 + MEAQ_DF$MEAQ_51 + MEAQ_DF$MEAQ_55 
+
+MEAQ_DF$MEAQACOSF_DA <- MEAQ_DF$MEAQ_2 + MEAQ_DF$MEAQ_19 + MEAQ_DF$MEAQ_25 + MEAQ_DF$MEAQ_34 + MEAQ_DF$MEAQ_54 + MEAQ_DF$MEAQ_61 
+
+MEAQ_DF$MEAQACOSF_PR <- MEAQ_DF$MEAQ_17 + MEAQ_DF$MEAQ_42 + MEAQ_DF$MEAQ_47
+
+MEAQ_DF$MEAQACOSF_DS <- MEAQ_DF$MEAQ_15 + MEAQ_DF$MEAQ_33 + MEAQ_DF$MEAQ_40 
+
+MEAQ_DF$MEAQACOSF_RD <- MEAQ_DF$MEAQ_10 + MEAQ_DF$MEAQ_21 + MEAQ_DF$MEAQ_23_r + MEAQ_DF$MEAQ_28 + MEAQ_DF$MEAQ_49 + MEAQ_DF$MEAQ_60 
+
+MEAQ_DF$MEAQACOSF_DE <- MEAQ_DF$MEAQ_6 + MEAQ_DF$MEAQ_12 + MEAQ_DF$MEAQ_37 + MEAQ_DF$MEAQ_53 + MEAQ_DF$MEAQ_62
+# =========================
+
+# MEAQ-ACO-BF ============= 
+MEAQ_DF$MEAQACOBF_BA <- MEAQ_DF$MEAQ_51 + MEAQ_DF$MEAQ_59 
+
+MEAQ_DF$MEAQACOBF_DA <- MEAQ_DF$MEAQ_7 + MEAQ_DF$MEAQ_58 
+
+MEAQ_DF$MEAQACOBF_PR <- MEAQ_DF$MEAQ_5 + MEAQ_DF$MEAQ_36 
+
+MEAQ_DF$MEAQACOBF_DS <- MEAQ_DF$MEAQ_22 + MEAQ_DF$MEAQ_33 
+
+MEAQ_DF$MEAQACOBF_RD <- MEAQ_DF$MEAQ_4 + MEAQ_DF$MEAQ_41 
+
+MEAQ_DF$MEAQACOBF_DE <- MEAQ_DF$MEAQ_53 + MEAQ_DF$MEAQ_62
+# =========================
 ```
 
-```{r, results='asis'}
-colMeans(BA_selection)
+```{r}
+MEAQ62_BA_DF <- MEAQ_DF %>% 
+  select("MEAQ_1", "MEAQ_8", "MEAQ_14", "MEAQ_20", "MEAQ_26", "MEAQ_32", "MEAQ_39", "MEAQ_45", "MEAQ_51", "MEAQ_55", "MEAQ_59")
+
+cronbach.alpha(MEAQ62_BA_DF)
+
+0.901/(11+((0.901)*(1-11))) #AIC
 ```
 
-```{r, results='asis'}
-colMeans(DA_selection)
+```{r}
+MEAQ62_DA_DF <- MEAQ_DF %>% 
+  select("MEAQ_2", "MEAQ_7", "MEAQ_13", "MEAQ_19", "MEAQ_25", "MEAQ_31", "MEAQ_34", "MEAQ_38", "MEAQ_44", "MEAQ_50", "MEAQ_54", "MEAQ_58", "MEAQ_61")
+
+cronbach.alpha(MEAQ62_DA_DF)
+
+0.893/(13+((0.893)*(1-13))) #AIC
 ```
 
-```{r, results='asis'}
-colMeans(PR_selection)
+```{r}
+MEAQ62_PR_DF <- MEAQ_DF %>% 
+  select("MEAQ_5", "MEAQ_11", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_47")
+
+cronbach.alpha(MEAQ62_PR_DF)
+
+0.869/(7+((0.869)*(1-7))) #AIC
 ```
 
-```{r, results='asis'}
-colMeans(DS_selection)
+```{r}
+MEAQ62_DS_DF <- MEAQ_DF %>% 
+  select("MEAQ_3", "MEAQ_9", "MEAQ_15", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40")
+
+cronbach.alpha(MEAQ62_DS_DF)
+
+0.879/(7+((0.879)*(1-7))) #AIC
 ```
 
-```{r, results='asis'}
-colMeans(RD_selection)
+```{r}
+MEAQ62_RD_DF <- MEAQ_DF %>% 
+  select("MEAQ_4", "MEAQ_10", "MEAQ_16", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_35", "MEAQ_41", "MEAQ_46", "MEAQ_49", "MEAQ_52", "MEAQ_56", "MEAQ_60")
+
+cronbach.alpha(MEAQ62_RD_DF)
+
+0.877/(13+((0.877)*(1-13))) #AIC
 ```
 
-```{r, results='asis'}
-colMeans(DE_selection)
+```{r}
+MEAQ62_DE_DF <- MEAQ_DF %>% 
+  select("MEAQ_6", "MEAQ_12", "MEAQ_18", "MEAQ_24", "MEAQ_29", "MEAQ_37", "MEAQ_43", "MEAQ_48", "MEAQ_53", "MEAQ_57", "MEAQ_62")
+
+cronbach.alpha(MEAQ62_DE_DF)
+
+0.87/(11+((0.87)*(1-11))) #AIC
 ```
 
-```{r, results='asis'}
-# Jaccard Similarity
-uni_selection <- cbind(BA_selection, DA_selection, PR_selection, DS_selection, RD_selection, DE_selection)
-mean(dist(uni_selection, method = 'binary'))
+```{r}
+MEAQGA_BA_DF <- MEAQ_DF %>% 
+  select("MEAQ_1", "MEAQ_8", "MEAQ_39", "MEAQ_51", "MEAQ_55")
+
+cronbach.alpha(MEAQGA_BA_DF)
+
+0.787/(5+((0.787)*(1-5))) #AIC
 ```
 
-```{r, results='asis'}
-sd(dist(uni_selection, method = 'binary'))
+```{r}
+MEAQGA_DA_DF <- MEAQ_DF %>% 
+  select("MEAQ_2", "MEAQ_7", "MEAQ_25", "MEAQ_31", "MEAQ_44")
+
+cronbach.alpha(MEAQGA_DA_DF)
+
+0.767/(5+((0.767)*(1-5))) #AIC
 ```
 
-```{r, results='asis'}
-facet_mmas_solution1 <- runs[[1]]
-summary(facet_mmas_solution1)
+```{r}
+MEAQGA_PR_DF <- MEAQ_DF %>% 
+  select("MEAQ_5", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42")
+
+cronbach.alpha(MEAQGA_PR_DF)
+
+0.818/(5+((0.818)*(1-5))) #AIC
 ```
 
-```{r, results='asis'}
-facet_mmas_solution1$subtests
+```{r}
+MEAQGA_DS_DF <- MEAQ_DF %>% 
+  select("MEAQ_9", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40")
+
+cronbach.alpha(MEAQGA_DS_DF)
+
+0.852/(5+((0.852)*(1-5))) #AIC
 ```
 
+```{r}
+MEAQGA_RD_DF <- MEAQ_DF %>% 
+  select("MEAQ_35", "MEAQ_41", "MEAQ_52", "MEAQ_56", "MEAQ_60")
+
+cronbach.alpha(MEAQGA_RD_DF)
+
+0.816/(5+((0.816)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_DE_DF <- MEAQ_DF %>% 
+  select("MEAQ_12", "MEAQ_37", "MEAQ_43", "MEAQ_57", "MEAQ_62")
+
+cronbach.alpha(MEAQGA_DE_DF)
+
+0.813/(5+((0.813)*(1-5))) #AIC
+```
+
+```{r}
+BEAQ_DF <- MEAQ_DF %>% 
+  select("MEAQ_58", "MEAQ_59", "MEAQ_33", "MEAQ_56", "MEAQ_42", "MEAQ_29", "MEAQ_44", "MEAQ_14", "MEAQ_41", "MEAQ_36", "MEAQ_45", "MEAQ_25", "MEAQ_27", "MEAQ_32", "MEAQ_50")
+
+cronbach.alpha(BEAQ_DF)
+
+0.847/(15+((0.847)*(1-15))) #AIC
+```
+
+```{r}
+MEAQACOSF_DF <- MEAQ_DF %>% 
+  select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60", "MEAQ_6", "MEAQ_12", "MEAQ_37", "MEAQ_53", "MEAQ_62")
+
+cronbach.alpha(MEAQACOSF_DF)
+
+0.844/(28+((0.844)*(1-28))) #AIC
+```
+
+```{r}
+MEAQACOSF_BA_DF <- MEAQ_DF %>% 
+  select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55")
+
+cronbach.alpha(MEAQACOSF_BA_DF)
+
+0.82/(5+((0.82)*(1-5))) #AIC
+```
+
+```{r}
+MEAQACOSF_DA_DF <- MEAQ_DF %>% 
+  select("MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61")
+
+cronbach.alpha(MEAQACOSF_DA_DF)
+
+0.828/(6+((0.828)*(1-6))) #AIC
+```
+
+```{r}
+MEAQACOSF_PR_DF <- MEAQ_DF %>% 
+  select("MEAQ_17", "MEAQ_42", "MEAQ_47")
+
+cronbach.alpha(MEAQACOSF_PR_DF)
+
+0.749/(3+((0.749)*(1-3))) #AIC
+```
+
+```{r}
+MEAQACOSF_DS_DF <- MEAQ_DF %>% 
+  select("MEAQ_15", "MEAQ_33", "MEAQ_40")
+
+cronbach.alpha(MEAQACOSF_DS_DF)
+
+0.781/(3+((0.781)*(1-3))) #AIC
+```
+
+```{r}
+MEAQACOSF_RD_DF <- MEAQ_DF %>% 
+  select("MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60")
+
+cronbach.alpha(MEAQACOSF_RD_DF)
+
+0.803/(6+((0.803)*(1-6))) #AIC
+```
+
+```{r}
+MEAQACOSF_DE_DF <- MEAQ_DF %>% 
+  select("MEAQ_6", "MEAQ_12", "MEAQ_37", "MEAQ_53", "MEAQ_62")
+
+cronbach.alpha(MEAQACOSF_DE_DF)
+
+0.784/(5+((0.784)*(1-5))) #AIC
+```
+
+```{r}
+MEAQACOBF_DF <- MEAQ_DF %>% 
+  select("MEAQ_51", "MEAQ_59", "MEAQ_7", "MEAQ_58", "MEAQ_5", "MEAQ_36", "MEAQ_22", "MEAQ_33", "MEAQ_4", "MEAQ_41", "MEAQ_53", "MEAQ_62") 
+
+cronbach.alpha(MEAQACOBF_DF)
+
+0.713/(12 + (0.713)*(1-12)) #AIC
+```
+
+```{r}
+MEAQACOBF_BA_DF <- MEAQ_DF %>% 
+  select("MEAQ_51", "MEAQ_59")
+
+cronbach.alpha(MEAQACOBF_BA_DF)
+
+0.798/(2 + (0.798)*(1-2)) #AIC
+```
+
+```{r}
+MEAQACOBF_DA_DF <- MEAQ_DF %>% 
+  select("MEAQ_7", "MEAQ_58")
+
+cronbach.alpha(MEAQACOBF_DA_DF)
+
+0.75/(2+((0.75)*(1-2))) #AIC
+```
+
+```{r}
+MEAQACOBF_PR_DF <- MEAQ_DF %>% 
+  select("MEAQ_5", "MEAQ_36")
+
+cronbach.alpha(MEAQACOBF_PR_DF)
+
+0.784/(2+((0.784)*(1-2))) #AIC
+```
+
+```{r}
+MEAQACOBF_DS_DF <- MEAQ_DF %>% 
+  select("MEAQ_22", "MEAQ_33")
+
+cronbach.alpha(MEAQACOBF_DS_DF)
+
+0.792/(2+((0.792)*(1-2))) #AIC
+```
+
+```{r}
+MEAQACOBF_RD_DF <- MEAQ_DF %>% 
+  select("MEAQ_4", "MEAQ_41")
+
+cronbach.alpha(MEAQACOBF_RD_DF)
+
+0.795/(2+((0.795)*(1-2))) #AIC
+```
+
+```{r}
+MEAQACOBF_DE_DF <- MEAQ_DF %>% 
+  select("MEAQ_53", "MEAQ_62")
+
+cronbach.alpha(MEAQACOBF_DE_DF)
+
+0.667/(2+((0.667)*(1-2)))
+```
+
+## Structural Validity 
+
+### MEAQ-62
+
+```{r}
+NA_Cleaned_Validation <- NA_Cleaned_Validation[,-1]
+```
+
+```{r}
+validation_longform_esem <- data.frame(BA_1 = NA_Cleaned_Validation$MEAQ_1,
+                                    BA_2 = NA_Cleaned_Validation$MEAQ_8,
+                                    BA_3 = NA_Cleaned_Validation$MEAQ_14,
+                                    BA_4 = NA_Cleaned_Validation$MEAQ_20,
+                                    BA_5 = NA_Cleaned_Validation$MEAQ_26,
+                                    BA_6 = NA_Cleaned_Validation$MEAQ_32,
+                                    BA_7 = NA_Cleaned_Validation$MEAQ_39,
+                                    BA_8 = NA_Cleaned_Validation$MEAQ_45,
+                                    BA_9 = NA_Cleaned_Validation$MEAQ_51,
+                                    BA_10 = NA_Cleaned_Validation$MEAQ_55, 
+                                    BA_11 = NA_Cleaned_Validation$MEAQ_59, 
+                                    DA_1 = NA_Cleaned_Validation$MEAQ_2, 
+                                    DA_2 = NA_Cleaned_Validation$MEAQ_7, 
+                                    DA_3 = NA_Cleaned_Validation$MEAQ_13, 
+                                    DA_4 = NA_Cleaned_Validation$MEAQ_19,
+                                    DA_5 = NA_Cleaned_Validation$MEAQ_25, 
+                                    DA_6 = NA_Cleaned_Validation$MEAQ_31, 
+                                    DA_7 = NA_Cleaned_Validation$MEAQ_34,
+                                    DA_8 = NA_Cleaned_Validation$MEAQ_38,
+                                    DA_9 = NA_Cleaned_Validation$MEAQ_44,
+                                    DA_10 = NA_Cleaned_Validation$MEAQ_50,
+                                    DA_11 = NA_Cleaned_Validation$MEAQ_54, 
+                                    DA_12 = NA_Cleaned_Validation$MEAQ_58, 
+                                    DA_13 = NA_Cleaned_Validation$MEAQ_61,
+                                    PR_1 = NA_Cleaned_Validation$MEAQ_5, 
+                                    PR_2 = NA_Cleaned_Validation$MEAQ_11,
+                                    PR_3 = NA_Cleaned_Validation$MEAQ_17,
+                                    PR_4 = NA_Cleaned_Validation$MEAQ_30_r,
+                                    PR_5 = NA_Cleaned_Validation$MEAQ_36, 
+                                    PR_6 = NA_Cleaned_Validation$MEAQ_42,
+                                    PR_7 = NA_Cleaned_Validation$MEAQ_47,
+                                    DS_1 = NA_Cleaned_Validation$MEAQ_3,
+                                    DS_2 = NA_Cleaned_Validation$MEAQ_9, 
+                                    DS_3 = NA_Cleaned_Validation$MEAQ_15, 
+                                    DS_4 = NA_Cleaned_Validation$MEAQ_22, 
+                                    DS_5 = NA_Cleaned_Validation$MEAQ_27,
+                                    DS_6 = NA_Cleaned_Validation$MEAQ_33, 
+                                    DS_7 = NA_Cleaned_Validation$MEAQ_40,
+                                    RD_1 = NA_Cleaned_Validation$MEAQ_4, 
+                                    RD_2 = NA_Cleaned_Validation$MEAQ_10,
+                                    RD_3 = NA_Cleaned_Validation$MEAQ_16, 
+                                    RD_4 = NA_Cleaned_Validation$MEAQ_21, 
+                                    RD_5 = NA_Cleaned_Validation$MEAQ_23_r,
+                                    RD_6 = NA_Cleaned_Validation$MEAQ_28,
+                                    RD_7 = NA_Cleaned_Validation$MEAQ_35, 
+                                    RD_8 = NA_Cleaned_Validation$MEAQ_41, 
+                                    RD_9 = NA_Cleaned_Validation$MEAQ_46, 
+                                    RD_10 = NA_Cleaned_Validation$MEAQ_49,
+                                    RD_11 = NA_Cleaned_Validation$MEAQ_52, 
+                                    RD_12 = NA_Cleaned_Validation$MEAQ_56, 
+                                    RD_13 = NA_Cleaned_Validation$MEAQ_60,
+                                    DE_1 = NA_Cleaned_Validation$MEAQ_6,
+                                    DE_2 = NA_Cleaned_Validation$MEAQ_12,
+                                    DE_3 = NA_Cleaned_Validation$MEAQ_18,
+                                    DE_4 = NA_Cleaned_Validation$MEAQ_24,
+                                    DE_5 = NA_Cleaned_Validation$MEAQ_29, 
+                                    DE_6 = NA_Cleaned_Validation$MEAQ_37,
+                                    DE_7 = NA_Cleaned_Validation$MEAQ_43, 
+                                    DE_8 = NA_Cleaned_Validation$MEAQ_48,
+                                    DE_9 = NA_Cleaned_Validation$MEAQ_53, 
+                                    DE_10 = NA_Cleaned_Validation$MEAQ_57,
+                                    DE_11 = NA_Cleaned_Validation$MEAQ_62)
+```
+
+```{r}
+main_loadings_list <- list(BA = c(1:11),
+                           DA = c(12:24),
+                           PR = c(25:31),
+                           DS = c(32:38),
+                           RD = c(39:51),
+                           DE = c(52:62))
+```
+
+```{r}
+target_rot <- make_target(nitems = 62, mainloadings = main_loadings_list)
+
+target_rot
+```
+
+```{r}
+efa_block <- esem_efa(data = validation_longform_esem,
+                      nfactors = 6,
+                      target = target_rot)
+
+efa_block$loadings
+```
+
+```{r}
+find_referents(efa_block, c("BA", "DA", "PR", "DS", "RD", "DE"))
+```
+
+```{r}
+meaq_referents <- list(BA = "BA_11",
+                       DA = "DA_11",
+                       PR = "PR_2", 
+                       DS = "DS_7",
+                       RD = "RD_12",
+                       DE = "DE_7")
+
+model_syntax <- syntax_composer(efa_object = efa_block,
+                                referents = meaq_referents)
+
+writeLines(model_syntax)
+```
+
+```{r}
+MEAQ62_EwC <- lavaan::cfa(model = model_syntax, data = validation_longform_esem, std.lv =T)
+
+lavaan::summary(MEAQ62_EwC, fit.measures = TRUE, std = TRUE)
+```
+
+### MEAQ-GA
+
+```{r}
+validation_ga_esem <- data.frame(BA_1 = NA_Cleaned_Validation$MEAQ_1,
+                                    BA_2 = NA_Cleaned_Validation$MEAQ_8,
+                                    BA_3 = NA_Cleaned_Validation$MEAQ_39,
+                                    BA_4 = NA_Cleaned_Validation$MEAQ_51,
+                                    BA_5 = NA_Cleaned_Validation$MEAQ_55, 
+                                    DA_1 = NA_Cleaned_Validation$MEAQ_2, 
+                                    DA_2 = NA_Cleaned_Validation$MEAQ_7, 
+                                    DA_3 = NA_Cleaned_Validation$MEAQ_25, 
+                                    DA_4 = NA_Cleaned_Validation$MEAQ_31, 
+                                    DA_5 = NA_Cleaned_Validation$MEAQ_44,
+                                    PR_1 = NA_Cleaned_Validation$MEAQ_5, 
+                                    PR_2 = NA_Cleaned_Validation$MEAQ_17,
+                                    PR_3 = NA_Cleaned_Validation$MEAQ_30_r,
+                                    PR_4 = NA_Cleaned_Validation$MEAQ_36, 
+                                    PR_5 = NA_Cleaned_Validation$MEAQ_42,
+                                    DS_1 = NA_Cleaned_Validation$MEAQ_9, 
+                                    DS_2 = NA_Cleaned_Validation$MEAQ_22, 
+                                    DS_3 = NA_Cleaned_Validation$MEAQ_27,
+                                    DS_4 = NA_Cleaned_Validation$MEAQ_33, 
+                                    DS_5 = NA_Cleaned_Validation$MEAQ_40,
+                                    RD_1 = NA_Cleaned_Validation$MEAQ_35, 
+                                    RD_2 = NA_Cleaned_Validation$MEAQ_41, 
+                                    RD_3 = NA_Cleaned_Validation$MEAQ_52, 
+                                    RD_4 = NA_Cleaned_Validation$MEAQ_56, 
+                                    RD_5 = NA_Cleaned_Validation$MEAQ_60,
+                                    DE_1 = NA_Cleaned_Validation$MEAQ_12,
+                                    DE_2 = NA_Cleaned_Validation$MEAQ_37,
+                                    DE_3 = NA_Cleaned_Validation$MEAQ_43, 
+                                    DE_4 = NA_Cleaned_Validation$MEAQ_57,
+                                    DE_5 = NA_Cleaned_Validation$MEAQ_62)
+```
+
+```{r}
+main_loadings_list <- list(BA = c(1:5),
+                           DA = c(6:10),
+                           PR = c(11:15),
+                           DS = c(16:20),
+                           RD = c(21:25),
+                           DE = c(26:30))
+
+target_rot <- make_target(nitems = 30, mainloadings = main_loadings_list)
+
+target_rot
+```
+
+```{r}
+efa_block <- esem_efa(data = validation_ga_esem,
+                      nfactors = 6,
+                      target = target_rot)
+
+efa_block$loadings
+```
+
+```{r}
+find_referents(efa_block, c("BA", "DA", "PR", "DS", "RD", "DE"))
+```
+
+```{r}
+meaq_referents <- list(BA = "BA_4",
+                       DA = "DA_5",
+                       PR = "PR_4", 
+                       DS = "DS_5",
+                       RD = "RD_4",
+                       DE = "DE_3")
+
+model_syntax <- syntax_composer(efa_object = efa_block,
+                                referents = meaq_referents)
+
+writeLines(model_syntax)
+```
+
+```{r}
+MEAQGA_EwC <- lavaan::cfa(model = model_syntax, data = validation_ga_esem, std.lv =T)
+
+lavaan::summary(MEAQGA_EwC, fit.measures = TRUE, std = TRUE)
+```
+
+### BEAQ
+
+```{r}
+BEAQ  <- ' EA  =~ MEAQ_58 + MEAQ_59 + MEAQ_33 + MEAQ_56 + MEAQ_42 + MEAQ_29 + MEAQ_44 + MEAQ_14 + MEAQ_41 + MEAQ_36 + MEAQ_45 + MEAQ_25 + MEAQ_27 + MEAQ_32 + MEAQ_50'
+
+BEAQ_CFA <- cfa(BEAQ, data = NA_Cleaned_Validation) 
+
+summary(BEAQ_CFA, fit.measures = TRUE, standardized = TRUE) 
+```
+
+
+### MEAQ-ACO-SF
+
+```{r}
+validation_facet_esem <- data.frame(BA_1 = NA_Cleaned_Validation$MEAQ_14,
+                                    BA_2 = NA_Cleaned_Validation$MEAQ_26,
+                                    BA_3 = NA_Cleaned_Validation$MEAQ_32,
+                                    BA_4 = NA_Cleaned_Validation$MEAQ_51,
+                                    BA_5 = NA_Cleaned_Validation$MEAQ_55, 
+                                    DA_1 = NA_Cleaned_Validation$MEAQ_2,
+                                    DA_2 = NA_Cleaned_Validation$MEAQ_19, 
+                                    DA_3 = NA_Cleaned_Validation$MEAQ_25, 
+                                    DA_4 = NA_Cleaned_Validation$MEAQ_34, 
+                                    DA_5 = NA_Cleaned_Validation$MEAQ_54, 
+                                    DA_6 = NA_Cleaned_Validation$MEAQ_61,
+                                    PR_1 = NA_Cleaned_Validation$MEAQ_17, 
+                                    PR_2 = NA_Cleaned_Validation$MEAQ_42,
+                                    PR_3 = NA_Cleaned_Validation$MEAQ_47,
+                                    DS_1 = NA_Cleaned_Validation$MEAQ_15,
+                                    DS_2 = NA_Cleaned_Validation$MEAQ_33, 
+                                    DS_3 = NA_Cleaned_Validation$MEAQ_40,
+                                    RD_1 = NA_Cleaned_Validation$MEAQ_10, 
+                                    RD_2 = NA_Cleaned_Validation$MEAQ_21,
+                                    RD_3 = NA_Cleaned_Validation$MEAQ_23_r, 
+                                    RD_4 = NA_Cleaned_Validation$MEAQ_28,
+                                    RD_5 = NA_Cleaned_Validation$MEAQ_49,
+                                    RD_6 = NA_Cleaned_Validation$MEAQ_60,
+                                    DE_1 = NA_Cleaned_Validation$MEAQ_6,
+                                    DE_2 = NA_Cleaned_Validation$MEAQ_12,
+                                    DE_3 = NA_Cleaned_Validation$MEAQ_37,
+                                    DE_4 = NA_Cleaned_Validation$MEAQ_53, 
+                                    DE_5 = NA_Cleaned_Validation$MEAQ_62)
+```
+
+```{r}
+main_loadings_list <- list(BA = c(1:5),
+                           DA = c(6:11),
+                           PR = c(12:14),
+                           DS = c(15:17),
+                           RD = c(18:23),
+                           DE = c(24:28))
+
+target_rot <- make_target(nitems = 28, mainloadings = main_loadings_list)
+
+target_rot
+```
+
+```{r}
+efa_block <- esem_efa(data = validation_facet_esem,
+                      nfactors = 6,
+                      target = target_rot)
+
+efa_block$loadings
+```
+
+```{r}
+find_referents(efa_block, c("BA", "DA", "PR", "DS", "RD", "DE"))
+```
+
+```{r}
+meaq_referents <- list(BA = "BA_4",
+                       DA = "DA_5",
+                       PR = "PR_2", 
+                       DS = "DS_3",
+                       RD = "RD_6",
+                       DE = "DE_4")
+
+model_syntax <- syntax_composer(efa_object = efa_block,
+                                referents = meaq_referents)
+
+writeLines(model_syntax)
+```
+
+```{r}
+MEAQACOSF_EwC <- lavaan::cfa(model = model_syntax, data = validation_facet_esem, std.lv =T)
+
+lavaan::summary(MEAQACOSF_EwC, fit.measures = TRUE, std = TRUE)
+```
+
+### MEAQ-ACO-BF
+
+```{r}
+validation_ubrief_esem <- data.frame(BA_1 = NA_Cleaned_Validation$MEAQ_51,
+                                    BA_2 = NA_Cleaned_Validation$MEAQ_59,
+                                    DA_1 = NA_Cleaned_Validation$MEAQ_7,
+                                    DA_2 = NA_Cleaned_Validation$MEAQ_58, 
+                                    PR_1 = NA_Cleaned_Validation$MEAQ_5, 
+                                    PR_2 = NA_Cleaned_Validation$MEAQ_36,
+                                    DS_1 = NA_Cleaned_Validation$MEAQ_22,
+                                    DS_2 = NA_Cleaned_Validation$MEAQ_33, 
+                                    RD_1 = NA_Cleaned_Validation$MEAQ_4, 
+                                    RD_2 = NA_Cleaned_Validation$MEAQ_41,
+                                    DE_1 = NA_Cleaned_Validation$MEAQ_53,
+                                    DE_2 = NA_Cleaned_Validation$MEAQ_62)
+
+main_loadings_list <- list(BA = c(1:2),
+                           DA = c(3:4),
+                           PR = c(5:6),
+                           DS = c(7:8),
+                           RD = c(9:10),
+                           DE = c(11:12))
+
+target_rot <- make_target(nitems = 12, mainloadings = main_loadings_list)
+
+target_rot
+```
+
+```{r}
+efa_block <- esem_efa(data = validation_ubrief_esem,
+                      nfactors = 6,
+                      target = target_rot)
+
+efa_block$loadings
+```
+
+```{r}
+find_referents(efa_block, c("BA", "DA", "PR", "DS", "RD", "DE"))
+```
+
+```{r}
+meaq_referents <- list(BA = "BA_2",
+                       DA = "DA_1",
+                       PR = "PR_1", 
+                       DS = "DS_2",
+                       RD = "RD_2",
+                       DE = "DE_1")
+
+model_syntax <- syntax_composer(efa_object = efa_block,
+                                referents = meaq_referents)
+
+writeLines(model_syntax)
+```
+
+```{r}
+MEAQACOBF_EwC <- lavaan::cfa(model = model_syntax, data = validation_ubrief_esem, std.lv =T)
+
+lavaan::summary(MEAQACOBF_EwC, fit.measures = TRUE, std = TRUE)
+```
+
+## Convergent Validity
+
+### Avoidance Measures
+
+```{r}
+# White Bear Suppression Inventory ===================
+
+# MEAQ_New_Patient_S1 (N=128 before cleaning missing data for MEAQ & validation measures)
+# MEAQ_Dev_Phase3_Patient (N=297 before cleaning missing data for MEAQ & validation measures)
+# Total N=425 before cleaning missing data, N=399 after 
+
+### MEAQ_New_Patient_S1 ### 
+
+colnames(MEAQ_New_Patient_S1)
+which(colnames(MEAQ_New_Patient_S1) == "MEAQ01")
+which(colnames(MEAQ_New_Patient_S1) == "meaq62")
+which(colnames(MEAQ_New_Patient_S1) == "wbsi01")
+which(colnames(MEAQ_New_Patient_S1) == "wbsi15")
+
+WBSI_Validation_S1 <- MEAQ_New_Patient_S1[,c(10:71, 156:170)] 
+
+WBSI_Validation_S1 <- rename(WBSI_Validation_S1, MEAQ_1 = MEAQ01,
+                                   MEAQ_2 = MEAQ02, 
+                                   MEAQ_3 = MEAQ03, 
+                                   MEAQ_4 = MEAQ04, 
+                                   MEAQ_5 = MEAQ05, 
+                                   MEAQ_6 = MEAQ06, 
+                                   MEAQ_7 = MEAQ07, 
+                                   MEAQ_8 = MEAQ08, 
+                                   MEAQ_9 = MEAQ09, 
+                                   MEAQ_10 = meaq10, 
+                                   MEAQ_11 = meaq11, 
+                                   MEAQ_12 = meaq12, 
+                                   MEAQ_13 = meaq13, 
+                                   MEAQ_14 = meaq14,
+                                   MEAQ_15 = meaq15, 
+                                   MEAQ_16 = meaq16, 
+                                   MEAQ_17 = meaq17, 
+                                   MEAQ_18 = meaq18, 
+                                   MEAQ_19 = meaq19, 
+                                   MEAQ_20 = meaq20, 
+                                   MEAQ_21 = meaq21, 
+                                   MEAQ_22 = meaq22, 
+                                   MEAQ_23 = meaq23, 
+                                   MEAQ_24 = meaq24, 
+                                   MEAQ_25 = meaq25, 
+                                   MEAQ_26 = meaq26, 
+                                   MEAQ_27 = meaq27, 
+                                   MEAQ_28 = meaq28, 
+                                   MEAQ_29 = meaq29, 
+                                   MEAQ_30 = meaq30, 
+                                   MEAQ_31 = meaq31, 
+                                   MEAQ_32 = meaq32, 
+                                   MEAQ_33 = meaq33, 
+                                   MEAQ_34 = meaq34, 
+                                   MEAQ_35 = meaq35, 
+                                   MEAQ_36 = meaq36, 
+                                   MEAQ_37 = meaq37, 
+                                   MEAQ_38 = meaq38, 
+                                   MEAQ_39 = meaq39, 
+                                   MEAQ_40 = meaq40, 
+                                   MEAQ_41 = meaq41, 
+                                   MEAQ_42 = meaq42, 
+                                   MEAQ_43 = meaq43, 
+                                   MEAQ_44 = meaq44, 
+                                   MEAQ_45 = meaq45, 
+                                   MEAQ_46 = meaq46, 
+                                   MEAQ_47 = meaq47,
+                                   MEAQ_48 = meaq48,
+                                   MEAQ_49 = meaq49, 
+                                   MEAQ_50 = meaq50, 
+                                   MEAQ_51 = meaq51, 
+                                   MEAQ_52 = meaq52, 
+                                   MEAQ_53 = meaq53, 
+                                   MEAQ_54 = meaq54, 
+                                   MEAQ_55 = meaq55, 
+                                   MEAQ_56 = meaq56, 
+                                   MEAQ_57 = meaq57, 
+                                   MEAQ_58 = meaq58, 
+                                   MEAQ_59 = meaq59, 
+                                   MEAQ_60 = meaq60, 
+                                   MEAQ_61 = meaq61,
+                                   MEAQ_62 = meaq62) 
  
+### MEAQ_Dev_Phase3_Patient ### 
+
+colnames(MEAQ_Dev_Phase3_Patient)
+which(colnames(MEAQ_Dev_Phase3_Patient) == "meaq01")
+which(colnames(MEAQ_Dev_Phase3_Patient) == "meaq62")
+which(colnames(MEAQ_Dev_Phase3_Patient) == "wbsi01")
+which(colnames(MEAQ_Dev_Phase3_Patient) == "wbsi15")
+
+WBSI_Validation_S2 <- MEAQ_Dev_Phase3_Patient[,c(188:249, 338:352)] 
+
+WBSI_Validation_S2 <- rename(WBSI_Validation_S2, MEAQ_1 = meaq01, 
+                                  MEAQ_2 = meaq02, 
+                                  MEAQ_3 = meaq03, 
+                                  MEAQ_4 = meaq04, 
+                                  MEAQ_5 = meaq05, 
+                                  MEAQ_6 = meaq06, 
+                                  MEAQ_7 = meaq07, 
+                                  MEAQ_8 = meaq08, 
+                                  MEAQ_9 = meaq09, 
+                                  MEAQ_10 = meaq10, 
+                                  MEAQ_11 = meaq11, 
+                                  MEAQ_12 = meaq12, 
+                                  MEAQ_13 = meaq13, 
+                                  MEAQ_14 = meaq14,
+                                  MEAQ_15 = meaq15, 
+                                  MEAQ_16 = meaq16, 
+                                  MEAQ_17 = meaq17, 
+                                  MEAQ_18 = meaq18, 
+                                  MEAQ_19 = meaq19, 
+                                  MEAQ_20 = meaq20, 
+                                  MEAQ_21 = meaq21, 
+                                  MEAQ_22 = meaq22, 
+                                  MEAQ_23 = meaq23, 
+                                  MEAQ_24 = meaq24, 
+                                  MEAQ_25 = meaq25, 
+                                  MEAQ_26 = meaq26, 
+                                  MEAQ_27 = meaq27, 
+                                   MEAQ_28 = meaq28, 
+                                   MEAQ_29 = meaq29, 
+                                   MEAQ_30 = meaq30, 
+                                   MEAQ_31 = meaq31, 
+                                   MEAQ_32 = meaq32, 
+                                   MEAQ_33 = meaq33, 
+                                   MEAQ_34 = meaq34, 
+                                   MEAQ_35 = meaq35, 
+                                   MEAQ_36 = meaq36, 
+                                   MEAQ_37 = meaq37, 
+                                   MEAQ_38 = meaq38, 
+                                   MEAQ_39 = meaq39, 
+                                   MEAQ_40 = meaq40, 
+                                   MEAQ_41 = meaq41, 
+                                   MEAQ_42 = meaq42, 
+                                   MEAQ_43 = meaq43, 
+                                   MEAQ_44 = meaq44, 
+                                   MEAQ_45 = meaq45, 
+                                   MEAQ_46 = meaq46, 
+                                   MEAQ_47 = meaq47,
+                                   MEAQ_48 = meaq48,
+                                   MEAQ_49 = meaq49, 
+                                   MEAQ_50 = meaq50, 
+                                   MEAQ_51 = meaq51, 
+                                   MEAQ_52 = meaq52, 
+                                   MEAQ_53 = meaq53, 
+                                   MEAQ_54 = meaq54, 
+                                   MEAQ_55 = meaq55, 
+                                   MEAQ_56 = meaq56, 
+                                   MEAQ_57 = meaq57, 
+                                   MEAQ_58 = meaq58, 
+                                   MEAQ_59 = meaq59, 
+                                   MEAQ_60 = meaq60, 
+                                   MEAQ_61 = meaq61,
+                                   MEAQ_62 = meaq62) 
+
+WBSI_Validation <- rbind(WBSI_Validation_S1, WBSI_Validation_S2)
+```
+
+```{r}
+WBSI_Validation$MEAQ_23_r <- dplyr::case_when(
+  WBSI_Validation$MEAQ_23 %in% 1 ~ 6, 
+  WBSI_Validation$MEAQ_23 %in% 2 ~ 5, 
+  WBSI_Validation$MEAQ_23 %in% 3 ~ 4,   
+  WBSI_Validation$MEAQ_23 %in% 4 ~ 3,   
+  WBSI_Validation$MEAQ_23 %in% 5 ~ 2, 
+  WBSI_Validation$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(WBSI_Validation$MEAQ_23)
+) 
+
+WBSI_Validation$MEAQ_30_r <- dplyr::case_when(
+  WBSI_Validation$MEAQ_30 %in% 1 ~ 6, 
+  WBSI_Validation$MEAQ_30 %in% 2 ~ 5, 
+  WBSI_Validation$MEAQ_30 %in% 3 ~ 4, 
+  WBSI_Validation$MEAQ_30 %in% 4 ~ 3, 
+  WBSI_Validation$MEAQ_30 %in% 5 ~ 2, 
+  WBSI_Validation$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(WBSI_Validation$MEAQ_30)
+)
+
+WBSI_Validation$MEAQ62_BA <- WBSI_Validation$MEAQ_1 + WBSI_Validation$MEAQ_8 + WBSI_Validation$MEAQ_14 + WBSI_Validation$MEAQ_20 + WBSI_Validation$MEAQ_26 + WBSI_Validation$MEAQ_32 + WBSI_Validation$MEAQ_39 + WBSI_Validation$MEAQ_45 + WBSI_Validation$MEAQ_51 + WBSI_Validation$MEAQ_55 + WBSI_Validation$MEAQ_59
+
+WBSI_Validation$MEAQ62_DA <- WBSI_Validation$MEAQ_2 + WBSI_Validation$MEAQ_7 + WBSI_Validation$MEAQ_13 + WBSI_Validation$MEAQ_19 + WBSI_Validation$MEAQ_25 + WBSI_Validation$MEAQ_31 + WBSI_Validation$MEAQ_34 + WBSI_Validation$MEAQ_38 + WBSI_Validation$MEAQ_44 + WBSI_Validation$MEAQ_50 + WBSI_Validation$MEAQ_54 + WBSI_Validation$MEAQ_58 + WBSI_Validation$MEAQ_61
+
+WBSI_Validation$MEAQ62_PR <- WBSI_Validation$MEAQ_5 + WBSI_Validation$MEAQ_11 + WBSI_Validation$MEAQ_17 + WBSI_Validation$MEAQ_30_r + WBSI_Validation$MEAQ_36 + WBSI_Validation$MEAQ_42 + WBSI_Validation$MEAQ_47 
+
+WBSI_Validation$MEAQ62_DS <- WBSI_Validation$MEAQ_3 + WBSI_Validation$MEAQ_9 + WBSI_Validation$MEAQ_15 + WBSI_Validation$MEAQ_22 + WBSI_Validation$MEAQ_27 + WBSI_Validation$MEAQ_33 + WBSI_Validation$MEAQ_40 
+
+WBSI_Validation$MEAQ62_RD <- WBSI_Validation$MEAQ_4 + WBSI_Validation$MEAQ_10 + WBSI_Validation$MEAQ_16 + WBSI_Validation$MEAQ_21 + WBSI_Validation$MEAQ_23_r + WBSI_Validation$MEAQ_28 + WBSI_Validation$MEAQ_35 + WBSI_Validation$MEAQ_41 + WBSI_Validation$MEAQ_46 + WBSI_Validation$MEAQ_49 + WBSI_Validation$MEAQ_52 + WBSI_Validation$MEAQ_56 + WBSI_Validation$MEAQ_60
+
+WBSI_Validation$MEAQ62_DE <- WBSI_Validation$MEAQ_6 + WBSI_Validation$MEAQ_12 + WBSI_Validation$MEAQ_18 + WBSI_Validation$MEAQ_24 + WBSI_Validation$MEAQ_29 + WBSI_Validation$MEAQ_37 + WBSI_Validation$MEAQ_43 + WBSI_Validation$MEAQ_48 + WBSI_Validation$MEAQ_53 + WBSI_Validation$MEAQ_57 + WBSI_Validation$MEAQ_62
+
+WBSI_Validation$MEAQ62_Total <- WBSI_Validation$MEAQ62_BA + WBSI_Validation$MEAQ62_DA + WBSI_Validation$MEAQ62_PR + WBSI_Validation$MEAQ62_DS + WBSI_Validation$MEAQ62_RD + (77 - WBSI_Validation$MEAQ62_DE)
+
+# =========================
+
+# MEAQ-GA =================
+WBSI_Validation$MEAQGA_BA <- WBSI_Validation$MEAQ_1 + WBSI_Validation$MEAQ_8 + WBSI_Validation$MEAQ_39 + WBSI_Validation$MEAQ_51 + WBSI_Validation$MEAQ_55
+
+WBSI_Validation$MEAQGA_DA <- WBSI_Validation$MEAQ_2 + WBSI_Validation$MEAQ_7 + WBSI_Validation$MEAQ_25 + WBSI_Validation$MEAQ_31 + WBSI_Validation$MEAQ_44 
+
+WBSI_Validation$MEAQGA_PR <- WBSI_Validation$MEAQ_5 + WBSI_Validation$MEAQ_17 + WBSI_Validation$MEAQ_30_r + WBSI_Validation$MEAQ_36 + WBSI_Validation$MEAQ_42 
+  
+WBSI_Validation$MEAQGA_DS <- WBSI_Validation$MEAQ_9 + WBSI_Validation$MEAQ_22 + WBSI_Validation$MEAQ_27 + WBSI_Validation$MEAQ_33 + WBSI_Validation$MEAQ_40
+  
+WBSI_Validation$MEAQGA_RD <- WBSI_Validation$MEAQ_35 + WBSI_Validation$MEAQ_41 + WBSI_Validation$MEAQ_52 + WBSI_Validation$MEAQ_56 + WBSI_Validation$MEAQ_60 
+  
+WBSI_Validation$MEAQGA_DE <- WBSI_Validation$MEAQ_12 + WBSI_Validation$MEAQ_13 + WBSI_Validation$MEAQ_43 + WBSI_Validation$MEAQ_57 + WBSI_Validation$MEAQ_62
+# =========================
+
+# BEAQ ==================== 
+WBSI_Validation$BEAQ <-  WBSI_Validation$MEAQ_58 +  WBSI_Validation$MEAQ_59 + WBSI_Validation$MEAQ_33 + WBSI_Validation$MEAQ_56 + WBSI_Validation$MEAQ_42 + WBSI_Validation$MEAQ_29 + WBSI_Validation$MEAQ_44 + WBSI_Validation$MEAQ_14 + WBSI_Validation$MEAQ_41 + WBSI_Validation$MEAQ_36 + WBSI_Validation$MEAQ_45 + WBSI_Validation$MEAQ_25 + WBSI_Validation$MEAQ_27 + WBSI_Validation$MEAQ_32 + WBSI_Validation$MEAQ_50
+# =========================
+
+# MEAQ-ACO-SF ============= 
+WBSI_Validation$MEAQACO_SF_BA <- WBSI_Validation$MEAQ_14 + WBSI_Validation$MEAQ_26 + WBSI_Validation$MEAQ_32 + WBSI_Validation$MEAQ_51 + WBSI_Validation$MEAQ_55 
+
+WBSI_Validation$MEAQACOSF_DA <- WBSI_Validation$MEAQ_2 + WBSI_Validation$MEAQ_19 + WBSI_Validation$MEAQ_25 + WBSI_Validation$MEAQ_34 + WBSI_Validation$MEAQ_54 + WBSI_Validation$MEAQ_61 
+
+WBSI_Validation$MEAQACOSF_PR <- WBSI_Validation$MEAQ_17 + WBSI_Validation$MEAQ_42 + WBSI_Validation$MEAQ_47
+
+WBSI_Validation$MEAQACOSF_DS <- WBSI_Validation$MEAQ_15 + WBSI_Validation$MEAQ_33 + WBSI_Validation$MEAQ_40 
+
+WBSI_Validation$MEAQACOSF_RD <- WBSI_Validation$MEAQ_10 + WBSI_Validation$MEAQ_21 + WBSI_Validation$MEAQ_23_r + WBSI_Validation$MEAQ_28 + WBSI_Validation$MEAQ_49 + WBSI_Validation$MEAQ_60 
+
+WBSI_Validation$MEAQACOSF_DE <- WBSI_Validation$MEAQ_6 + WBSI_Validation$MEAQ_12 + WBSI_Validation$MEAQ_37 + WBSI_Validation$MEAQ_53 + WBSI_Validation$MEAQ_62
+# =========================
+
+# MEAQ-ACO-BF ============= 
+WBSI_Validation$MEAQACOBF_BA <- WBSI_Validation$MEAQ_51 + WBSI_Validation$MEAQ_59 
+
+WBSI_Validation$MEAQACOBF_DA <- WBSI_Validation$MEAQ_7 + WBSI_Validation$MEAQ_58
+
+WBSI_Validation$MEAQACOBF_PR <- WBSI_Validation$MEAQ_5 + WBSI_Validation$MEAQ_36 
+WBSI_Validation$MEAQACOBF_DS <- WBSI_Validation$MEAQ_22 + WBSI_Validation$MEAQ_33 
+
+WBSI_Validation$MEAQACOBF_RD <- WBSI_Validation$MEAQ_4 + WBSI_Validation$MEAQ_41
+
+WBSI_Validation$MEAQACOBF_DE <- WBSI_Validation$MEAQ_53 + WBSI_Validation$MEAQ_62
+
+WBSI_Validation$MEAQACOBF_Total <- WBSI_Validation$MEAQACOBF_BA + WBSI_Validation$MEAQACOBF_DA + WBSI_Validation$MEAQACOBF_PR + WBSI_Validation$MEAQACOBF_DS + WBSI_Validation$MEAQACOBF_RD + (14 - WBSI_Validation$MEAQACOBF_DE)
+# =========================
+
+WBSI_Validation$wbsi <- 
+  WBSI_Validation$wbsi01 + 
+  WBSI_Validation$wbsi02 + 
+  WBSI_Validation$wbsi03 + 
+  WBSI_Validation$wbsi04 +
+  WBSI_Validation$wbsi05 + 
+  WBSI_Validation$wbsi06 + 
+  WBSI_Validation$wbsi07 + 
+  WBSI_Validation$wbsi08 + 
+  WBSI_Validation$wbsi09 + 
+  WBSI_Validation$wbsi10 +
+  WBSI_Validation$wbsi11 + 
+  WBSI_Validation$wbsi12 + 
+  WBSI_Validation$wbsi13 + 
+  WBSI_Validation$wbsi14 + 
+  WBSI_Validation$wbsi15
+```
+
+```{r}
+WBSI_Validation1 <- WBSI_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "wbsi")]
+
+WBSI_Validation2 <- WBSI_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "wbsi")]
+
+WBSI_Validation3 <- WBSI_Validation[,c("MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOSF_Total", "wbsi")]
+
+WBSI_Validation4 <- WBSI_Validation[,c("MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE", "MEAQACOBF_Total", "wbsi")]
+
+cor.test(WBSI_Validation$BEAQ, WBSI_Validation$wbsi)
+```
+
+```{r}
+rcorr(as.matrix(WBSI_Validation1),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(WBSI_Validation2),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(WBSI_Validation3),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(WBSI_Validation4),type="pearson") 
+```
+
+
+
