@@ -2756,7 +2756,16 @@ WBSI_Validation$wbsi <-
   WBSI_Validation$wbsi14 + 
   WBSI_Validation$wbsi15
 
+WBSI_Validation <- na.omit(WBSI_Validation)
+
 WBSI_Validation <- round_df(WBSI_Validation, 0)
+
+WBSI_alpha_df <- WBSI_Validation %>%
+  select("wbsi01", "wbsi02", "wbsi03", "wbsi04", "wbsi05", "wbsi06", "wbsi07", "wbsi08", "wbsi09", "wbsi10", "wbsi11", "wbsi12", "wbsi13", "wbsi14", "wbsi15")
+
+cronbach.alpha(WBSI_alpha_df)
+
+0.921/(15+((0.921)*(1-15))) #AIC
 ```
 
 ```{r}
@@ -4044,3 +4053,2634 @@ rcorr(as.matrix(BFIN_Validation3),type="pearson")
 ```{r}
 rcorr(as.matrix(BFIN_Validation4),type="pearson") 
 ```
+
+```{r}
+# BFAS Neuroticism Scale ==============================
+
+# MEAQ_AAQ_MTurk_T1 (N=1052 before cleaning missing data)
+# MEAQ_AAQ_Undergrad_SMU_T1 (N=364 before cleaning missing data)
+
+### MEAQ_AAQ_MTurk_T1 ###
+
+colnames(MEAQ_AAQ_MTurk_T1)
+which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_1i")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_62i")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "BFAS_N")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "BFAS_N_Withdrawal")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "BFAS_N_Volatility")
+
+BFAS_Validation_S1 <- MEAQ_AAQ_MTurk_T1[,c(98:159,27:29)] 
+
+BFAS_Validation_S1 <- rename(BFAS_Validation_S1, MEAQ_1 = MEAQ_1i, 
+                                 MEAQ_2 = MEAQ_2i, 
+                                 MEAQ_3 = MEAQ_3i, 
+                                 MEAQ_4 = MEAQ_4i, 
+                                 MEAQ_5 = MEAQ_5i, 
+                                 MEAQ_6 = MEAQ_6i, 
+                                 MEAQ_7 = MEAQ_7i, 
+                                 MEAQ_8 = MEAQ_8i, 
+                                 MEAQ_9 = MEAQ_9i, 
+                                 MEAQ_10 = MEAQ_10i, 
+                                 MEAQ_11 = MEAQ_11i, 
+                                 MEAQ_12 = MEAQ_12i, 
+                                 MEAQ_13 = MEAQ_13i, 
+                                 MEAQ_14 = MEAQ_14i,
+                                 MEAQ_15 = MEAQ_15i, 
+                                 MEAQ_16 = MEAQ_16i, 
+                                 MEAQ_17 = MEAQ_17i, 
+                                 MEAQ_18 = MEAQ_18i, 
+                                 MEAQ_19 = MEAQ_19i, 
+                                 MEAQ_20 = MEAQ_20i, 
+                                 MEAQ_21 = MEAQ_21i, 
+                                 MEAQ_22 = MEAQ_22i, 
+                                 MEAQ_23 = MEAQ_23i, 
+                                 MEAQ_24 = MEAQ_24i, 
+                                 MEAQ_25 = MEAQ_25i, 
+                                 MEAQ_26 = MEAQ_26i, 
+                                 MEAQ_27 = MEAQ_27i, 
+                                 MEAQ_28 = MEAQ_28i, 
+                                 MEAQ_29 = MEAQ_29i, 
+                                 MEAQ_30 = MEAQ_30i, 
+                                 MEAQ_31 = MEAQ_31i, 
+                                 MEAQ_32 = MEAQ_32i, 
+                                 MEAQ_33 = MEAQ_33i, 
+                                 MEAQ_34 = MEAQ_34i, 
+                                 MEAQ_35 = MEAQ_35i, 
+                                 MEAQ_36 = MEAQ_36i, 
+                                 MEAQ_37 = MEAQ_37i, 
+                                 MEAQ_38 = MEAQ_38i, 
+                                 MEAQ_39 = MEAQ_39i, 
+                                 MEAQ_40 = MEAQ_40i, 
+                                 MEAQ_41 = MEAQ_41i, 
+                                 MEAQ_42 = MEAQ_42i, 
+                                 MEAQ_43 = MEAQ_43i, 
+                                 MEAQ_44 = MEAQ_44i, 
+                                 MEAQ_45 = MEAQ_45i, 
+                                 MEAQ_46 = MEAQ_46i, 
+                                 MEAQ_47 = MEAQ_47i,
+                                 MEAQ_48 = MEAQ_48i,
+                                 MEAQ_49 = MEAQ_49i, 
+                                 MEAQ_50 = MEAQ_50i, 
+                                 MEAQ_51 = MEAQ_51i, 
+                                 MEAQ_52 = MEAQ_52i, 
+                                 MEAQ_53 = MEAQ_53i, 
+                                 MEAQ_54 = MEAQ_54i, 
+                                 MEAQ_55 = MEAQ_55i, 
+                                 MEAQ_56 = MEAQ_56i, 
+                                 MEAQ_57 = MEAQ_57i, 
+                                 MEAQ_58 = MEAQ_58i, 
+                                 MEAQ_59 = MEAQ_59i, 
+                                 MEAQ_60 = MEAQ_60i, 
+                                 MEAQ_61 = MEAQ_61i,
+                                 MEAQ_62 = MEAQ_62i) 
+
+BFAS_Validation_S1 <- BFAS_Validation_S1[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "BFAS_N", "BFAS_N_Withdrawal", "BFAS_N_Volatility")]
+
+# "bfas1n_r", "BFAS_6N", "BFAS_11N", "bfas16n_r", "bfas21n_r", "BFAS_26N", "BFAS_31N", "bfas36n_r", "bfas41n_r", "BFAS_46N", "BFAS_51N", "bfas56n_r", "BFAS_61N", "BFAS_66N", "bfas71n_r", "bfas76n_r", "BFAS_81N", "BFAS_86N", "BFAS_BFAS_91N", "BFAS_96N"
+```
+
+```{r}
+### MEAQ_AAQ_Undergrad_SMU_T1 ### 
+
+colnames(MEAQ_AAQ_Undergrad_SMU_T1)
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "MEAQ_1")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "MEAQ_62")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "BFAS_N")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "BFAS_N_Withdrawal")
+
+BFAS_Validation_S2 <- MEAQ_AAQ_Undergrad_SMU_T1[,c(237:298, 26:28)] 
+
+BFAS_Validation_S2 <- BFAS_Validation_S2[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "BFAS_N", "BFAS_N_Withdrawal", "BFAS_N_Volatility")]
+
+BFAS_Validation <- rbind(BFAS_Validation_S1, BFAS_Validation_S2)
+
+BFAS_Validation <- na.omit(BFAS_Validation) 
+
+BFAS_Validation <- round_df(BFAS_Validation, 0)
+```
+
+```{r}
+### Reverse coding apart from DE ### 
+BFAS_Validation$MEAQ_23_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_23 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_23 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_23 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_23 %in% 4 ~ 3,   
+  BFAS_Validation$MEAQ_23 %in% 5 ~ 2, 
+  BFAS_Validation$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_23)
+) 
+
+BFAS_Validation$MEAQ_30_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_30 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_30 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_30 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_30 %in% 4 ~ 3,   
+  BFAS_Validation$MEAQ_30 %in% 5 ~ 2, 
+  BFAS_Validation$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_30)
+)
+
+### Reverse coding for DE items (for total score) ###
+
+BFAS_Validation$MEAQ_6_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_6 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_6 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_6 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_6 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_6 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_6 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_6)
+)
+
+BFAS_Validation$MEAQ_12_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_12 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_12 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_12 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_12 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_12 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_12 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_12)
+)
+
+BFAS_Validation$MEAQ_18_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_18 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_18 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_18 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_18 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_18 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_18 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_18)
+)
+
+BFAS_Validation$MEAQ_24_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_24 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_24 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_24 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_24 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_24 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_24 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_24)
+)
+
+BFAS_Validation$MEAQ_29_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_29 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_29 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_29 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_29 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_29 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_29 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_29)
+)
+
+BFAS_Validation$MEAQ_37_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_37 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_37 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_37 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_37 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_37 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_37 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_37)
+)
+
+BFAS_Validation$MEAQ_43_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_43 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_43 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_43 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_43 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_43 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_43 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_43)
+)
+
+BFAS_Validation$MEAQ_48_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_48 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_48 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_48 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_48 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_48 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_48 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_48)
+)
+
+BFAS_Validation$MEAQ_53_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_53 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_53 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_53 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_53 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_53 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_53 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_53)
+)
+
+BFAS_Validation$MEAQ_57_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_57 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_57 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_57 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_57 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_57 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_57 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_57)
+)
+
+BFAS_Validation$MEAQ_62_r <- dplyr::case_when(
+  BFAS_Validation$MEAQ_62 %in% 1 ~ 6, 
+  BFAS_Validation$MEAQ_62 %in% 2 ~ 5, 
+  BFAS_Validation$MEAQ_62 %in% 3 ~ 4,   
+  BFAS_Validation$MEAQ_62 %in% 4 ~ 3, 
+  BFAS_Validation$MEAQ_62 %in% 5 ~ 2,  
+  BFAS_Validation$MEAQ_62 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFAS_Validation$MEAQ_62)
+)
+
+# MEAQ-62 =================
+BFAS_Validation$MEAQ62_BA <- BFAS_Validation$MEAQ_1 + BFAS_Validation$MEAQ_8 + BFAS_Validation$MEAQ_14 +  BFAS_Validation$MEAQ_20 + BFAS_Validation$MEAQ_26 + BFAS_Validation$MEAQ_32 + BFAS_Validation$MEAQ_39 + BFAS_Validation$MEAQ_45 + BFAS_Validation$MEAQ_51 + BFAS_Validation$MEAQ_55 + BFAS_Validation$MEAQ_59
+
+BFAS_Validation$MEAQ62_DA <- BFAS_Validation$MEAQ_2 + BFAS_Validation$MEAQ_7 + BFAS_Validation$MEAQ_13 + BFAS_Validation$MEAQ_19 + BFAS_Validation$MEAQ_25 + BFAS_Validation$MEAQ_31 + BFAS_Validation$MEAQ_34 + BFAS_Validation$MEAQ_38 + BFAS_Validation$MEAQ_44 + BFAS_Validation$MEAQ_50 + BFAS_Validation$MEAQ_54 + BFAS_Validation$MEAQ_58 + BFAS_Validation$MEAQ_61
+
+BFAS_Validation$MEAQ62_PR <- BFAS_Validation$MEAQ_5 + BFAS_Validation$MEAQ_11 + BFAS_Validation$MEAQ_17 + BFAS_Validation$MEAQ_30_r + BFAS_Validation$MEAQ_36 + BFAS_Validation$MEAQ_42 + BFAS_Validation$MEAQ_47 
+
+BFAS_Validation$MEAQ62_DS <- BFAS_Validation$MEAQ_3 + BFAS_Validation$MEAQ_9 + BFAS_Validation$MEAQ_15 + BFAS_Validation$MEAQ_22 + BFAS_Validation$MEAQ_27 + BFAS_Validation$MEAQ_33 + BFAS_Validation$MEAQ_40 
+
+BFAS_Validation$MEAQ62_RD <- BFAS_Validation$MEAQ_4 + BFAS_Validation$MEAQ_10 + BFAS_Validation$MEAQ_16 + BFAS_Validation$MEAQ_21 + BFAS_Validation$MEAQ_23_r + BFAS_Validation$MEAQ_28 + BFAS_Validation$MEAQ_35 + BFAS_Validation$MEAQ_41 + BFAS_Validation$MEAQ_46 + BFAS_Validation$MEAQ_49 + BFAS_Validation$MEAQ_52 + BFAS_Validation$MEAQ_56 + BFAS_Validation$MEAQ_60
+
+BFAS_Validation$MEAQ62_DE <- BFAS_Validation$MEAQ_6 + BFAS_Validation$MEAQ_12 + BFAS_Validation$MEAQ_18 + BFAS_Validation$MEAQ_24 + BFAS_Validation$MEAQ_29 + BFAS_Validation$MEAQ_37 + BFAS_Validation$MEAQ_43 + BFAS_Validation$MEAQ_48 + BFAS_Validation$MEAQ_53 + BFAS_Validation$MEAQ_57 + BFAS_Validation$MEAQ_62
+
+BFAS_Validation$MEAQ62_DE_R <- BFAS_Validation$MEAQ_6_r + BFAS_Validation$MEAQ_12_r + BFAS_Validation$MEAQ_18_r + BFAS_Validation$MEAQ_24_r + BFAS_Validation$MEAQ_29_r + BFAS_Validation$MEAQ_37_r + BFAS_Validation$MEAQ_43_r + BFAS_Validation$MEAQ_48_r + BFAS_Validation$MEAQ_53_r + BFAS_Validation$MEAQ_57_r + BFAS_Validation$MEAQ_62_r
+
+BFAS_Validation$MEAQ62_Total <- BFAS_Validation$MEAQ62_BA + BFAS_Validation$MEAQ62_DA + BFAS_Validation$MEAQ62_PR + BFAS_Validation$MEAQ62_DS + BFAS_Validation$MEAQ62_RD + BFAS_Validation$MEAQ62_DE_R
+
+# =========================
+
+# MEAQ-GA =================
+BFAS_Validation$MEAQGA_BA <- BFAS_Validation$MEAQ_1 + BFAS_Validation$MEAQ_8 + BFAS_Validation$MEAQ_39 + BFAS_Validation$MEAQ_51 + BFAS_Validation$MEAQ_55
+
+BFAS_Validation$MEAQGA_DA <- BFAS_Validation$MEAQ_2 + BFAS_Validation$MEAQ_7 + BFAS_Validation$MEAQ_25 + BFAS_Validation$MEAQ_31 + BFAS_Validation$MEAQ_44 
+
+BFAS_Validation$MEAQGA_PR <- BFAS_Validation$MEAQ_5 + BFAS_Validation$MEAQ_17 + BFAS_Validation$MEAQ_30_r + BFAS_Validation$MEAQ_36 + BFAS_Validation$MEAQ_42 
+  
+BFAS_Validation$MEAQGA_DS <- BFAS_Validation$MEAQ_9 + BFAS_Validation$MEAQ_22 + BFAS_Validation$MEAQ_27 + BFAS_Validation$MEAQ_33 + BFAS_Validation$MEAQ_40
+  
+BFAS_Validation$MEAQGA_RD <- BFAS_Validation$MEAQ_35 + BFAS_Validation$MEAQ_41 + BFAS_Validation$MEAQ_52 + BFAS_Validation$MEAQ_56 + BFAS_Validation$MEAQ_60 
+  
+BFAS_Validation$MEAQGA_DE <- BFAS_Validation$MEAQ_12 + BFAS_Validation$MEAQ_13 + BFAS_Validation$MEAQ_43 + BFAS_Validation$MEAQ_57 + BFAS_Validation$MEAQ_62
+
+# =========================
+
+# BEAQ ==================== 
+BFAS_Validation$BEAQ <-  BFAS_Validation$MEAQ_58 +  BFAS_Validation$MEAQ_59 + BFAS_Validation$MEAQ_33 + BFAS_Validation$MEAQ_56 + BFAS_Validation$MEAQ_42 + BFAS_Validation$MEAQ_29 + BFAS_Validation$MEAQ_44 + BFAS_Validation$MEAQ_14 + BFAS_Validation$MEAQ_41 + BFAS_Validation$MEAQ_36 + BFAS_Validation$MEAQ_45 + BFAS_Validation$MEAQ_25 + BFAS_Validation$MEAQ_27 + BFAS_Validation$MEAQ_32 + BFAS_Validation$MEAQ_50
+# =========================
+
+# MEAQ-ACO-SF ============= 
+BFAS_Validation$MEAQACOSF_BA <- BFAS_Validation$MEAQ_14 + BFAS_Validation$MEAQ_26 + BFAS_Validation$MEAQ_32 + BFAS_Validation$MEAQ_51 + BFAS_Validation$MEAQ_55 
+
+BFAS_Validation$MEAQACOSF_DA <- BFAS_Validation$MEAQ_2 + BFAS_Validation$MEAQ_19 + BFAS_Validation$MEAQ_25 + BFAS_Validation$MEAQ_34 + BFAS_Validation$MEAQ_54 + BFAS_Validation$MEAQ_61 
+
+BFAS_Validation$MEAQACOSF_PR <- BFAS_Validation$MEAQ_17 + BFAS_Validation$MEAQ_42 + BFAS_Validation$MEAQ_47
+
+BFAS_Validation$MEAQACOSF_DS <- BFAS_Validation$MEAQ_15 + BFAS_Validation$MEAQ_33 + BFAS_Validation$MEAQ_40 
+
+BFAS_Validation$MEAQACOSF_RD <- BFAS_Validation$MEAQ_10 + BFAS_Validation$MEAQ_21 + BFAS_Validation$MEAQ_23_r + BFAS_Validation$MEAQ_28 + BFAS_Validation$MEAQ_49 + BFAS_Validation$MEAQ_60 
+
+BFAS_Validation$MEAQACOSF_DE <- BFAS_Validation$MEAQ_6 + BFAS_Validation$MEAQ_12 + BFAS_Validation$MEAQ_37 + BFAS_Validation$MEAQ_53 + BFAS_Validation$MEAQ_62
+
+BFAS_Validation$MEAQACOSF_DE_R <- BFAS_Validation$MEAQ_6 + BFAS_Validation$MEAQ_12 + BFAS_Validation$MEAQ_37 + BFAS_Validation$MEAQ_53 + BFAS_Validation$MEAQ_62
+
+BFAS_Validation$MEAQACOSF_Total <- BFAS_Validation$MEAQACOSF_BA + BFAS_Validation$MEAQACOSF_DA + BFAS_Validation$MEAQACOSF_PR + BFAS_Validation$MEAQACOSF_DS + BFAS_Validation$MEAQACOSF_RD + BFAS_Validation$MEAQACOSF_DE_R
+
+# =========================
+
+# MEAQ-ACO-BF ============= 
+BFAS_Validation$MEAQACOBF_BA <- BFAS_Validation$MEAQ_51 + BFAS_Validation$MEAQ_59 
+
+BFAS_Validation$MEAQACOBF_DA <- BFAS_Validation$MEAQ_7 + BFAS_Validation$MEAQ_58 
+
+BFAS_Validation$MEAQACOBF_PR <- BFAS_Validation$MEAQ_5 + BFAS_Validation$MEAQ_36 
+
+BFAS_Validation$MEAQACOBF_DS <- BFAS_Validation$MEAQ_22 + BFAS_Validation$MEAQ_33 
+
+BFAS_Validation$MEAQACOBF_RD <- BFAS_Validation$MEAQ_4 + BFAS_Validation$MEAQ_41 
+
+BFAS_Validation$MEAQACOBF_DE <- BFAS_Validation$MEAQ_53 + BFAS_Validation$MEAQ_62
+
+BFAS_Validation$MEAQACOBF_DE_R <- BFAS_Validation$MEAQ_53_r + BFAS_Validation$MEAQ_62_r
+
+BFAS_Validation$MEAQACOBF_Total <- BFAS_Validation$MEAQACOBF_BA + BFAS_Validation$MEAQACOBF_DA + BFAS_Validation$MEAQACOBF_PR + BFAS_Validation$MEAQACOBF_DS + BFAS_Validation$MEAQACOBF_RD + BFAS_Validation$MEAQACOBF_DE_R
+# =========================
+
+```
+
+```{r}
+BFAS_Validation1 <- BFAS_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "BFAS_N", "BFAS_N_Volatility", "BFAS_N_Withdrawal")]
+
+BFAS_Validation2 <- BFAS_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "BFAS_N", "BFAS_N_Volatility", "BFAS_N_Withdrawal")]
+
+BFAS_Validation3 <- BFAS_Validation[,c("MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOSF_Total", "BFAS_N", "BFAS_N_Volatility", "BFAS_N_Withdrawal")]
+
+BFAS_Validation4 <- BFAS_Validation[,c("MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE", "MEAQACOBF_Total", "BFAS_N", "BFAS_N_Volatility", "BFAS_N_Withdrawal")]
+
+cor.test(BFAS_Validation$BEAQ, BFAS_Validation$BFAS_N)
+
+cor.test(BFAS_Validation$BEAQ, BFAS_Validation$BFAS_N_Volatility)
+
+cor.test(BFAS_Validation$BEAQ, BFAS_Validation$BFAS_N_Withdrawal)
+```
+
+```{r}
+rcorr(as.matrix(BFAS_Validation1),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(BFAS_Validation2),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(BFAS_Validation3),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(BFAS_Validation4),type="pearson") 
+```
+
+### Negative Affect Measures ### 
+
+```{r}
+# PANAS-SF Negative Affect  ===========================
+
+# MEAQ_Dev_Undergrad_Iowa (N=314 before cleaning missing data for MEAQ & validation measures)
+# MEAQ_Dev_Outpatient_Clinical (N=201 before cleaning missing data for MEAQ & validation measures)
+# LTC_MTurk_T1 (N=3520 before cleaning missing data for MEAQ & validation measures)
+# LTC_Undergrad_SMU_T1 (N=293 before cleaning missing data for MEAQ & validation measures)
+
+### MEAQ_Dev_Undergrad_Iowa ###
+
+colnames(MEAQ_Dev_Undergrad_Iowa)
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "MEAQ1")
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "MEAQ39")
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "PANAS2")
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "PANAS20")
+
+PANAS_SFN_Validation_S1 <- MEAQ_Dev_Undergrad_Iowa
+
+PANAS_SFN_Validation_S1$PANAS_NA <- 
+  PANAS_SFN_Validation_S1$PANAS2 + 
+  PANAS_SFN_Validation_S1$PANAS4 + 
+  PANAS_SFN_Validation_S1$PANAS6 + 
+  PANAS_SFN_Validation_S1$PANAS7 + 
+  PANAS_SFN_Validation_S1$PANAS8 + 
+  PANAS_SFN_Validation_S1$PANAS11 + 
+  PANAS_SFN_Validation_S1$PANAS13 + 
+  PANAS_SFN_Validation_S1$PANAS15 + 
+  PANAS_SFN_Validation_S1$PANAS18 + 
+  PANAS_SFN_Validation_S1$PANAS20
+
+PANAS_SFN_Validation_S1 <- rename(PANAS_SFN_Validation_S1, MEAQ_1 = MEAQ1,  
+                                       MEAQ_2 = MEAQ2, 
+                                       MEAQ_3 = MEAQ3, 
+                                       MEAQ_4 = MEAQ4, 
+                                       MEAQ_5 = MEAQ5, 
+                                       MEAQ_6 = MEAQ6, 
+                                       MEAQ_7 = MEAQ7, 
+                                       MEAQ_8 = MEAQ8, 
+                                       MEAQ_9 = MEAQ9, 
+                                       MEAQ_10 = MEAQ10, 
+                                       MEAQ_11 = MEAQ11, 
+                                       MEAQ_12 = MEAQ12, 
+                                       MEAQ_13 = MEAQ13, 
+                                       MEAQ_14 = MEAQ14B,
+                                       MEAQ_15 = MEAQ15, 
+                                       MEAQ_16 = MEAQ16, 
+                                       MEAQ_17 = MEAQ17, 
+                                       MEAQ_18 = MEAQ18, 
+                                       MEAQ_19 = MEAQ19, 
+                                       MEAQ_20 = MEAQ20, 
+                                       MEAQ_21 = MEAQ21, 
+                                       MEAQ_22 = MEAQ22, 
+                                       MEAQ_23 = MEAQ23, 
+                                       MEAQ_24 = MEAQ24, 
+                                       MEAQ_25 = MEAQ25B, 
+                                       MEAQ_26 = MEAQ26, 
+                                       MEAQ_27 = MEAQ27B, 
+                                       MEAQ_28 = MEAQ28, 
+                                       MEAQ_29 = MEAQ29B, 
+                                       MEAQ_30 = MEAQ30, 
+                                       MEAQ_31 = MEAQ31, 
+                                       MEAQ_32 = MEAQ32B, 
+                                       MEAQ_33 = MEAQ33B, 
+                                       MEAQ_34 = MEAQ34, 
+                                       MEAQ_35 = MEAQ35, 
+                                       MEAQ_36 = MEAQ36B, 
+                                       MEAQ_37 = MEAQ37, 
+                                       MEAQ_38 = MEAQ38, 
+                                       MEAQ_39 = MEAQ39, 
+                                       MEAQ_40 = MEAQ40, 
+                                       MEAQ_41 = MEAQ41B, 
+                                       MEAQ_42 = MEAQ42B, 
+                                       MEAQ_43 = MEAQ43, 
+                                       MEAQ_44 = MEAQ44B, 
+                                       MEAQ_45 = MEAQ45B, 
+                                       MEAQ_46 = MEAQ46, 
+                                       MEAQ_47 = MEAQ47,
+                                       MEAQ_48 = MEAQ48,
+                                       MEAQ_49 = MEAQ49, 
+                                       MEAQ_50 = MEAQ50B, 
+                                       MEAQ_51 = MEAQ51, 
+                                       MEAQ_52 = MEAQ52, 
+                                       MEAQ_53 = MEAQ53, 
+                                       MEAQ_54 = MEAQ54, 
+                                       MEAQ_55 = MEAQ55, 
+                                       MEAQ_56 = MEAQ56B, 
+                                       MEAQ_57 = MEAQ57, 
+                                       MEAQ_58 = MEAQ58B, 
+                                       MEAQ_59 = MEAQ59B, 
+                                       MEAQ_60 = MEAQ60, 
+                                       MEAQ_61 = MEAQ61,
+                                       MEAQ_62 = MEAQ62) 
+
+PANAS_SFN_Validation_S1 <- PANAS_SFN_Validation_S1[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "PANAS_NA")]
+
+### MEAQ_Dev_Outpatient_Clinical ###
+
+colnames(MEAQ_Dev_Outpatient_Clinical)
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "MEAQ1")
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "MEAQ39")
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "panas2")
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "panas20")
+
+PANAS_SFN_Validation_S2 <- MEAQ_Dev_Outpatient_Clinical
+
+PANAS_SFN_Validation_S2$PANAS_NA <- 
+  PANAS_SFN_Validation_S2$panas2 + 
+  PANAS_SFN_Validation_S2$panas4 + 
+  PANAS_SFN_Validation_S2$panas6 + 
+  PANAS_SFN_Validation_S2$panas7 + 
+  PANAS_SFN_Validation_S2$panas8 + 
+  PANAS_SFN_Validation_S2$panas11 + 
+  PANAS_SFN_Validation_S2$panas13 + 
+  PANAS_SFN_Validation_S2$panas15 + 
+  PANAS_SFN_Validation_S2$panas18 + 
+  PANAS_SFN_Validation_S2$panas20
+
+PANAS_SFN_Validation_S2 <- rename(PANAS_SFN_Validation_S2, MEAQ_1 = MEAQ1, 
+                                            MEAQ_2 = MEAQ2, 
+                                            MEAQ_3 = MEAQ3, 
+                                            MEAQ_4 = MEAQ4, 
+                                            MEAQ_5 = MEAQ5, 
+                                            MEAQ_6 = MEAQ6, 
+                                            MEAQ_7 = MEAQ7, 
+                                            MEAQ_8 = MEAQ8, 
+                                            MEAQ_9 = MEAQ9, 
+                                            MEAQ_10 = MEAQ10, 
+                                            MEAQ_11 = MEAQ11, 
+                                            MEAQ_12 = MEAQ12, 
+                                            MEAQ_13 = MEAQ13, 
+                                            MEAQ_14 = MEAQ14B,
+                                            MEAQ_15 = MEAQ15, 
+                                            MEAQ_16 = MEAQ16, 
+                                            MEAQ_17 = MEAQ17, 
+                                            MEAQ_18 = MEAQ18, 
+                                            MEAQ_19 = MEAQ19, 
+                                            MEAQ_20 = MEAQ20, 
+                                            MEAQ_21 = MEAQ21, 
+                                            MEAQ_22 = MEAQ22, 
+                                            MEAQ_23 = MEAQ23, 
+                                            MEAQ_24 = MEAQ24, 
+                                            MEAQ_25 = MEAQ25B, 
+                                            MEAQ_26 = MEAQ26, 
+                                            MEAQ_27 = MEAQ27B, 
+                                            MEAQ_28 = MEAQ28, 
+                                            MEAQ_29 = MEAQ29B, 
+                                            MEAQ_30 = MEAQ30, 
+                                            MEAQ_31 = MEAQ31, 
+                                            MEAQ_32 = MEAQ32B, 
+                                            MEAQ_33 = MEAQ33B, 
+                                            MEAQ_34 = MEAQ34, 
+                                            MEAQ_35 = MEAQ35, 
+                                            MEAQ_36 = MEAQ36B, 
+                                            MEAQ_37 = MEAQ37, 
+                                            MEAQ_38 = MEAQ38, 
+                                            MEAQ_39 = MEAQ39, 
+                                            MEAQ_40 = MEAQ40, 
+                                            MEAQ_41 = MEAQ41B, 
+                                            MEAQ_42 = MEAQ42B, 
+                                            MEAQ_43 = MEAQ43, 
+                                            MEAQ_44 = MEAQ44B, 
+                                            MEAQ_45 = MEAQ45B, 
+                                            MEAQ_46 = MEAQ46, 
+                                            MEAQ_47 = MEAQ47,
+                                            MEAQ_48 = MEAQ48,
+                                            MEAQ_49 = MEAQ49, 
+                                            MEAQ_50 = MEAQ50B, 
+                                            MEAQ_51 = MEAQ51, 
+                                            MEAQ_52 = MEAQ52, 
+                                            MEAQ_53 = MEAQ53, 
+                                            MEAQ_54 = MEAQ54, 
+                                            MEAQ_55 = MEAQ55, 
+                                            MEAQ_56 = MEAQ56B, 
+                                            MEAQ_57 = MEAQ57, 
+                                            MEAQ_58 = MEAQ58B, 
+                                            MEAQ_59 = MEAQ59B, 
+                                            MEAQ_60 = MEAQ60, 
+                                            MEAQ_61 = MEAQ61,
+                                            MEAQ_62 = MEAQ62) 
+
+PANAS_SFN_Validation_S2 <- PANAS_SFN_Validation_S2[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "PANAS_NA")]
+
+PANAS_SFN_Validation <- rbind(PANAS_SFN_Validation_S1, PANAS_SFN_Validation_S2)
+
+PANAS_SFN_Validation <- na.omit(PANAS_SFN_Validation)
+
+PANAS_SFN_Validation <- round_df(PANAS_SFN_Validation)
+```
+
+```{r}
+### Reverse coding apart from DE ### 
+PANAS_SFN_Validation$MEAQ_23_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_23 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_23 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_23 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_23 %in% 4 ~ 3,   
+  PANAS_SFN_Validation$MEAQ_23 %in% 5 ~ 2, 
+  PANAS_SFN_Validation$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_23)
+) 
+
+PANAS_SFN_Validation$MEAQ_30_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_30 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_30 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_30 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_30 %in% 4 ~ 3,   
+  PANAS_SFN_Validation$MEAQ_30 %in% 5 ~ 2, 
+  PANAS_SFN_Validation$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_30)
+)
+
+### Reverse coding for DE items (for total score) ###
+
+PANAS_SFN_Validation$MEAQ_6_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_6 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_6 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_6 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_6 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_6 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_6 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_6)
+)
+
+PANAS_SFN_Validation$MEAQ_12_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_12 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_12 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_12 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_12 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_12 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_12 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_12)
+)
+
+PANAS_SFN_Validation$MEAQ_18_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_18 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_18 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_18 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_18 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_18 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_18 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_18)
+)
+
+PANAS_SFN_Validation$MEAQ_24_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_24 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_24 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_24 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_24 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_24 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_24 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_24)
+)
+
+PANAS_SFN_Validation$MEAQ_29_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_29 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_29 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_29 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_29 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_29 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_29 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_29)
+)
+
+PANAS_SFN_Validation$MEAQ_37_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_37 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_37 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_37 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_37 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_37 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_37 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_37)
+)
+
+PANAS_SFN_Validation$MEAQ_43_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_43 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_43 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_43 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_43 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_43 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_43 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_43)
+)
+
+PANAS_SFN_Validation$MEAQ_48_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_48 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_48 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_48 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_48 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_48 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_48 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_48)
+)
+
+PANAS_SFN_Validation$MEAQ_53_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_53 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_53 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_53 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_53 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_53 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_53 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_53)
+)
+
+PANAS_SFN_Validation$MEAQ_57_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_57 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_57 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_57 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_57 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_57 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_57 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_57)
+)
+
+PANAS_SFN_Validation$MEAQ_62_r <- dplyr::case_when(
+  PANAS_SFN_Validation$MEAQ_62 %in% 1 ~ 6, 
+  PANAS_SFN_Validation$MEAQ_62 %in% 2 ~ 5, 
+  PANAS_SFN_Validation$MEAQ_62 %in% 3 ~ 4,   
+  PANAS_SFN_Validation$MEAQ_62 %in% 4 ~ 3, 
+  PANAS_SFN_Validation$MEAQ_62 %in% 5 ~ 2,  
+  PANAS_SFN_Validation$MEAQ_62 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFN_Validation$MEAQ_62)
+)
+
+# MEAQ-62 =================
+PANAS_SFN_Validation$MEAQ62_BA <- PANAS_SFN_Validation$MEAQ_1 + PANAS_SFN_Validation$MEAQ_8 + PANAS_SFN_Validation$MEAQ_14 +  PANAS_SFN_Validation$MEAQ_20 + PANAS_SFN_Validation$MEAQ_26 + PANAS_SFN_Validation$MEAQ_32 + PANAS_SFN_Validation$MEAQ_39 + PANAS_SFN_Validation$MEAQ_45 + PANAS_SFN_Validation$MEAQ_51 + PANAS_SFN_Validation$MEAQ_55 + PANAS_SFN_Validation$MEAQ_59
+
+PANAS_SFN_Validation$MEAQ62_DA <- PANAS_SFN_Validation$MEAQ_2 + PANAS_SFN_Validation$MEAQ_7 + PANAS_SFN_Validation$MEAQ_13 + PANAS_SFN_Validation$MEAQ_19 + PANAS_SFN_Validation$MEAQ_25 + PANAS_SFN_Validation$MEAQ_31 + PANAS_SFN_Validation$MEAQ_34 + PANAS_SFN_Validation$MEAQ_38 + PANAS_SFN_Validation$MEAQ_44 + PANAS_SFN_Validation$MEAQ_50 + PANAS_SFN_Validation$MEAQ_54 + PANAS_SFN_Validation$MEAQ_58 + PANAS_SFN_Validation$MEAQ_61
+
+PANAS_SFN_Validation$MEAQ62_PR <- PANAS_SFN_Validation$MEAQ_5 + PANAS_SFN_Validation$MEAQ_11 + PANAS_SFN_Validation$MEAQ_17 + PANAS_SFN_Validation$MEAQ_30_r + PANAS_SFN_Validation$MEAQ_36 + PANAS_SFN_Validation$MEAQ_42 + PANAS_SFN_Validation$MEAQ_47 
+
+PANAS_SFN_Validation$MEAQ62_DS <- PANAS_SFN_Validation$MEAQ_3 + PANAS_SFN_Validation$MEAQ_9 + PANAS_SFN_Validation$MEAQ_15 + PANAS_SFN_Validation$MEAQ_22 + PANAS_SFN_Validation$MEAQ_27 + PANAS_SFN_Validation$MEAQ_33 + PANAS_SFN_Validation$MEAQ_40 
+
+PANAS_SFN_Validation$MEAQ62_RD <- PANAS_SFN_Validation$MEAQ_4 + PANAS_SFN_Validation$MEAQ_10 + PANAS_SFN_Validation$MEAQ_16 + PANAS_SFN_Validation$MEAQ_21 + PANAS_SFN_Validation$MEAQ_23_r + PANAS_SFN_Validation$MEAQ_28 + PANAS_SFN_Validation$MEAQ_35 + PANAS_SFN_Validation$MEAQ_41 + PANAS_SFN_Validation$MEAQ_46 + PANAS_SFN_Validation$MEAQ_49 + PANAS_SFN_Validation$MEAQ_52 + PANAS_SFN_Validation$MEAQ_56 + PANAS_SFN_Validation$MEAQ_60
+
+PANAS_SFN_Validation$MEAQ62_DE <- PANAS_SFN_Validation$MEAQ_6 + PANAS_SFN_Validation$MEAQ_12 + PANAS_SFN_Validation$MEAQ_18 + PANAS_SFN_Validation$MEAQ_24 + PANAS_SFN_Validation$MEAQ_29 + PANAS_SFN_Validation$MEAQ_37 + PANAS_SFN_Validation$MEAQ_43 + PANAS_SFN_Validation$MEAQ_48 + PANAS_SFN_Validation$MEAQ_53 + PANAS_SFN_Validation$MEAQ_57 + PANAS_SFN_Validation$MEAQ_62
+
+PANAS_SFN_Validation$MEAQ62_DE_R <- PANAS_SFN_Validation$MEAQ_6_r + PANAS_SFN_Validation$MEAQ_12_r + PANAS_SFN_Validation$MEAQ_18_r + PANAS_SFN_Validation$MEAQ_24_r + PANAS_SFN_Validation$MEAQ_29_r + PANAS_SFN_Validation$MEAQ_37_r + PANAS_SFN_Validation$MEAQ_43_r + PANAS_SFN_Validation$MEAQ_48_r + PANAS_SFN_Validation$MEAQ_53_r + PANAS_SFN_Validation$MEAQ_57_r + PANAS_SFN_Validation$MEAQ_62_r
+
+PANAS_SFN_Validation$MEAQ62_Total <- PANAS_SFN_Validation$MEAQ62_BA + PANAS_SFN_Validation$MEAQ62_DA + PANAS_SFN_Validation$MEAQ62_PR + PANAS_SFN_Validation$MEAQ62_DS + PANAS_SFN_Validation$MEAQ62_RD + PANAS_SFN_Validation$MEAQ62_DE_R
+
+# =========================
+
+# MEAQ-GA =================
+PANAS_SFN_Validation$MEAQGA_BA <- PANAS_SFN_Validation$MEAQ_1 + PANAS_SFN_Validation$MEAQ_8 + PANAS_SFN_Validation$MEAQ_39 + PANAS_SFN_Validation$MEAQ_51 + PANAS_SFN_Validation$MEAQ_55
+
+PANAS_SFN_Validation$MEAQGA_DA <- PANAS_SFN_Validation$MEAQ_2 + PANAS_SFN_Validation$MEAQ_7 + PANAS_SFN_Validation$MEAQ_25 + PANAS_SFN_Validation$MEAQ_31 + PANAS_SFN_Validation$MEAQ_44 
+
+PANAS_SFN_Validation$MEAQGA_PR <- PANAS_SFN_Validation$MEAQ_5 + PANAS_SFN_Validation$MEAQ_17 + PANAS_SFN_Validation$MEAQ_30_r + PANAS_SFN_Validation$MEAQ_36 + PANAS_SFN_Validation$MEAQ_42 
+  
+PANAS_SFN_Validation$MEAQGA_DS <- PANAS_SFN_Validation$MEAQ_9 + PANAS_SFN_Validation$MEAQ_22 + PANAS_SFN_Validation$MEAQ_27 + PANAS_SFN_Validation$MEAQ_33 + PANAS_SFN_Validation$MEAQ_40
+  
+PANAS_SFN_Validation$MEAQGA_RD <- PANAS_SFN_Validation$MEAQ_35 + PANAS_SFN_Validation$MEAQ_41 + PANAS_SFN_Validation$MEAQ_52 + PANAS_SFN_Validation$MEAQ_56 + PANAS_SFN_Validation$MEAQ_60 
+  
+PANAS_SFN_Validation$MEAQGA_DE <- PANAS_SFN_Validation$MEAQ_12 + PANAS_SFN_Validation$MEAQ_13 + PANAS_SFN_Validation$MEAQ_43 + PANAS_SFN_Validation$MEAQ_57 + PANAS_SFN_Validation$MEAQ_62
+
+# =========================
+
+# BEAQ ==================== 
+PANAS_SFN_Validation$BEAQ <-  PANAS_SFN_Validation$MEAQ_58 +  PANAS_SFN_Validation$MEAQ_59 + PANAS_SFN_Validation$MEAQ_33 + PANAS_SFN_Validation$MEAQ_56 + PANAS_SFN_Validation$MEAQ_42 + PANAS_SFN_Validation$MEAQ_29 + PANAS_SFN_Validation$MEAQ_44 + PANAS_SFN_Validation$MEAQ_14 + PANAS_SFN_Validation$MEAQ_41 + PANAS_SFN_Validation$MEAQ_36 + PANAS_SFN_Validation$MEAQ_45 + PANAS_SFN_Validation$MEAQ_25 + PANAS_SFN_Validation$MEAQ_27 + PANAS_SFN_Validation$MEAQ_32 + PANAS_SFN_Validation$MEAQ_50
+# =========================
+
+# MEAQ-ACO-SF ============= 
+PANAS_SFN_Validation$MEAQACOSF_BA <- PANAS_SFN_Validation$MEAQ_14 + PANAS_SFN_Validation$MEAQ_26 + PANAS_SFN_Validation$MEAQ_32 + PANAS_SFN_Validation$MEAQ_51 + PANAS_SFN_Validation$MEAQ_55 
+
+PANAS_SFN_Validation$MEAQACOSF_DA <- PANAS_SFN_Validation$MEAQ_2 + PANAS_SFN_Validation$MEAQ_19 + PANAS_SFN_Validation$MEAQ_25 + PANAS_SFN_Validation$MEAQ_34 + PANAS_SFN_Validation$MEAQ_54 + PANAS_SFN_Validation$MEAQ_61 
+
+PANAS_SFN_Validation$MEAQACOSF_PR <- PANAS_SFN_Validation$MEAQ_17 + PANAS_SFN_Validation$MEAQ_42 + PANAS_SFN_Validation$MEAQ_47
+
+PANAS_SFN_Validation$MEAQACOSF_DS <- PANAS_SFN_Validation$MEAQ_15 + PANAS_SFN_Validation$MEAQ_33 + PANAS_SFN_Validation$MEAQ_40 
+
+PANAS_SFN_Validation$MEAQACOSF_RD <- PANAS_SFN_Validation$MEAQ_10 + PANAS_SFN_Validation$MEAQ_21 + PANAS_SFN_Validation$MEAQ_23_r + PANAS_SFN_Validation$MEAQ_28 + PANAS_SFN_Validation$MEAQ_49 + PANAS_SFN_Validation$MEAQ_60 
+
+PANAS_SFN_Validation$MEAQACOSF_DE <- PANAS_SFN_Validation$MEAQ_6 + PANAS_SFN_Validation$MEAQ_12 + PANAS_SFN_Validation$MEAQ_37 + PANAS_SFN_Validation$MEAQ_53 + PANAS_SFN_Validation$MEAQ_62
+
+PANAS_SFN_Validation$MEAQACOSF_DE_R <- PANAS_SFN_Validation$MEAQ_6 + PANAS_SFN_Validation$MEAQ_12 + PANAS_SFN_Validation$MEAQ_37 + PANAS_SFN_Validation$MEAQ_53 + PANAS_SFN_Validation$MEAQ_62
+
+PANAS_SFN_Validation$MEAQACOSF_Total <- PANAS_SFN_Validation$MEAQACOSF_BA + PANAS_SFN_Validation$MEAQACOSF_DA + PANAS_SFN_Validation$MEAQACOSF_PR + PANAS_SFN_Validation$MEAQACOSF_DS + PANAS_SFN_Validation$MEAQACOSF_RD + PANAS_SFN_Validation$MEAQACOSF_DE_R
+
+# =========================
+
+# MEAQ-ACO-BF ============= 
+PANAS_SFN_Validation$MEAQACOBF_BA <- PANAS_SFN_Validation$MEAQ_51 + PANAS_SFN_Validation$MEAQ_59 
+
+PANAS_SFN_Validation$MEAQACOBF_DA <- PANAS_SFN_Validation$MEAQ_7 + PANAS_SFN_Validation$MEAQ_58 
+
+PANAS_SFN_Validation$MEAQACOBF_PR <- PANAS_SFN_Validation$MEAQ_5 + PANAS_SFN_Validation$MEAQ_36 
+
+PANAS_SFN_Validation$MEAQACOBF_DS <- PANAS_SFN_Validation$MEAQ_22 + PANAS_SFN_Validation$MEAQ_33 
+
+PANAS_SFN_Validation$MEAQACOBF_RD <- PANAS_SFN_Validation$MEAQ_4 + PANAS_SFN_Validation$MEAQ_41 
+
+PANAS_SFN_Validation$MEAQACOBF_DE <- PANAS_SFN_Validation$MEAQ_53 + PANAS_SFN_Validation$MEAQ_62
+
+PANAS_SFN_Validation$MEAQACOBF_DE_R <- PANAS_SFN_Validation$MEAQ_53_r + PANAS_SFN_Validation$MEAQ_62_r
+
+PANAS_SFN_Validation$MEAQACOBF_Total <- PANAS_SFN_Validation$MEAQACOBF_BA + PANAS_SFN_Validation$MEAQACOBF_DA + PANAS_SFN_Validation$MEAQACOBF_PR + PANAS_SFN_Validation$MEAQACOBF_DS + PANAS_SFN_Validation$MEAQACOBF_RD + PANAS_SFN_Validation$MEAQACOBF_DE_R
+# =========================
+
+```
+
+```{r}
+PANAS_SFN_Validation1 <- PANAS_SFN_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "PANAS_NA")]
+
+PANAS_SFN_Validation2 <- PANAS_SFN_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "PANAS_NA")]
+
+PANAS_SFN_Validation3 <- PANAS_SFN_Validation[,c("MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOSF_Total", "PANAS_NA")]
+
+PANAS_SFN_Validation4 <- PANAS_SFN_Validation[,c("MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE", "MEAQACOBF_Total", "PANAS_NA")]
+
+cor.test(PANAS_SFN_Validation$BEAQ, PANAS_SFN_Validation$PANAS_NA)
+```
+
+```{r}
+rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_SFN_Validation2),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_SFN_Validation3),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_SFN_Validation4),type="pearson") 
+```
+
+```{r}
+# PANAS-X Negative Affect  ===========================
+
+# MEAQ_AAQ_MTurk_T1 (N=1052 before cleaning missing data for MEAQ & validation measures)
+# MEAQ_AAQ_Undergrad_SMU_T1 (N=364 before cleaning missing data for MEAQ & validation measures)
+
+### MEAQ_AAQ_MTurk_T1 ### 
+
+colnames(MEAQ_AAQ_MTurk_T1)
+which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_1i")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_62i")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "PANASX_1")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "PANASX_57")
+
+PANAS_XN_Validation_S1 <- MEAQ_AAQ_MTurk_T1
+
+PANAS_XN_Validation_S1$PANASX_NA <- 
+PANAS_XN_Validation_S1$PANASX_11_NA + PANAS_XN_Validation_S1$PANASX_18_NA + PANAS_XN_Validation_S1$PANASX_26_NA + PANAS_XN_Validation_S1$PANASX_32_NA + PANAS_XN_Validation_S1$PANASX_34_NA + PANAS_XN_Validation_S1$PANASX_38_NA + PANAS_XN_Validation_S1$PANASX_40_NA + PANAS_XN_Validation_S1$PANASX_42_NA + PANAS_XN_Validation_S1$PANASX_44_NA + PANAS_XN_Validation_S1$PANASX_50_NA
+
+PANAS_XN_Validation_S1 <- rename(PANAS_XN_Validation_S1, MEAQ_1 = MEAQ_1i, 
+                                 MEAQ_2 = MEAQ_2i, 
+                                 MEAQ_3 = MEAQ_3i, 
+                                 MEAQ_4 = MEAQ_4i, 
+                                 MEAQ_5 = MEAQ_5i, 
+                                 MEAQ_6 = MEAQ_6i, 
+                                 MEAQ_7 = MEAQ_7i, 
+                                 MEAQ_8 = MEAQ_8i, 
+                                 MEAQ_9 = MEAQ_9i, 
+                                 MEAQ_10 = MEAQ_10i, 
+                                 MEAQ_11 = MEAQ_11i, 
+                                 MEAQ_12 = MEAQ_12i, 
+                                 MEAQ_13 = MEAQ_13i, 
+                                 MEAQ_14 = MEAQ_14i,
+                                 MEAQ_15 = MEAQ_15i, 
+                                 MEAQ_16 = MEAQ_16i, 
+                                 MEAQ_17 = MEAQ_17i, 
+                                 MEAQ_18 = MEAQ_18i, 
+                                 MEAQ_19 = MEAQ_19i, 
+                                 MEAQ_20 = MEAQ_20i, 
+                                 MEAQ_21 = MEAQ_21i, 
+                                 MEAQ_22 = MEAQ_22i, 
+                                 MEAQ_23 = MEAQ_23i, 
+                                 MEAQ_24 = MEAQ_24i, 
+                                 MEAQ_25 = MEAQ_25i, 
+                                 MEAQ_26 = MEAQ_26i, 
+                                 MEAQ_27 = MEAQ_27i, 
+                                 MEAQ_28 = MEAQ_28i, 
+                                 MEAQ_29 = MEAQ_29i, 
+                                 MEAQ_30 = MEAQ_30i, 
+                                 MEAQ_31 = MEAQ_31i, 
+                                 MEAQ_32 = MEAQ_32i, 
+                                 MEAQ_33 = MEAQ_33i, 
+                                 MEAQ_34 = MEAQ_34i, 
+                                 MEAQ_35 = MEAQ_35i, 
+                                 MEAQ_36 = MEAQ_36i, 
+                                 MEAQ_37 = MEAQ_37i, 
+                                 MEAQ_38 = MEAQ_38i, 
+                                 MEAQ_39 = MEAQ_39i, 
+                                 MEAQ_40 = MEAQ_40i, 
+                                 MEAQ_41 = MEAQ_41i, 
+                                 MEAQ_42 = MEAQ_42i, 
+                                 MEAQ_43 = MEAQ_43i, 
+                                 MEAQ_44 = MEAQ_44i, 
+                                 MEAQ_45 = MEAQ_45i, 
+                                 MEAQ_46 = MEAQ_46i, 
+                                 MEAQ_47 = MEAQ_47i,
+                                 MEAQ_48 = MEAQ_48i,
+                                 MEAQ_49 = MEAQ_49i, 
+                                 MEAQ_50 = MEAQ_50i, 
+                                 MEAQ_51 = MEAQ_51i, 
+                                 MEAQ_52 = MEAQ_52i, 
+                                 MEAQ_53 = MEAQ_53i, 
+                                 MEAQ_54 = MEAQ_54i, 
+                                 MEAQ_55 = MEAQ_55i, 
+                                 MEAQ_56 = MEAQ_56i, 
+                                 MEAQ_57 = MEAQ_57i, 
+                                 MEAQ_58 = MEAQ_58i, 
+                                 MEAQ_59 = MEAQ_59i, 
+                                 MEAQ_60 = MEAQ_60i, 
+                                 MEAQ_61 = MEAQ_61i,
+                                 MEAQ_62 = MEAQ_62i)
+
+PANAS_XN_Validation_S1 <- PANAS_XN_Validation_S1[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "PANASX_NA")]
+
+### MEAQ_AAQ_Undergrad_SMU_T1 ###
+
+colnames(MEAQ_AAQ_Undergrad_SMU_T1)
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "MEAQ_1")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "MEAQ_62")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "PANASX_1")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "PANASX_57")
+
+PANAS_XN_Validation_S2 <- MEAQ_AAQ_Undergrad_SMU_T1 
+
+PANAS_XN_Validation_S2$PANASX_NA <- 
+PANAS_XN_Validation_S2$PANASX_11_NA + PANAS_XN_Validation_S2$PANASX_18_NA + PANAS_XN_Validation_S2$PANASX_26_NA + PANAS_XN_Validation_S2$PANASX_32_NA + PANAS_XN_Validation_S2$PANASX_34_NA + PANAS_XN_Validation_S2$PANASX_38_NA + PANAS_XN_Validation_S2$PANASX_40_NA + PANAS_XN_Validation_S2$PANASX_42_NA + PANAS_XN_Validation_S2$PANASX_44_NA + PANAS_XN_Validation_S2$PANASX_50_NA
+
+PANAS_XN_Validation_S2 <- PANAS_XN_Validation_S2[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "PANASX_NA")]
+
+PANAS_XN_Validation <- rbind(PANAS_XN_Validation_S1, PANAS_XN_Validation_S2)
+
+PANAS_XN_Validation <- na.omit(PANAS_XN_Validation)
+
+PANAS_XN_Validation <- round_df(PANAS_XN_Validation, 0)
+```
+
+```{r}
+### Reverse coding apart from DE ### 
+PANAS_XN_Validation$MEAQ_23_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_23 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_23 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_23 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_23 %in% 4 ~ 3,   
+  PANAS_XN_Validation$MEAQ_23 %in% 5 ~ 2, 
+  PANAS_XN_Validation$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_23)
+) 
+
+PANAS_XN_Validation$MEAQ_30_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_30 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_30 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_30 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_30 %in% 4 ~ 3,   
+  PANAS_XN_Validation$MEAQ_30 %in% 5 ~ 2, 
+  PANAS_XN_Validation$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_30)
+)
+
+### Reverse coding for DE items (for total score) ###
+
+PANAS_XN_Validation$MEAQ_6_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_6 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_6 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_6 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_6 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_6 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_6 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_6)
+)
+
+PANAS_XN_Validation$MEAQ_12_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_12 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_12 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_12 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_12 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_12 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_12 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_12)
+)
+
+PANAS_XN_Validation$MEAQ_18_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_18 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_18 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_18 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_18 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_18 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_18 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_18)
+)
+
+PANAS_XN_Validation$MEAQ_24_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_24 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_24 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_24 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_24 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_24 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_24 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_24)
+)
+
+PANAS_XN_Validation$MEAQ_29_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_29 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_29 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_29 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_29 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_29 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_29 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_29)
+)
+
+PANAS_XN_Validation$MEAQ_37_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_37 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_37 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_37 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_37 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_37 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_37 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_37)
+)
+
+PANAS_XN_Validation$MEAQ_43_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_43 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_43 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_43 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_43 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_43 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_43 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_43)
+)
+
+PANAS_XN_Validation$MEAQ_48_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_48 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_48 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_48 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_48 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_48 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_48 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_48)
+)
+
+PANAS_XN_Validation$MEAQ_53_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_53 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_53 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_53 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_53 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_53 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_53 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_53)
+)
+
+PANAS_XN_Validation$MEAQ_57_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_57 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_57 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_57 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_57 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_57 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_57 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_57)
+)
+
+PANAS_XN_Validation$MEAQ_62_r <- dplyr::case_when(
+  PANAS_XN_Validation$MEAQ_62 %in% 1 ~ 6, 
+  PANAS_XN_Validation$MEAQ_62 %in% 2 ~ 5, 
+  PANAS_XN_Validation$MEAQ_62 %in% 3 ~ 4,   
+  PANAS_XN_Validation$MEAQ_62 %in% 4 ~ 3, 
+  PANAS_XN_Validation$MEAQ_62 %in% 5 ~ 2,  
+  PANAS_XN_Validation$MEAQ_62 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XN_Validation$MEAQ_62)
+)
+
+# MEAQ-62 =================
+PANAS_XN_Validation$MEAQ62_BA <- PANAS_XN_Validation$MEAQ_1 + PANAS_XN_Validation$MEAQ_8 + PANAS_XN_Validation$MEAQ_14 +  PANAS_XN_Validation$MEAQ_20 + PANAS_XN_Validation$MEAQ_26 + PANAS_XN_Validation$MEAQ_32 + PANAS_XN_Validation$MEAQ_39 + PANAS_XN_Validation$MEAQ_45 + PANAS_XN_Validation$MEAQ_51 + PANAS_XN_Validation$MEAQ_55 + PANAS_XN_Validation$MEAQ_59
+
+PANAS_XN_Validation$MEAQ62_DA <- PANAS_XN_Validation$MEAQ_2 + PANAS_XN_Validation$MEAQ_7 + PANAS_XN_Validation$MEAQ_13 + PANAS_XN_Validation$MEAQ_19 + PANAS_XN_Validation$MEAQ_25 + PANAS_XN_Validation$MEAQ_31 + PANAS_XN_Validation$MEAQ_34 + PANAS_XN_Validation$MEAQ_38 + PANAS_XN_Validation$MEAQ_44 + PANAS_XN_Validation$MEAQ_50 + PANAS_XN_Validation$MEAQ_54 + PANAS_XN_Validation$MEAQ_58 + PANAS_XN_Validation$MEAQ_61
+
+PANAS_XN_Validation$MEAQ62_PR <- PANAS_XN_Validation$MEAQ_5 + PANAS_XN_Validation$MEAQ_11 + PANAS_XN_Validation$MEAQ_17 + PANAS_XN_Validation$MEAQ_30_r + PANAS_XN_Validation$MEAQ_36 + PANAS_XN_Validation$MEAQ_42 + PANAS_XN_Validation$MEAQ_47 
+
+PANAS_XN_Validation$MEAQ62_DS <- PANAS_XN_Validation$MEAQ_3 + PANAS_XN_Validation$MEAQ_9 + PANAS_XN_Validation$MEAQ_15 + PANAS_XN_Validation$MEAQ_22 + PANAS_XN_Validation$MEAQ_27 + PANAS_XN_Validation$MEAQ_33 + PANAS_XN_Validation$MEAQ_40 
+
+PANAS_XN_Validation$MEAQ62_RD <- PANAS_XN_Validation$MEAQ_4 + PANAS_XN_Validation$MEAQ_10 + PANAS_XN_Validation$MEAQ_16 + PANAS_XN_Validation$MEAQ_21 + PANAS_XN_Validation$MEAQ_23_r + PANAS_XN_Validation$MEAQ_28 + PANAS_XN_Validation$MEAQ_35 + PANAS_XN_Validation$MEAQ_41 + PANAS_XN_Validation$MEAQ_46 + PANAS_XN_Validation$MEAQ_49 + PANAS_XN_Validation$MEAQ_52 + PANAS_XN_Validation$MEAQ_56 + PANAS_XN_Validation$MEAQ_60
+
+PANAS_XN_Validation$MEAQ62_DE <- PANAS_XN_Validation$MEAQ_6 + PANAS_XN_Validation$MEAQ_12 + PANAS_XN_Validation$MEAQ_18 + PANAS_XN_Validation$MEAQ_24 + PANAS_XN_Validation$MEAQ_29 + PANAS_XN_Validation$MEAQ_37 + PANAS_XN_Validation$MEAQ_43 + PANAS_XN_Validation$MEAQ_48 + PANAS_XN_Validation$MEAQ_53 + PANAS_XN_Validation$MEAQ_57 + PANAS_XN_Validation$MEAQ_62
+
+PANAS_XN_Validation$MEAQ62_DE_R <- PANAS_XN_Validation$MEAQ_6_r + PANAS_XN_Validation$MEAQ_12_r + PANAS_XN_Validation$MEAQ_18_r + PANAS_XN_Validation$MEAQ_24_r + PANAS_XN_Validation$MEAQ_29_r + PANAS_XN_Validation$MEAQ_37_r + PANAS_XN_Validation$MEAQ_43_r + PANAS_XN_Validation$MEAQ_48_r + PANAS_XN_Validation$MEAQ_53_r + PANAS_XN_Validation$MEAQ_57_r + PANAS_XN_Validation$MEAQ_62_r
+
+PANAS_XN_Validation$MEAQ62_Total <- PANAS_XN_Validation$MEAQ62_BA + PANAS_XN_Validation$MEAQ62_DA + PANAS_XN_Validation$MEAQ62_PR + PANAS_XN_Validation$MEAQ62_DS + PANAS_XN_Validation$MEAQ62_RD + PANAS_XN_Validation$MEAQ62_DE_R
+
+# =========================
+
+# MEAQ-GA =================
+PANAS_XN_Validation$MEAQGA_BA <- PANAS_XN_Validation$MEAQ_1 + PANAS_XN_Validation$MEAQ_8 + PANAS_XN_Validation$MEAQ_39 + PANAS_XN_Validation$MEAQ_51 + PANAS_XN_Validation$MEAQ_55
+
+PANAS_XN_Validation$MEAQGA_DA <- PANAS_XN_Validation$MEAQ_2 + PANAS_XN_Validation$MEAQ_7 + PANAS_XN_Validation$MEAQ_25 + PANAS_XN_Validation$MEAQ_31 + PANAS_XN_Validation$MEAQ_44 
+
+PANAS_XN_Validation$MEAQGA_PR <- PANAS_XN_Validation$MEAQ_5 + PANAS_XN_Validation$MEAQ_17 + PANAS_XN_Validation$MEAQ_30_r + PANAS_XN_Validation$MEAQ_36 + PANAS_XN_Validation$MEAQ_42 
+  
+PANAS_XN_Validation$MEAQGA_DS <- PANAS_XN_Validation$MEAQ_9 + PANAS_XN_Validation$MEAQ_22 + PANAS_XN_Validation$MEAQ_27 + PANAS_XN_Validation$MEAQ_33 + PANAS_XN_Validation$MEAQ_40
+  
+PANAS_XN_Validation$MEAQGA_RD <- PANAS_XN_Validation$MEAQ_35 + PANAS_XN_Validation$MEAQ_41 + PANAS_XN_Validation$MEAQ_52 + PANAS_XN_Validation$MEAQ_56 + PANAS_XN_Validation$MEAQ_60 
+  
+PANAS_XN_Validation$MEAQGA_DE <- PANAS_XN_Validation$MEAQ_12 + PANAS_XN_Validation$MEAQ_13 + PANAS_XN_Validation$MEAQ_43 + PANAS_XN_Validation$MEAQ_57 + PANAS_XN_Validation$MEAQ_62
+
+# =========================
+
+# BEAQ ==================== 
+PANAS_XN_Validation$BEAQ <-  PANAS_XN_Validation$MEAQ_58 +  PANAS_XN_Validation$MEAQ_59 + PANAS_XN_Validation$MEAQ_33 + PANAS_XN_Validation$MEAQ_56 + PANAS_XN_Validation$MEAQ_42 + PANAS_XN_Validation$MEAQ_29 + PANAS_XN_Validation$MEAQ_44 + PANAS_XN_Validation$MEAQ_14 + PANAS_XN_Validation$MEAQ_41 + PANAS_XN_Validation$MEAQ_36 + PANAS_XN_Validation$MEAQ_45 + PANAS_XN_Validation$MEAQ_25 + PANAS_XN_Validation$MEAQ_27 + PANAS_XN_Validation$MEAQ_32 + PANAS_XN_Validation$MEAQ_50
+# =========================
+
+# MEAQ-ACO-X ============= 
+PANAS_XN_Validation$MEAQACOX_BA <- PANAS_XN_Validation$MEAQ_14 + PANAS_XN_Validation$MEAQ_26 + PANAS_XN_Validation$MEAQ_32 + PANAS_XN_Validation$MEAQ_51 + PANAS_XN_Validation$MEAQ_55 
+
+PANAS_XN_Validation$MEAQACOX_DA <- PANAS_XN_Validation$MEAQ_2 + PANAS_XN_Validation$MEAQ_19 + PANAS_XN_Validation$MEAQ_25 + PANAS_XN_Validation$MEAQ_34 + PANAS_XN_Validation$MEAQ_54 + PANAS_XN_Validation$MEAQ_61 
+
+PANAS_XN_Validation$MEAQACOX_PR <- PANAS_XN_Validation$MEAQ_17 + PANAS_XN_Validation$MEAQ_42 + PANAS_XN_Validation$MEAQ_47
+
+PANAS_XN_Validation$MEAQACOX_DS <- PANAS_XN_Validation$MEAQ_15 + PANAS_XN_Validation$MEAQ_33 + PANAS_XN_Validation$MEAQ_40 
+
+PANAS_XN_Validation$MEAQACOX_RD <- PANAS_XN_Validation$MEAQ_10 + PANAS_XN_Validation$MEAQ_21 + PANAS_XN_Validation$MEAQ_23_r + PANAS_XN_Validation$MEAQ_28 + PANAS_XN_Validation$MEAQ_49 + PANAS_XN_Validation$MEAQ_60 
+
+PANAS_XN_Validation$MEAQACOX_DE <- PANAS_XN_Validation$MEAQ_6 + PANAS_XN_Validation$MEAQ_12 + PANAS_XN_Validation$MEAQ_37 + PANAS_XN_Validation$MEAQ_53 + PANAS_XN_Validation$MEAQ_62
+
+PANAS_XN_Validation$MEAQACOX_DE_R <- PANAS_XN_Validation$MEAQ_6 + PANAS_XN_Validation$MEAQ_12 + PANAS_XN_Validation$MEAQ_37 + PANAS_XN_Validation$MEAQ_53 + PANAS_XN_Validation$MEAQ_62
+
+PANAS_XN_Validation$MEAQACOX_Total <- PANAS_XN_Validation$MEAQACOX_BA + PANAS_XN_Validation$MEAQACOX_DA + PANAS_XN_Validation$MEAQACOX_PR + PANAS_XN_Validation$MEAQACOX_DS + PANAS_XN_Validation$MEAQACOX_RD + PANAS_XN_Validation$MEAQACOX_DE_R
+
+# =========================
+
+# MEAQ-ACO-BF ============= 
+PANAS_XN_Validation$MEAQACOBF_BA <- PANAS_XN_Validation$MEAQ_51 + PANAS_XN_Validation$MEAQ_59 
+
+PANAS_XN_Validation$MEAQACOBF_DA <- PANAS_XN_Validation$MEAQ_7 + PANAS_XN_Validation$MEAQ_58 
+
+PANAS_XN_Validation$MEAQACOBF_PR <- PANAS_XN_Validation$MEAQ_5 + PANAS_XN_Validation$MEAQ_36 
+
+PANAS_XN_Validation$MEAQACOBF_DS <- PANAS_XN_Validation$MEAQ_22 + PANAS_XN_Validation$MEAQ_33 
+
+PANAS_XN_Validation$MEAQACOBF_RD <- PANAS_XN_Validation$MEAQ_4 + PANAS_XN_Validation$MEAQ_41 
+
+PANAS_XN_Validation$MEAQACOBF_DE <- PANAS_XN_Validation$MEAQ_53 + PANAS_XN_Validation$MEAQ_62
+
+PANAS_XN_Validation$MEAQACOBF_DE_R <- PANAS_XN_Validation$MEAQ_53_r + PANAS_XN_Validation$MEAQ_62_r
+
+PANAS_XN_Validation$MEAQACOBF_Total <- PANAS_XN_Validation$MEAQACOBF_BA + PANAS_XN_Validation$MEAQACOBF_DA + PANAS_XN_Validation$MEAQACOBF_PR + PANAS_XN_Validation$MEAQACOBF_DS + PANAS_XN_Validation$MEAQACOBF_RD + PANAS_XN_Validation$MEAQACOBF_DE_R
+# =========================
+
+```
+
+```{r}
+PANAS_XN_Validation1 <- PANAS_XN_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "PANASX_NA")]
+
+PANAS_XN_Validation2 <- PANAS_XN_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "PANASX_NA")]
+
+PANAS_XN_Validation3 <- PANAS_XN_Validation[,c("MEAQACOX_BA", "MEAQACOX_DA", "MEAQACOX_PR", "MEAQACOX_DS", "MEAQACOX_RD", "MEAQACOX_DE", "MEAQACOX_Total", "PANASX_NA")]
+
+PANAS_XN_Validation4 <- PANAS_XN_Validation[,c("MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE", "MEAQACOBF_Total", "PANASX_NA")]
+
+cor.test(PANAS_XN_Validation$BEAQ, PANAS_XN_Validation$PANASX_NA)
+```
+
+```{r}
+rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_XN_Validation2),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_XN_Validation3),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_XN_Validation4),type="pearson") 
+```
+
+### Quality of Life Measures 
+
+```{r}
+# PANAS-SF Positive Affect  ===========================
+
+### MEAQ_Dev_Undergrad_Iowa ###
+
+colnames(MEAQ_Dev_Undergrad_Iowa)
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "MEAQ1")
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "MEAQ39")
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "PANAS1")
+which(colnames(MEAQ_Dev_Undergrad_Iowa) == "PANAS20")
+
+PANAS_SFP_Validation_S1 <- MEAQ_Dev_Undergrad_Iowa
+
+PANAS_SFP_Validation_S1$PANAS_PA <- PANAS_SFP_Validation_S1$PANAS1 + PANAS_SFP_Validation_S1$PANAS3 + PANAS_SFP_Validation_S1$PANAS5 + PANAS_SFP_Validation_S1$PANAS9 + PANAS_SFP_Validation_S1$PANAS10 + 
+PANAS_SFP_Validation_S1$PANAS12 + PANAS_SFP_Validation_S1$PANAS14 + 
+PANAS_SFP_Validation_S1$PANAS16 + PANAS_SFP_Validation_S1$PANAS17 + PANAS_SFP_Validation_S1$PANAS19
+
+PANAS_SFP_Validation_S1 <- rename(PANAS_SFP_Validation_S1, MEAQ_1 = MEAQ1,  
+                                       MEAQ_2 = MEAQ2, 
+                                       MEAQ_3 = MEAQ3, 
+                                       MEAQ_4 = MEAQ4, 
+                                       MEAQ_5 = MEAQ5, 
+                                       MEAQ_6 = MEAQ6, 
+                                       MEAQ_7 = MEAQ7, 
+                                       MEAQ_8 = MEAQ8, 
+                                       MEAQ_9 = MEAQ9, 
+                                       MEAQ_10 = MEAQ10, 
+                                       MEAQ_11 = MEAQ11, 
+                                       MEAQ_12 = MEAQ12, 
+                                       MEAQ_13 = MEAQ13, 
+                                       MEAQ_14 = MEAQ14B,
+                                       MEAQ_15 = MEAQ15, 
+                                       MEAQ_16 = MEAQ16, 
+                                       MEAQ_17 = MEAQ17, 
+                                       MEAQ_18 = MEAQ18, 
+                                       MEAQ_19 = MEAQ19, 
+                                       MEAQ_20 = MEAQ20, 
+                                       MEAQ_21 = MEAQ21, 
+                                       MEAQ_22 = MEAQ22, 
+                                       MEAQ_23 = MEAQ23, 
+                                       MEAQ_24 = MEAQ24, 
+                                       MEAQ_25 = MEAQ25B, 
+                                       MEAQ_26 = MEAQ26, 
+                                       MEAQ_27 = MEAQ27B, 
+                                       MEAQ_28 = MEAQ28, 
+                                       MEAQ_29 = MEAQ29B, 
+                                       MEAQ_30 = MEAQ30, 
+                                       MEAQ_31 = MEAQ31, 
+                                       MEAQ_32 = MEAQ32B, 
+                                       MEAQ_33 = MEAQ33B, 
+                                       MEAQ_34 = MEAQ34, 
+                                       MEAQ_35 = MEAQ35, 
+                                       MEAQ_36 = MEAQ36B, 
+                                       MEAQ_37 = MEAQ37, 
+                                       MEAQ_38 = MEAQ38, 
+                                       MEAQ_39 = MEAQ39, 
+                                       MEAQ_40 = MEAQ40, 
+                                       MEAQ_41 = MEAQ41B, 
+                                       MEAQ_42 = MEAQ42B, 
+                                       MEAQ_43 = MEAQ43, 
+                                       MEAQ_44 = MEAQ44B, 
+                                       MEAQ_45 = MEAQ45B, 
+                                       MEAQ_46 = MEAQ46, 
+                                       MEAQ_47 = MEAQ47,
+                                       MEAQ_48 = MEAQ48,
+                                       MEAQ_49 = MEAQ49, 
+                                       MEAQ_50 = MEAQ50B, 
+                                       MEAQ_51 = MEAQ51, 
+                                       MEAQ_52 = MEAQ52, 
+                                       MEAQ_53 = MEAQ53, 
+                                       MEAQ_54 = MEAQ54, 
+                                       MEAQ_55 = MEAQ55, 
+                                       MEAQ_56 = MEAQ56B, 
+                                       MEAQ_57 = MEAQ57, 
+                                       MEAQ_58 = MEAQ58B, 
+                                       MEAQ_59 = MEAQ59B, 
+                                       MEAQ_60 = MEAQ60, 
+                                       MEAQ_61 = MEAQ61,
+                                       MEAQ_62 = MEAQ62) 
+
+PANAS_SFP_Validation_S1 <- PANAS_SFP_Validation_S1[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "PANAS_PA")]
+
+### MEAQ_Dev_Outpatient_Clinical ###
+
+colnames(MEAQ_Dev_Outpatient_Clinical)
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "MEAQ1")
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "MEAQ39")
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "panas1")
+which(colnames(MEAQ_Dev_Outpatient_Clinical) == "panas20")
+
+PANAS_SFP_Validation_S2 <- MEAQ_Dev_Outpatient_Clinical
+
+PANAS_SFP_Validation_S2 <- rename(PANAS_SFP_Validation_S2, 
+                                       PANAS1 = panas1, 
+                                       PANAS3 = panas3,
+                                       PANAS5 = panas5,
+                                       PANAS9 = panas9,
+                                       PANAS10 = panas10,
+                                       PANAS12 = panas12, 
+                                       PANAS14 = panas14,
+                                       PANAS16 = panas16,
+                                       PANAS17 = panas17,
+                                       PANAS19 = panas19)
+
+PANAS_SFP_Validation_S2$PANAS_PA <- PANAS_SFP_Validation_S2$PANAS1 + PANAS_SFP_Validation_S2$PANAS3 + PANAS_SFP_Validation_S2$PANAS5 + PANAS_SFP_Validation_S2$PANAS9 + PANAS_SFP_Validation_S2$PANAS10 + 
+PANAS_SFP_Validation_S2$PANAS12 + PANAS_SFP_Validation_S2$PANAS14 + 
+PANAS_SFP_Validation_S2$PANAS16 + PANAS_SFP_Validation_S2$PANAS17 + PANAS_SFP_Validation_S2$PANAS19
+
+
+PANAS_SFP_Validation_S2 <- rename(PANAS_SFP_Validation_S2, MEAQ_1 = MEAQ1, 
+                                            MEAQ_2 = MEAQ2, 
+                                            MEAQ_3 = MEAQ3, 
+                                            MEAQ_4 = MEAQ4, 
+                                            MEAQ_5 = MEAQ5, 
+                                            MEAQ_6 = MEAQ6, 
+                                            MEAQ_7 = MEAQ7, 
+                                            MEAQ_8 = MEAQ8, 
+                                            MEAQ_9 = MEAQ9, 
+                                            MEAQ_10 = MEAQ10, 
+                                            MEAQ_11 = MEAQ11, 
+                                            MEAQ_12 = MEAQ12, 
+                                            MEAQ_13 = MEAQ13, 
+                                            MEAQ_14 = MEAQ14B,
+                                            MEAQ_15 = MEAQ15, 
+                                            MEAQ_16 = MEAQ16, 
+                                            MEAQ_17 = MEAQ17, 
+                                            MEAQ_18 = MEAQ18, 
+                                            MEAQ_19 = MEAQ19, 
+                                            MEAQ_20 = MEAQ20, 
+                                            MEAQ_21 = MEAQ21, 
+                                            MEAQ_22 = MEAQ22, 
+                                            MEAQ_23 = MEAQ23, 
+                                            MEAQ_24 = MEAQ24, 
+                                            MEAQ_25 = MEAQ25B, 
+                                            MEAQ_26 = MEAQ26, 
+                                            MEAQ_27 = MEAQ27B, 
+                                            MEAQ_28 = MEAQ28, 
+                                            MEAQ_29 = MEAQ29B, 
+                                            MEAQ_30 = MEAQ30, 
+                                            MEAQ_31 = MEAQ31, 
+                                            MEAQ_32 = MEAQ32B, 
+                                            MEAQ_33 = MEAQ33B, 
+                                            MEAQ_34 = MEAQ34, 
+                                            MEAQ_35 = MEAQ35, 
+                                            MEAQ_36 = MEAQ36B, 
+                                            MEAQ_37 = MEAQ37, 
+                                            MEAQ_38 = MEAQ38, 
+                                            MEAQ_39 = MEAQ39, 
+                                            MEAQ_40 = MEAQ40, 
+                                            MEAQ_41 = MEAQ41B, 
+                                            MEAQ_42 = MEAQ42B, 
+                                            MEAQ_43 = MEAQ43, 
+                                            MEAQ_44 = MEAQ44B, 
+                                            MEAQ_45 = MEAQ45B, 
+                                            MEAQ_46 = MEAQ46, 
+                                            MEAQ_47 = MEAQ47,
+                                            MEAQ_48 = MEAQ48,
+                                            MEAQ_49 = MEAQ49, 
+                                            MEAQ_50 = MEAQ50B, 
+                                            MEAQ_51 = MEAQ51, 
+                                            MEAQ_52 = MEAQ52, 
+                                            MEAQ_53 = MEAQ53, 
+                                            MEAQ_54 = MEAQ54, 
+                                            MEAQ_55 = MEAQ55, 
+                                            MEAQ_56 = MEAQ56B, 
+                                            MEAQ_57 = MEAQ57, 
+                                            MEAQ_58 = MEAQ58B, 
+                                            MEAQ_59 = MEAQ59B, 
+                                            MEAQ_60 = MEAQ60, 
+                                            MEAQ_61 = MEAQ61,
+                                            MEAQ_62 = MEAQ62) 
+
+PANAS_SFP_Validation_S2 <- PANAS_SFP_Validation_S2[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "PANAS_PA")]
+
+PANAS_SFP_Validation <- rbind(PANAS_SFP_Validation_S1, PANAS_SFP_Validation_S2)
+
+PANAS_SFP_Validation <- na.omit(PANAS_SFP_Validation)
+
+PANAS_SFP_Validation <- round_df(PANAS_SFP_Validation)
+```
+
+```{r}
+### Reverse coding apart from DE ### 
+PANAS_SFP_Validation$MEAQ_23_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_23 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_23 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_23 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_23 %in% 4 ~ 3,   
+  PANAS_SFP_Validation$MEAQ_23 %in% 5 ~ 2, 
+  PANAS_SFP_Validation$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_23)
+) 
+
+PANAS_SFP_Validation$MEAQ_30_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_30 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_30 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_30 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_30 %in% 4 ~ 3,   
+  PANAS_SFP_Validation$MEAQ_30 %in% 5 ~ 2, 
+  PANAS_SFP_Validation$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_30)
+)
+
+### Reverse coding for DE items (for total score) ###
+
+PANAS_SFP_Validation$MEAQ_6_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_6 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_6 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_6 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_6 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_6 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_6 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_6)
+)
+
+PANAS_SFP_Validation$MEAQ_12_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_12 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_12 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_12 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_12 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_12 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_12 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_12)
+)
+
+PANAS_SFP_Validation$MEAQ_18_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_18 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_18 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_18 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_18 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_18 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_18 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_18)
+)
+
+PANAS_SFP_Validation$MEAQ_24_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_24 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_24 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_24 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_24 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_24 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_24 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_24)
+)
+
+PANAS_SFP_Validation$MEAQ_29_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_29 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_29 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_29 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_29 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_29 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_29 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_29)
+)
+
+PANAS_SFP_Validation$MEAQ_37_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_37 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_37 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_37 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_37 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_37 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_37 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_37)
+)
+
+PANAS_SFP_Validation$MEAQ_43_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_43 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_43 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_43 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_43 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_43 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_43 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_43)
+)
+
+PANAS_SFP_Validation$MEAQ_48_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_48 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_48 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_48 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_48 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_48 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_48 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_48)
+)
+
+PANAS_SFP_Validation$MEAQ_53_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_53 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_53 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_53 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_53 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_53 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_53 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_53)
+)
+
+PANAS_SFP_Validation$MEAQ_57_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_57 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_57 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_57 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_57 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_57 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_57 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_57)
+)
+
+PANAS_SFP_Validation$MEAQ_62_r <- dplyr::case_when(
+  PANAS_SFP_Validation$MEAQ_62 %in% 1 ~ 6, 
+  PANAS_SFP_Validation$MEAQ_62 %in% 2 ~ 5, 
+  PANAS_SFP_Validation$MEAQ_62 %in% 3 ~ 4,   
+  PANAS_SFP_Validation$MEAQ_62 %in% 4 ~ 3, 
+  PANAS_SFP_Validation$MEAQ_62 %in% 5 ~ 2,  
+  PANAS_SFP_Validation$MEAQ_62 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_SFP_Validation$MEAQ_62)
+)
+
+# MEAQ-62 =================
+PANAS_SFP_Validation$MEAQ62_BA <- PANAS_SFP_Validation$MEAQ_1 + PANAS_SFP_Validation$MEAQ_8 + PANAS_SFP_Validation$MEAQ_14 +  PANAS_SFP_Validation$MEAQ_20 + PANAS_SFP_Validation$MEAQ_26 + PANAS_SFP_Validation$MEAQ_32 + PANAS_SFP_Validation$MEAQ_39 + PANAS_SFP_Validation$MEAQ_45 + PANAS_SFP_Validation$MEAQ_51 + PANAS_SFP_Validation$MEAQ_55 + PANAS_SFP_Validation$MEAQ_59
+
+PANAS_SFP_Validation$MEAQ62_DA <- PANAS_SFP_Validation$MEAQ_2 + PANAS_SFP_Validation$MEAQ_7 + PANAS_SFP_Validation$MEAQ_13 + PANAS_SFP_Validation$MEAQ_19 + PANAS_SFP_Validation$MEAQ_25 + PANAS_SFP_Validation$MEAQ_31 + PANAS_SFP_Validation$MEAQ_34 + PANAS_SFP_Validation$MEAQ_38 + PANAS_SFP_Validation$MEAQ_44 + PANAS_SFP_Validation$MEAQ_50 + PANAS_SFP_Validation$MEAQ_54 + PANAS_SFP_Validation$MEAQ_58 + PANAS_SFP_Validation$MEAQ_61
+
+PANAS_SFP_Validation$MEAQ62_PR <- PANAS_SFP_Validation$MEAQ_5 + PANAS_SFP_Validation$MEAQ_11 + PANAS_SFP_Validation$MEAQ_17 + PANAS_SFP_Validation$MEAQ_30_r + PANAS_SFP_Validation$MEAQ_36 + PANAS_SFP_Validation$MEAQ_42 + PANAS_SFP_Validation$MEAQ_47 
+
+PANAS_SFP_Validation$MEAQ62_DS <- PANAS_SFP_Validation$MEAQ_3 + PANAS_SFP_Validation$MEAQ_9 + PANAS_SFP_Validation$MEAQ_15 + PANAS_SFP_Validation$MEAQ_22 + PANAS_SFP_Validation$MEAQ_27 + PANAS_SFP_Validation$MEAQ_33 + PANAS_SFP_Validation$MEAQ_40 
+
+PANAS_SFP_Validation$MEAQ62_RD <- PANAS_SFP_Validation$MEAQ_4 + PANAS_SFP_Validation$MEAQ_10 + PANAS_SFP_Validation$MEAQ_16 + PANAS_SFP_Validation$MEAQ_21 + PANAS_SFP_Validation$MEAQ_23_r + PANAS_SFP_Validation$MEAQ_28 + PANAS_SFP_Validation$MEAQ_35 + PANAS_SFP_Validation$MEAQ_41 + PANAS_SFP_Validation$MEAQ_46 + PANAS_SFP_Validation$MEAQ_49 + PANAS_SFP_Validation$MEAQ_52 + PANAS_SFP_Validation$MEAQ_56 + PANAS_SFP_Validation$MEAQ_60
+
+PANAS_SFP_Validation$MEAQ62_DE <- PANAS_SFP_Validation$MEAQ_6 + PANAS_SFP_Validation$MEAQ_12 + PANAS_SFP_Validation$MEAQ_18 + PANAS_SFP_Validation$MEAQ_24 + PANAS_SFP_Validation$MEAQ_29 + PANAS_SFP_Validation$MEAQ_37 + PANAS_SFP_Validation$MEAQ_43 + PANAS_SFP_Validation$MEAQ_48 + PANAS_SFP_Validation$MEAQ_53 + PANAS_SFP_Validation$MEAQ_57 + PANAS_SFP_Validation$MEAQ_62
+
+PANAS_SFP_Validation$MEAQ62_DE_R <- PANAS_SFP_Validation$MEAQ_6_r + PANAS_SFP_Validation$MEAQ_12_r + PANAS_SFP_Validation$MEAQ_18_r + PANAS_SFP_Validation$MEAQ_24_r + PANAS_SFP_Validation$MEAQ_29_r + PANAS_SFP_Validation$MEAQ_37_r + PANAS_SFP_Validation$MEAQ_43_r + PANAS_SFP_Validation$MEAQ_48_r + PANAS_SFP_Validation$MEAQ_53_r + PANAS_SFP_Validation$MEAQ_57_r + PANAS_SFP_Validation$MEAQ_62_r
+
+PANAS_SFP_Validation$MEAQ62_Total <- PANAS_SFP_Validation$MEAQ62_BA + PANAS_SFP_Validation$MEAQ62_DA + PANAS_SFP_Validation$MEAQ62_PR + PANAS_SFP_Validation$MEAQ62_DS + PANAS_SFP_Validation$MEAQ62_RD + PANAS_SFP_Validation$MEAQ62_DE_R
+
+# =========================
+
+# MEAQ-GA =================
+PANAS_SFP_Validation$MEAQGA_BA <- PANAS_SFP_Validation$MEAQ_1 + PANAS_SFP_Validation$MEAQ_8 + PANAS_SFP_Validation$MEAQ_39 + PANAS_SFP_Validation$MEAQ_51 + PANAS_SFP_Validation$MEAQ_55
+
+PANAS_SFP_Validation$MEAQGA_DA <- PANAS_SFP_Validation$MEAQ_2 + PANAS_SFP_Validation$MEAQ_7 + PANAS_SFP_Validation$MEAQ_25 + PANAS_SFP_Validation$MEAQ_31 + PANAS_SFP_Validation$MEAQ_44 
+
+PANAS_SFP_Validation$MEAQGA_PR <- PANAS_SFP_Validation$MEAQ_5 + PANAS_SFP_Validation$MEAQ_17 + PANAS_SFP_Validation$MEAQ_30_r + PANAS_SFP_Validation$MEAQ_36 + PANAS_SFP_Validation$MEAQ_42 
+  
+PANAS_SFP_Validation$MEAQGA_DS <- PANAS_SFP_Validation$MEAQ_9 + PANAS_SFP_Validation$MEAQ_22 + PANAS_SFP_Validation$MEAQ_27 + PANAS_SFP_Validation$MEAQ_33 + PANAS_SFP_Validation$MEAQ_40
+  
+PANAS_SFP_Validation$MEAQGA_RD <- PANAS_SFP_Validation$MEAQ_35 + PANAS_SFP_Validation$MEAQ_41 + PANAS_SFP_Validation$MEAQ_52 + PANAS_SFP_Validation$MEAQ_56 + PANAS_SFP_Validation$MEAQ_60 
+  
+PANAS_SFP_Validation$MEAQGA_DE <- PANAS_SFP_Validation$MEAQ_12 + PANAS_SFP_Validation$MEAQ_13 + PANAS_SFP_Validation$MEAQ_43 + PANAS_SFP_Validation$MEAQ_57 + PANAS_SFP_Validation$MEAQ_62
+
+# =========================
+
+# BEAQ ==================== 
+PANAS_SFP_Validation$BEAQ <-  PANAS_SFP_Validation$MEAQ_58 +  PANAS_SFP_Validation$MEAQ_59 + PANAS_SFP_Validation$MEAQ_33 + PANAS_SFP_Validation$MEAQ_56 + PANAS_SFP_Validation$MEAQ_42 + PANAS_SFP_Validation$MEAQ_29 + PANAS_SFP_Validation$MEAQ_44 + PANAS_SFP_Validation$MEAQ_14 + PANAS_SFP_Validation$MEAQ_41 + PANAS_SFP_Validation$MEAQ_36 + PANAS_SFP_Validation$MEAQ_45 + PANAS_SFP_Validation$MEAQ_25 + PANAS_SFP_Validation$MEAQ_27 + PANAS_SFP_Validation$MEAQ_32 + PANAS_SFP_Validation$MEAQ_50
+# =========================
+
+# MEAQ-ACO-SF ============= 
+PANAS_SFP_Validation$MEAQACOSF_BA <- PANAS_SFP_Validation$MEAQ_14 + PANAS_SFP_Validation$MEAQ_26 + PANAS_SFP_Validation$MEAQ_32 + PANAS_SFP_Validation$MEAQ_51 + PANAS_SFP_Validation$MEAQ_55 
+
+PANAS_SFP_Validation$MEAQACOSF_DA <- PANAS_SFP_Validation$MEAQ_2 + PANAS_SFP_Validation$MEAQ_19 + PANAS_SFP_Validation$MEAQ_25 + PANAS_SFP_Validation$MEAQ_34 + PANAS_SFP_Validation$MEAQ_54 + PANAS_SFP_Validation$MEAQ_61 
+
+PANAS_SFP_Validation$MEAQACOSF_PR <- PANAS_SFP_Validation$MEAQ_17 + PANAS_SFP_Validation$MEAQ_42 + PANAS_SFP_Validation$MEAQ_47
+
+PANAS_SFP_Validation$MEAQACOSF_DS <- PANAS_SFP_Validation$MEAQ_15 + PANAS_SFP_Validation$MEAQ_33 + PANAS_SFP_Validation$MEAQ_40 
+
+PANAS_SFP_Validation$MEAQACOSF_RD <- PANAS_SFP_Validation$MEAQ_10 + PANAS_SFP_Validation$MEAQ_21 + PANAS_SFP_Validation$MEAQ_23_r + PANAS_SFP_Validation$MEAQ_28 + PANAS_SFP_Validation$MEAQ_49 + PANAS_SFP_Validation$MEAQ_60 
+
+PANAS_SFP_Validation$MEAQACOSF_DE <- PANAS_SFP_Validation$MEAQ_6 + PANAS_SFP_Validation$MEAQ_12 + PANAS_SFP_Validation$MEAQ_37 + PANAS_SFP_Validation$MEAQ_53 + PANAS_SFP_Validation$MEAQ_62
+
+PANAS_SFP_Validation$MEAQACOSF_DE_R <- PANAS_SFP_Validation$MEAQ_6 + PANAS_SFP_Validation$MEAQ_12 + PANAS_SFP_Validation$MEAQ_37 + PANAS_SFP_Validation$MEAQ_53 + PANAS_SFP_Validation$MEAQ_62
+
+PANAS_SFP_Validation$MEAQACOSF_Total <- PANAS_SFP_Validation$MEAQACOSF_BA + PANAS_SFP_Validation$MEAQACOSF_DA + PANAS_SFP_Validation$MEAQACOSF_PR + PANAS_SFP_Validation$MEAQACOSF_DS + PANAS_SFP_Validation$MEAQACOSF_RD + PANAS_SFP_Validation$MEAQACOSF_DE_R
+
+# =========================
+
+# MEAQ-ACO-BF ============= 
+PANAS_SFP_Validation$MEAQACOBF_BA <- PANAS_SFP_Validation$MEAQ_51 + PANAS_SFP_Validation$MEAQ_59 
+
+PANAS_SFP_Validation$MEAQACOBF_DA <- PANAS_SFP_Validation$MEAQ_7 + PANAS_SFP_Validation$MEAQ_58 
+
+PANAS_SFP_Validation$MEAQACOBF_PR <- PANAS_SFP_Validation$MEAQ_5 + PANAS_SFP_Validation$MEAQ_36 
+
+PANAS_SFP_Validation$MEAQACOBF_DS <- PANAS_SFP_Validation$MEAQ_22 + PANAS_SFP_Validation$MEAQ_33 
+
+PANAS_SFP_Validation$MEAQACOBF_RD <- PANAS_SFP_Validation$MEAQ_4 + PANAS_SFP_Validation$MEAQ_41 
+
+PANAS_SFP_Validation$MEAQACOBF_DE <- PANAS_SFP_Validation$MEAQ_53 + PANAS_SFP_Validation$MEAQ_62
+
+PANAS_SFP_Validation$MEAQACOBF_DE_R <- PANAS_SFP_Validation$MEAQ_53_r + PANAS_SFP_Validation$MEAQ_62_r
+
+PANAS_SFP_Validation$MEAQACOBF_Total <- PANAS_SFP_Validation$MEAQACOBF_BA + PANAS_SFP_Validation$MEAQACOBF_DA + PANAS_SFP_Validation$MEAQACOBF_PR + PANAS_SFP_Validation$MEAQACOBF_DS + PANAS_SFP_Validation$MEAQACOBF_RD + PANAS_SFP_Validation$MEAQACOBF_DE_R
+# =========================
+
+```
+
+```{r}
+PANAS_SFP_Validation1 <- PANAS_SFP_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "PANAS_PA")]
+
+PANAS_SFP_Validation2 <- PANAS_SFP_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "PANAS_PA")]
+
+PANAS_SFP_Validation3 <- PANAS_SFP_Validation[,c("MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOSF_Total", "PANAS_PA")]
+
+PANAS_SFP_Validation4 <- PANAS_SFP_Validation[,c("MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE", "MEAQACOBF_Total", "PANAS_PA")]
+
+cor.test(PANAS_SFP_Validation$BEAQ, PANAS_SFP_Validation$PANAS_PA)
+```
+
+```{r}
+rcorr(as.matrix(PANAS_SFP_Validation1),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_SFP_Validation2),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_SFP_Validation3),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_SFP_Validation4),type="pearson") 
+```
+
+```{r}
+# PANAS-X Negative Affect  ===========================
+
+# MEAQ_AAQ_MTurk_T1 (N=1052 before cleaning missing data for MEAQ & validation measures)
+# MEAQ_AAQ_Undergrad_SMU_T1 (N=364 before cleaning missing data for MEAQ & validation measures)
+
+### MEAQ_AAQ_MTurk_T1 ### 
+
+colnames(MEAQ_AAQ_MTurk_T1)
+which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_1i")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "MEAQ_62i")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "PANASX_1")
+which(colnames(MEAQ_AAQ_MTurk_T1) == "PANASX_57")
+
+PANAS_XP_Validation_S1 <- MEAQ_AAQ_MTurk_T1
+
+PANAS_XP_Validation_S1$PANASX_PA  <- 
+PANAS_XP_Validation_S1$PANASX_3  + PANAS_XP_Validation_S1$PANASX_8  + PANAS_XP_Validation_S1$PANASX_13  + PANAS_XP_Validation_S1$PANASX_25  + PANAS_XP_Validation_S1$PANASX_31  + PANAS_XP_Validation_S1$PANASX_37  + PANAS_XP_Validation_S1$PANASX_39  + PANAS_XP_Validation_S1$PANASX_47  + PANAS_XP_Validation_S1$PANASX_52  + PANAS_XP_Validation_S1$PANASX_55
+
+PANAS_XP_Validation_S1 <- rename(PANAS_XP_Validation_S1, MEAQ_1 = MEAQ_1i, 
+                                 MEAQ_2 = MEAQ_2i, 
+                                 MEAQ_3 = MEAQ_3i, 
+                                 MEAQ_4 = MEAQ_4i, 
+                                 MEAQ_5 = MEAQ_5i, 
+                                 MEAQ_6 = MEAQ_6i, 
+                                 MEAQ_7 = MEAQ_7i, 
+                                 MEAQ_8 = MEAQ_8i, 
+                                 MEAQ_9 = MEAQ_9i, 
+                                 MEAQ_10 = MEAQ_10i, 
+                                 MEAQ_11 = MEAQ_11i, 
+                                 MEAQ_12 = MEAQ_12i, 
+                                 MEAQ_13 = MEAQ_13i, 
+                                 MEAQ_14 = MEAQ_14i,
+                                 MEAQ_15 = MEAQ_15i, 
+                                 MEAQ_16 = MEAQ_16i, 
+                                 MEAQ_17 = MEAQ_17i, 
+                                 MEAQ_18 = MEAQ_18i, 
+                                 MEAQ_19 = MEAQ_19i, 
+                                 MEAQ_20 = MEAQ_20i, 
+                                 MEAQ_21 = MEAQ_21i, 
+                                 MEAQ_22 = MEAQ_22i, 
+                                 MEAQ_23 = MEAQ_23i, 
+                                 MEAQ_24 = MEAQ_24i, 
+                                 MEAQ_25 = MEAQ_25i, 
+                                 MEAQ_26 = MEAQ_26i, 
+                                 MEAQ_27 = MEAQ_27i, 
+                                 MEAQ_28 = MEAQ_28i, 
+                                 MEAQ_29 = MEAQ_29i, 
+                                 MEAQ_30 = MEAQ_30i, 
+                                 MEAQ_31 = MEAQ_31i, 
+                                 MEAQ_32 = MEAQ_32i, 
+                                 MEAQ_33 = MEAQ_33i, 
+                                 MEAQ_34 = MEAQ_34i, 
+                                 MEAQ_35 = MEAQ_35i, 
+                                 MEAQ_36 = MEAQ_36i, 
+                                 MEAQ_37 = MEAQ_37i, 
+                                 MEAQ_38 = MEAQ_38i, 
+                                 MEAQ_39 = MEAQ_39i, 
+                                 MEAQ_40 = MEAQ_40i, 
+                                 MEAQ_41 = MEAQ_41i, 
+                                 MEAQ_42 = MEAQ_42i, 
+                                 MEAQ_43 = MEAQ_43i, 
+                                 MEAQ_44 = MEAQ_44i, 
+                                 MEAQ_45 = MEAQ_45i, 
+                                 MEAQ_46 = MEAQ_46i, 
+                                 MEAQ_47 = MEAQ_47i,
+                                 MEAQ_48 = MEAQ_48i,
+                                 MEAQ_49 = MEAQ_49i, 
+                                 MEAQ_50 = MEAQ_50i, 
+                                 MEAQ_51 = MEAQ_51i, 
+                                 MEAQ_52 = MEAQ_52i, 
+                                 MEAQ_53 = MEAQ_53i, 
+                                 MEAQ_54 = MEAQ_54i, 
+                                 MEAQ_55 = MEAQ_55i, 
+                                 MEAQ_56 = MEAQ_56i, 
+                                 MEAQ_57 = MEAQ_57i, 
+                                 MEAQ_58 = MEAQ_58i, 
+                                 MEAQ_59 = MEAQ_59i, 
+                                 MEAQ_60 = MEAQ_60i, 
+                                 MEAQ_61 = MEAQ_61i,
+                                 MEAQ_62 = MEAQ_62i)
+
+PANAS_XP_Validation_S1 <- PANAS_XP_Validation_S1[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "PANASX_PA")]
+
+### MEAQ_AAQ_Undergrad_SMU_T1 ###
+
+colnames(MEAQ_AAQ_Undergrad_SMU_T1)
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "MEAQ_1")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "MEAQ_62")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "PANASX_1")
+which(colnames(MEAQ_AAQ_Undergrad_SMU_T1) == "PANASX_57")
+
+PANAS_XP_Validation_S2 <- MEAQ_AAQ_Undergrad_SMU_T1 
+
+PANAS_XP_Validation_S2$PANASX_PA  <- 
+PANAS_XP_Validation_S2$PANASX_3  + PANAS_XP_Validation_S2$PANASX_8  + PANAS_XP_Validation_S2$PANASX_13  + PANAS_XP_Validation_S2$PANASX_25  + PANAS_XP_Validation_S2$PANASX_31  + PANAS_XP_Validation_S2$PANASX_37  + PANAS_XP_Validation_S2$PANASX_39  + PANAS_XP_Validation_S2$PANASX_47  + PANAS_XP_Validation_S2$PANASX_52  + PANAS_XP_Validation_S2$PANASX_55
+
+PANAS_XP_Validation_S2 <- PANAS_XP_Validation_S2[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "PANASX_PA")]
+
+PANAS_XP_Validation <- rbind(PANAS_XP_Validation_S1, PANAS_XP_Validation_S2)
+
+PANAS_XP_Validation <- na.omit(PANAS_XP_Validation)
+
+PANAS_XP_Validation <- round_df(PANAS_XP_Validation, 0)
+```
+
+```{r}
+### Reverse coding apart from DE ### 
+PANAS_XP_Validation$MEAQ_23_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_23 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_23 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_23 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_23 %in% 4 ~ 3,   
+  PANAS_XP_Validation$MEAQ_23 %in% 5 ~ 2, 
+  PANAS_XP_Validation$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_23)
+) 
+
+PANAS_XP_Validation$MEAQ_30_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_30 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_30 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_30 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_30 %in% 4 ~ 3,   
+  PANAS_XP_Validation$MEAQ_30 %in% 5 ~ 2, 
+  PANAS_XP_Validation$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_30)
+)
+
+### Reverse coding for DE items (for total score) ###
+
+PANAS_XP_Validation$MEAQ_6_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_6 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_6 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_6 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_6 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_6 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_6 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_6)
+)
+
+PANAS_XP_Validation$MEAQ_12_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_12 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_12 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_12 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_12 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_12 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_12 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_12)
+)
+
+PANAS_XP_Validation$MEAQ_18_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_18 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_18 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_18 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_18 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_18 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_18 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_18)
+)
+
+PANAS_XP_Validation$MEAQ_24_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_24 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_24 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_24 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_24 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_24 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_24 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_24)
+)
+
+PANAS_XP_Validation$MEAQ_29_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_29 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_29 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_29 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_29 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_29 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_29 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_29)
+)
+
+PANAS_XP_Validation$MEAQ_37_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_37 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_37 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_37 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_37 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_37 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_37 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_37)
+)
+
+PANAS_XP_Validation$MEAQ_43_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_43 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_43 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_43 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_43 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_43 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_43 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_43)
+)
+
+PANAS_XP_Validation$MEAQ_48_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_48 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_48 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_48 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_48 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_48 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_48 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_48)
+)
+
+PANAS_XP_Validation$MEAQ_53_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_53 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_53 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_53 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_53 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_53 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_53 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_53)
+)
+
+PANAS_XP_Validation$MEAQ_57_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_57 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_57 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_57 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_57 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_57 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_57 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_57)
+)
+
+PANAS_XP_Validation$MEAQ_62_r <- dplyr::case_when(
+  PANAS_XP_Validation$MEAQ_62 %in% 1 ~ 6, 
+  PANAS_XP_Validation$MEAQ_62 %in% 2 ~ 5, 
+  PANAS_XP_Validation$MEAQ_62 %in% 3 ~ 4,   
+  PANAS_XP_Validation$MEAQ_62 %in% 4 ~ 3, 
+  PANAS_XP_Validation$MEAQ_62 %in% 5 ~ 2,  
+  PANAS_XP_Validation$MEAQ_62 %in% 6 ~ 1,
+  TRUE ~ as.numeric(PANAS_XP_Validation$MEAQ_62)
+)
+
+# MEAQ-62 =================
+PANAS_XP_Validation$MEAQ62_BA <- PANAS_XP_Validation$MEAQ_1 + PANAS_XP_Validation$MEAQ_8 + PANAS_XP_Validation$MEAQ_14 +  PANAS_XP_Validation$MEAQ_20 + PANAS_XP_Validation$MEAQ_26 + PANAS_XP_Validation$MEAQ_32 + PANAS_XP_Validation$MEAQ_39 + PANAS_XP_Validation$MEAQ_45 + PANAS_XP_Validation$MEAQ_51 + PANAS_XP_Validation$MEAQ_55 + PANAS_XP_Validation$MEAQ_59
+
+PANAS_XP_Validation$MEAQ62_DA <- PANAS_XP_Validation$MEAQ_2 + PANAS_XP_Validation$MEAQ_7 + PANAS_XP_Validation$MEAQ_13 + PANAS_XP_Validation$MEAQ_19 + PANAS_XP_Validation$MEAQ_25 + PANAS_XP_Validation$MEAQ_31 + PANAS_XP_Validation$MEAQ_34 + PANAS_XP_Validation$MEAQ_38 + PANAS_XP_Validation$MEAQ_44 + PANAS_XP_Validation$MEAQ_50 + PANAS_XP_Validation$MEAQ_54 + PANAS_XP_Validation$MEAQ_58 + PANAS_XP_Validation$MEAQ_61
+
+PANAS_XP_Validation$MEAQ62_PR <- PANAS_XP_Validation$MEAQ_5 + PANAS_XP_Validation$MEAQ_11 + PANAS_XP_Validation$MEAQ_17 + PANAS_XP_Validation$MEAQ_30_r + PANAS_XP_Validation$MEAQ_36 + PANAS_XP_Validation$MEAQ_42 + PANAS_XP_Validation$MEAQ_47 
+
+PANAS_XP_Validation$MEAQ62_DS <- PANAS_XP_Validation$MEAQ_3 + PANAS_XP_Validation$MEAQ_9 + PANAS_XP_Validation$MEAQ_15 + PANAS_XP_Validation$MEAQ_22 + PANAS_XP_Validation$MEAQ_27 + PANAS_XP_Validation$MEAQ_33 + PANAS_XP_Validation$MEAQ_40 
+
+PANAS_XP_Validation$MEAQ62_RD <- PANAS_XP_Validation$MEAQ_4 + PANAS_XP_Validation$MEAQ_10 + PANAS_XP_Validation$MEAQ_16 + PANAS_XP_Validation$MEAQ_21 + PANAS_XP_Validation$MEAQ_23_r + PANAS_XP_Validation$MEAQ_28 + PANAS_XP_Validation$MEAQ_35 + PANAS_XP_Validation$MEAQ_41 + PANAS_XP_Validation$MEAQ_46 + PANAS_XP_Validation$MEAQ_49 + PANAS_XP_Validation$MEAQ_52 + PANAS_XP_Validation$MEAQ_56 + PANAS_XP_Validation$MEAQ_60
+
+PANAS_XP_Validation$MEAQ62_DE <- PANAS_XP_Validation$MEAQ_6 + PANAS_XP_Validation$MEAQ_12 + PANAS_XP_Validation$MEAQ_18 + PANAS_XP_Validation$MEAQ_24 + PANAS_XP_Validation$MEAQ_29 + PANAS_XP_Validation$MEAQ_37 + PANAS_XP_Validation$MEAQ_43 + PANAS_XP_Validation$MEAQ_48 + PANAS_XP_Validation$MEAQ_53 + PANAS_XP_Validation$MEAQ_57 + PANAS_XP_Validation$MEAQ_62
+
+PANAS_XP_Validation$MEAQ62_DE_R <- PANAS_XP_Validation$MEAQ_6_r + PANAS_XP_Validation$MEAQ_12_r + PANAS_XP_Validation$MEAQ_18_r + PANAS_XP_Validation$MEAQ_24_r + PANAS_XP_Validation$MEAQ_29_r + PANAS_XP_Validation$MEAQ_37_r + PANAS_XP_Validation$MEAQ_43_r + PANAS_XP_Validation$MEAQ_48_r + PANAS_XP_Validation$MEAQ_53_r + PANAS_XP_Validation$MEAQ_57_r + PANAS_XP_Validation$MEAQ_62_r
+
+PANAS_XP_Validation$MEAQ62_Total <- PANAS_XP_Validation$MEAQ62_BA + PANAS_XP_Validation$MEAQ62_DA + PANAS_XP_Validation$MEAQ62_PR + PANAS_XP_Validation$MEAQ62_DS + PANAS_XP_Validation$MEAQ62_RD + PANAS_XP_Validation$MEAQ62_DE_R
+
+# =========================
+
+# MEAQ-GA =================
+PANAS_XP_Validation$MEAQGA_BA <- PANAS_XP_Validation$MEAQ_1 + PANAS_XP_Validation$MEAQ_8 + PANAS_XP_Validation$MEAQ_39 + PANAS_XP_Validation$MEAQ_51 + PANAS_XP_Validation$MEAQ_55
+
+PANAS_XP_Validation$MEAQGA_DA <- PANAS_XP_Validation$MEAQ_2 + PANAS_XP_Validation$MEAQ_7 + PANAS_XP_Validation$MEAQ_25 + PANAS_XP_Validation$MEAQ_31 + PANAS_XP_Validation$MEAQ_44 
+
+PANAS_XP_Validation$MEAQGA_PR <- PANAS_XP_Validation$MEAQ_5 + PANAS_XP_Validation$MEAQ_17 + PANAS_XP_Validation$MEAQ_30_r + PANAS_XP_Validation$MEAQ_36 + PANAS_XP_Validation$MEAQ_42 
+  
+PANAS_XP_Validation$MEAQGA_DS <- PANAS_XP_Validation$MEAQ_9 + PANAS_XP_Validation$MEAQ_22 + PANAS_XP_Validation$MEAQ_27 + PANAS_XP_Validation$MEAQ_33 + PANAS_XP_Validation$MEAQ_40
+  
+PANAS_XP_Validation$MEAQGA_RD <- PANAS_XP_Validation$MEAQ_35 + PANAS_XP_Validation$MEAQ_41 + PANAS_XP_Validation$MEAQ_52 + PANAS_XP_Validation$MEAQ_56 + PANAS_XP_Validation$MEAQ_60 
+  
+PANAS_XP_Validation$MEAQGA_DE <- PANAS_XP_Validation$MEAQ_12 + PANAS_XP_Validation$MEAQ_13 + PANAS_XP_Validation$MEAQ_43 + PANAS_XP_Validation$MEAQ_57 + PANAS_XP_Validation$MEAQ_62
+
+# =========================
+
+# BEAQ ==================== 
+PANAS_XP_Validation$BEAQ <-  PANAS_XP_Validation$MEAQ_58 +  PANAS_XP_Validation$MEAQ_59 + PANAS_XP_Validation$MEAQ_33 + PANAS_XP_Validation$MEAQ_56 + PANAS_XP_Validation$MEAQ_42 + PANAS_XP_Validation$MEAQ_29 + PANAS_XP_Validation$MEAQ_44 + PANAS_XP_Validation$MEAQ_14 + PANAS_XP_Validation$MEAQ_41 + PANAS_XP_Validation$MEAQ_36 + PANAS_XP_Validation$MEAQ_45 + PANAS_XP_Validation$MEAQ_25 + PANAS_XP_Validation$MEAQ_27 + PANAS_XP_Validation$MEAQ_32 + PANAS_XP_Validation$MEAQ_50
+# =========================
+
+# MEAQ-ACO-X ============= 
+PANAS_XP_Validation$MEAQACOX_BA <- PANAS_XP_Validation$MEAQ_14 + PANAS_XP_Validation$MEAQ_26 + PANAS_XP_Validation$MEAQ_32 + PANAS_XP_Validation$MEAQ_51 + PANAS_XP_Validation$MEAQ_55 
+
+PANAS_XP_Validation$MEAQACOX_DA <- PANAS_XP_Validation$MEAQ_2 + PANAS_XP_Validation$MEAQ_19 + PANAS_XP_Validation$MEAQ_25 + PANAS_XP_Validation$MEAQ_34 + PANAS_XP_Validation$MEAQ_54 + PANAS_XP_Validation$MEAQ_61 
+
+PANAS_XP_Validation$MEAQACOX_PR <- PANAS_XP_Validation$MEAQ_17 + PANAS_XP_Validation$MEAQ_42 + PANAS_XP_Validation$MEAQ_47
+
+PANAS_XP_Validation$MEAQACOX_DS <- PANAS_XP_Validation$MEAQ_15 + PANAS_XP_Validation$MEAQ_33 + PANAS_XP_Validation$MEAQ_40 
+
+PANAS_XP_Validation$MEAQACOX_RD <- PANAS_XP_Validation$MEAQ_10 + PANAS_XP_Validation$MEAQ_21 + PANAS_XP_Validation$MEAQ_23_r + PANAS_XP_Validation$MEAQ_28 + PANAS_XP_Validation$MEAQ_49 + PANAS_XP_Validation$MEAQ_60 
+
+PANAS_XP_Validation$MEAQACOX_DE <- PANAS_XP_Validation$MEAQ_6 + PANAS_XP_Validation$MEAQ_12 + PANAS_XP_Validation$MEAQ_37 + PANAS_XP_Validation$MEAQ_53 + PANAS_XP_Validation$MEAQ_62
+
+PANAS_XP_Validation$MEAQACOX_DE_R <- PANAS_XP_Validation$MEAQ_6 + PANAS_XP_Validation$MEAQ_12 + PANAS_XP_Validation$MEAQ_37 + PANAS_XP_Validation$MEAQ_53 + PANAS_XP_Validation$MEAQ_62
+
+PANAS_XP_Validation$MEAQACOX_Total <- PANAS_XP_Validation$MEAQACOX_BA + PANAS_XP_Validation$MEAQACOX_DA + PANAS_XP_Validation$MEAQACOX_PR + PANAS_XP_Validation$MEAQACOX_DS + PANAS_XP_Validation$MEAQACOX_RD + PANAS_XP_Validation$MEAQACOX_DE_R
+
+# =========================
+
+# MEAQ-ACO-BF ============= 
+PANAS_XP_Validation$MEAQACOBF_BA <- PANAS_XP_Validation$MEAQ_51 + PANAS_XP_Validation$MEAQ_59 
+
+PANAS_XP_Validation$MEAQACOBF_DA <- PANAS_XP_Validation$MEAQ_7 + PANAS_XP_Validation$MEAQ_58 
+
+PANAS_XP_Validation$MEAQACOBF_PR <- PANAS_XP_Validation$MEAQ_5 + PANAS_XP_Validation$MEAQ_36 
+
+PANAS_XP_Validation$MEAQACOBF_DS <- PANAS_XP_Validation$MEAQ_22 + PANAS_XP_Validation$MEAQ_33 
+
+PANAS_XP_Validation$MEAQACOBF_RD <- PANAS_XP_Validation$MEAQ_4 + PANAS_XP_Validation$MEAQ_41 
+
+PANAS_XP_Validation$MEAQACOBF_DE <- PANAS_XP_Validation$MEAQ_53 + PANAS_XP_Validation$MEAQ_62
+
+PANAS_XP_Validation$MEAQACOBF_DE_R <- PANAS_XP_Validation$MEAQ_53_r + PANAS_XP_Validation$MEAQ_62_r
+
+PANAS_XP_Validation$MEAQACOBF_Total <- PANAS_XP_Validation$MEAQACOBF_BA + PANAS_XP_Validation$MEAQACOBF_DA + PANAS_XP_Validation$MEAQACOBF_PR + PANAS_XP_Validation$MEAQACOBF_DS + PANAS_XP_Validation$MEAQACOBF_RD + PANAS_XP_Validation$MEAQACOBF_DE_R
+# =========================
+
+```
+
+```{r}
+PANAS_XP_Validation1 <- PANAS_XP_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "PANASX_PA")]
+
+PANAS_XP_Validation2 <- PANAS_XP_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "PANASX_PA")]
+
+PANAS_XP_Validation3 <- PANAS_XP_Validation[,c("MEAQACOX_BA", "MEAQACOX_DA", "MEAQACOX_PR", "MEAQACOX_DS", "MEAQACOX_RD", "MEAQACOX_DE", "MEAQACOX_Total", "PANASX_PA")]
+
+PANAS_XP_Validation4 <- PANAS_XP_Validation[,c("MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE", "MEAQACOBF_Total", "PANASX_PA")]
+
+cor.test(PANAS_XP_Validation$BEAQ, PANAS_XP_Validation$PANASX_PA)
+```
+
+```{r}
+rcorr(as.matrix(PANAS_XP_Validation1),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_XP_Validation2),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_XP_Validation3),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(PANAS_XP_Validation4),type="pearson") 
+```
+
+```{r}
+# LTC_MTurk_T1 (N=3520 before cleaning missing data for MEAQ & validation measures)
+# LTC_Undergrad_SMU_T1 (N=293 before cleaning missing data for MEAQ & validation measures)
+
+LTC_MTurk_T1 <- rename(LTC_MTurk_T1, MEAQ_1 = Q18_1, 
+                            MEAQ_2 = Q18_2, 
+                            MEAQ_3 = Q18_3, 
+                            MEAQ_4 = Q18_4, 
+                            MEAQ_5 = Q18_5, 
+                            MEAQ_6 = Q18_6, 
+                            MEAQ_7 = Q18_7, 
+                            MEAQ_8 = Q18_8, 
+                            MEAQ_9 = Q18_9, 
+                            MEAQ_10 = Q18_10, 
+                            MEAQ_11 = Q18_11, 
+                            MEAQ_12 = Q18_12, 
+                            MEAQ_13 = Q18_13, 
+                            MEAQ_14 = Q18_14,
+                            MEAQ_15 = Q18_15, 
+                            MEAQ_16 = Q18_16, 
+                            MEAQ_17 = Q18_17, 
+                            MEAQ_18 = Q18_18, 
+                            MEAQ_19 = Q18_19, 
+                            MEAQ_20 = Q18_20, 
+                            MEAQ_21 = Q18_21, 
+                            MEAQ_22 = Q18_22, 
+                            MEAQ_23 = Q18_23, 
+                            MEAQ_24 = Q18_24, 
+                            MEAQ_25 = Q18_25, 
+                            MEAQ_26 = Q18_26, 
+                            MEAQ_27 = Q18_27, 
+                            MEAQ_28 = Q18_28, 
+                            MEAQ_29 = Q18_29, 
+                            MEAQ_30 = Q18_30, 
+                            MEAQ_31 = Q18_31, 
+                            MEAQ_32 = Q18_32, 
+                            MEAQ_33 = Q18_33, 
+                            MEAQ_34 = Q18_34, 
+                            MEAQ_35 = Q18_35, 
+                            MEAQ_36 = Q18_36, 
+                            MEAQ_37 = Q18_37, 
+                            MEAQ_38 = Q18_38, 
+                            MEAQ_39 = Q18_39, 
+                            MEAQ_40 = Q18_40, 
+                            MEAQ_41 = Q18_41, 
+                            MEAQ_42 = Q18_42, 
+                            MEAQ_43 = Q18_43, 
+                            MEAQ_44 = Q18_44, 
+                            MEAQ_45 = Q18_45, 
+                            MEAQ_46 = Q18_46, 
+                            MEAQ_47 = Q18_47,
+                            MEAQ_48 = Q18_48,
+                            MEAQ_49 = Q18_49, 
+                            MEAQ_50 = Q18_50, 
+                            MEAQ_51 = Q18_51, 
+                            MEAQ_52 = Q18_52, 
+                            MEAQ_53 = Q18_53, 
+                            MEAQ_54 = Q18_54, 
+                            MEAQ_55 = Q18_55, 
+                            MEAQ_56 = Q18_56, 
+                            MEAQ_57 = Q18_57, 
+                            MEAQ_58 = Q18_58, 
+                            MEAQ_59 = Q18_59, 
+                            MEAQ_61 = Q18_60, 
+                            MEAQ_62 = Q18_61) 
+
+y <- sample(1:6, 3520, prob=c(0.10,0.10,0.20,0.25,0.25, 0.20), replace=TRUE)
+
+LTC_MTurk_T1 <- LTC_MTurk_T1 %>% 
+  add_column(MEAQ_60 = y) # adding column of NAs for missing MEAQ item in LTC_MTurk_T1 dataset
+
+# renaming MEAQ variables in LTC_Undergrad_SMU_T1 dataset to match standard format 
+
+LTC_Undergrad_SMU_T1 <- rename(LTC_Undergrad_SMU_T1, MEAQ_1 = Q18_1,
+                                    MEAQ_2 = Q18_2, 
+                                    MEAQ_3 = Q18_3, 
+                                    MEAQ_4 = Q18_4, 
+                                    MEAQ_5 = Q18_5, 
+                                    MEAQ_6 = Q18_6, 
+                                    MEAQ_7 = Q18_7, 
+                                    MEAQ_8 = Q18_8, 
+                                    MEAQ_9 = Q18_9, 
+                                    MEAQ_10 = Q18_10, 
+                                    MEAQ_11 = Q18_11, 
+                                    MEAQ_12 = Q18_12, 
+                                    MEAQ_13 = Q18_13, 
+                                    MEAQ_14 = Q18_14,
+                                    MEAQ_15 = Q18_15, 
+                                    MEAQ_16 = Q18_16, 
+                                    MEAQ_17 = Q18_17, 
+                                    MEAQ_18 = Q18_18, 
+                                    MEAQ_19 = Q18_19, 
+                                    MEAQ_20 = Q18_20, 
+                                    MEAQ_21 = Q18_21, 
+                                    MEAQ_22 = Q18_22, 
+                                    MEAQ_23 = Q18_23, 
+                                    MEAQ_24 = Q18_24, 
+                                    MEAQ_25 = Q18_25, 
+                                    MEAQ_26 = Q18_26, 
+                                    MEAQ_27 = Q18_27, 
+                                    MEAQ_28 = Q18_28, 
+                                    MEAQ_29 = Q18_29, 
+                                    MEAQ_30 = Q18_30, 
+                                    MEAQ_31 = Q18_31, 
+                                    MEAQ_32 = Q18_32, 
+                                    MEAQ_33 = Q18_33, 
+                                    MEAQ_34 = Q18_34, 
+                                    MEAQ_35 = Q18_35, 
+                                    MEAQ_36 = Q18_36, 
+                                    MEAQ_37 = Q18_37, 
+                                    MEAQ_38 = Q18_38, 
+                                    MEAQ_39 = Q18_39, 
+                                    MEAQ_40 = Q18_40, 
+                                    MEAQ_41 = Q18_41, 
+                                    MEAQ_42 = Q18_42, 
+                                    MEAQ_43 = Q18_43, 
+                                    MEAQ_44 = Q18_44, 
+                                    MEAQ_45 = Q18_45, 
+                                    MEAQ_46 = Q18_46, 
+                                    MEAQ_47 = Q18_47,
+                                    MEAQ_48 = Q18_48,
+                                    MEAQ_49 = Q18_49, 
+                                    MEAQ_50 = Q18_50, 
+                                    MEAQ_51 = Q18_51, 
+                                    MEAQ_52 = Q18_52, 
+                                    MEAQ_53 = Q18_53, 
+                                    MEAQ_54 = Q18_54, 
+                                    MEAQ_55 = Q18_55, 
+                                    MEAQ_56 = Q18_56, 
+                                    MEAQ_57 = Q18_57, 
+                                    MEAQ_58 = Q18_58, 
+                                    MEAQ_59 = Q18_59, 
+                                    MEAQ_61 = Q18_60, 
+                                    MEAQ_62 = Q18_61) 
+y2 <- sample(1:6, 293, prob=c(0.10,0.10,0.20,0.25,0.25, 0.20), replace=TRUE)
+
+LTC_Undergrad_SMU_T1 <- LTC_Undergrad_SMU_T1 %>% 
+  add_column(MEAQ_60 = y2) # adding column of NAs for missing MEAQ item in LTC_Undergrad_SMU_T1 dataset
+
+LTC_MTurk_T1 <- rename(LTC_MTurk_T1,  
+                       SWLS_1 = Q21_1,
+                       SWLS_2 = Q21_2,
+                       SWLS_3 = Q21_4,
+                       SWLS_4 = Q21_5,
+                       SWLS_5 = Q21_6) 
+
+SWLS_Validation_S1 <- LTC_MTurk_T1
+
+SWLS_Validation_S1$SWLS_Total <- 
+  SWLS_Validation_S1$SWLS_1 + 
+  SWLS_Validation_S1$SWLS_2 + 
+  SWLS_Validation_S1$SWLS_3 + 
+  SWLS_Validation_S1$SWLS_4 + 
+  SWLS_Validation_S1$SWLS_5
+
+SWLS_Validation_S1 <- SWLS_Validation_S1[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "SWLS_Total")]
+
+LTC_Undergrad_SMU_T1 <- rename(LTC_Undergrad_SMU_T1,  
+                       SWLS_1 = Q21_1,
+                       SWLS_2 = Q21_2,
+                       SWLS_3 = Q21_4,
+                       SWLS_4 = Q21_5,
+                       SWLS_5 = Q21_6) 
+
+SWLS_Validation_S2 <- LTC_Undergrad_SMU_T1
+
+SWLS_Validation_S2$SWLS_Total <- 
+  SWLS_Validation_S2$SWLS_1 + 
+  SWLS_Validation_S2$SWLS_2 + 
+  SWLS_Validation_S2$SWLS_3 + 
+  SWLS_Validation_S2$SWLS_4 + 
+  SWLS_Validation_S2$SWLS_5
+
+SWLS_Validation_S2 <- SWLS_Validation_S2[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "SWLS_Total")]
+
+SWLS_Validation <- rbind(SWLS_Validation_S1, SWLS_Validation_S2)
+
+SWLS_Validation <- na.omit(SWLS_Validation)
+
+SWLS_Validation <- round_df(SWLS_Validation, 0)
+```
+
+```{r}
+### Reverse coding apart from DE ### 
+SWLS_Validation$MEAQ_23_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_23 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_23 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_23 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_23 %in% 4 ~ 3,   
+  SWLS_Validation$MEAQ_23 %in% 5 ~ 2, 
+  SWLS_Validation$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_23)
+) 
+
+SWLS_Validation$MEAQ_30_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_30 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_30 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_30 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_30 %in% 4 ~ 3,   
+  SWLS_Validation$MEAQ_30 %in% 5 ~ 2, 
+  SWLS_Validation$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_30)
+)
+
+### Reverse coding for DE items (for total score) ###
+
+SWLS_Validation$MEAQ_6_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_6 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_6 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_6 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_6 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_6 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_6 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_6)
+)
+
+SWLS_Validation$MEAQ_12_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_12 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_12 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_12 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_12 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_12 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_12 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_12)
+)
+
+SWLS_Validation$MEAQ_18_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_18 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_18 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_18 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_18 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_18 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_18 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_18)
+)
+
+SWLS_Validation$MEAQ_24_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_24 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_24 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_24 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_24 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_24 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_24 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_24)
+)
+
+SWLS_Validation$MEAQ_29_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_29 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_29 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_29 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_29 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_29 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_29 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_29)
+)
+
+SWLS_Validation$MEAQ_37_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_37 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_37 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_37 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_37 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_37 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_37 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_37)
+)
+
+SWLS_Validation$MEAQ_43_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_43 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_43 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_43 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_43 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_43 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_43 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_43)
+)
+
+SWLS_Validation$MEAQ_48_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_48 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_48 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_48 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_48 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_48 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_48 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_48)
+)
+
+SWLS_Validation$MEAQ_53_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_53 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_53 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_53 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_53 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_53 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_53 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_53)
+)
+
+SWLS_Validation$MEAQ_57_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_57 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_57 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_57 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_57 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_57 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_57 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_57)
+)
+
+SWLS_Validation$MEAQ_62_r <- dplyr::case_when(
+  SWLS_Validation$MEAQ_62 %in% 1 ~ 6, 
+  SWLS_Validation$MEAQ_62 %in% 2 ~ 5, 
+  SWLS_Validation$MEAQ_62 %in% 3 ~ 4,   
+  SWLS_Validation$MEAQ_62 %in% 4 ~ 3, 
+  SWLS_Validation$MEAQ_62 %in% 5 ~ 2,  
+  SWLS_Validation$MEAQ_62 %in% 6 ~ 1,
+  TRUE ~ as.numeric(SWLS_Validation$MEAQ_62)
+)
+
+# MEAQ-62 =================
+SWLS_Validation$MEAQ62_BA <- SWLS_Validation$MEAQ_1 + SWLS_Validation$MEAQ_8 + SWLS_Validation$MEAQ_14 +  SWLS_Validation$MEAQ_20 + SWLS_Validation$MEAQ_26 + SWLS_Validation$MEAQ_32 + SWLS_Validation$MEAQ_39 + SWLS_Validation$MEAQ_45 + SWLS_Validation$MEAQ_51 + SWLS_Validation$MEAQ_55 + SWLS_Validation$MEAQ_59
+
+SWLS_Validation$MEAQ62_DA <- SWLS_Validation$MEAQ_2 + SWLS_Validation$MEAQ_7 + SWLS_Validation$MEAQ_13 + SWLS_Validation$MEAQ_19 + SWLS_Validation$MEAQ_25 + SWLS_Validation$MEAQ_31 + SWLS_Validation$MEAQ_34 + SWLS_Validation$MEAQ_38 + SWLS_Validation$MEAQ_44 + SWLS_Validation$MEAQ_50 + SWLS_Validation$MEAQ_54 + SWLS_Validation$MEAQ_58 + SWLS_Validation$MEAQ_61
+
+SWLS_Validation$MEAQ62_PR <- SWLS_Validation$MEAQ_5 + SWLS_Validation$MEAQ_11 + SWLS_Validation$MEAQ_17 + SWLS_Validation$MEAQ_30_r + SWLS_Validation$MEAQ_36 + SWLS_Validation$MEAQ_42 + SWLS_Validation$MEAQ_47 
+
+SWLS_Validation$MEAQ62_DS <- SWLS_Validation$MEAQ_3 + SWLS_Validation$MEAQ_9 + SWLS_Validation$MEAQ_15 + SWLS_Validation$MEAQ_22 + SWLS_Validation$MEAQ_27 + SWLS_Validation$MEAQ_33 + SWLS_Validation$MEAQ_40 
+
+SWLS_Validation$MEAQ62_RD <- SWLS_Validation$MEAQ_4 + SWLS_Validation$MEAQ_10 + SWLS_Validation$MEAQ_16 + SWLS_Validation$MEAQ_21 + SWLS_Validation$MEAQ_23_r + SWLS_Validation$MEAQ_28 + SWLS_Validation$MEAQ_35 + SWLS_Validation$MEAQ_41 + SWLS_Validation$MEAQ_46 + SWLS_Validation$MEAQ_49 + SWLS_Validation$MEAQ_52 + SWLS_Validation$MEAQ_56 + SWLS_Validation$MEAQ_60
+
+SWLS_Validation$MEAQ62_DE <- SWLS_Validation$MEAQ_6 + SWLS_Validation$MEAQ_12 + SWLS_Validation$MEAQ_18 + SWLS_Validation$MEAQ_24 + SWLS_Validation$MEAQ_29 + SWLS_Validation$MEAQ_37 + SWLS_Validation$MEAQ_43 + SWLS_Validation$MEAQ_48 + SWLS_Validation$MEAQ_53 + SWLS_Validation$MEAQ_57 + SWLS_Validation$MEAQ_62
+
+SWLS_Validation$MEAQ62_DE_R <- SWLS_Validation$MEAQ_6_r + SWLS_Validation$MEAQ_12_r + SWLS_Validation$MEAQ_18_r + SWLS_Validation$MEAQ_24_r + SWLS_Validation$MEAQ_29_r + SWLS_Validation$MEAQ_37_r + SWLS_Validation$MEAQ_43_r + SWLS_Validation$MEAQ_48_r + SWLS_Validation$MEAQ_53_r + SWLS_Validation$MEAQ_57_r + SWLS_Validation$MEAQ_62_r
+
+SWLS_Validation$MEAQ62_Total <- SWLS_Validation$MEAQ62_BA + SWLS_Validation$MEAQ62_DA + SWLS_Validation$MEAQ62_PR + SWLS_Validation$MEAQ62_DS + SWLS_Validation$MEAQ62_RD + SWLS_Validation$MEAQ62_DE_R
+
+# =========================
+
+# MEAQ-GA =================
+SWLS_Validation$MEAQGA_BA <- SWLS_Validation$MEAQ_1 + SWLS_Validation$MEAQ_8 + SWLS_Validation$MEAQ_39 + SWLS_Validation$MEAQ_51 + SWLS_Validation$MEAQ_55
+
+SWLS_Validation$MEAQGA_DA <- SWLS_Validation$MEAQ_2 + SWLS_Validation$MEAQ_7 + SWLS_Validation$MEAQ_25 + SWLS_Validation$MEAQ_31 + SWLS_Validation$MEAQ_44 
+
+SWLS_Validation$MEAQGA_PR <- SWLS_Validation$MEAQ_5 + SWLS_Validation$MEAQ_17 + SWLS_Validation$MEAQ_30_r + SWLS_Validation$MEAQ_36 + SWLS_Validation$MEAQ_42 
+  
+SWLS_Validation$MEAQGA_DS <- SWLS_Validation$MEAQ_9 + SWLS_Validation$MEAQ_22 + SWLS_Validation$MEAQ_27 + SWLS_Validation$MEAQ_33 + SWLS_Validation$MEAQ_40
+  
+SWLS_Validation$MEAQGA_RD <- SWLS_Validation$MEAQ_35 + SWLS_Validation$MEAQ_41 + SWLS_Validation$MEAQ_52 + SWLS_Validation$MEAQ_56 + SWLS_Validation$MEAQ_60 
+  
+SWLS_Validation$MEAQGA_DE <- SWLS_Validation$MEAQ_12 + SWLS_Validation$MEAQ_13 + SWLS_Validation$MEAQ_43 + SWLS_Validation$MEAQ_57 + SWLS_Validation$MEAQ_62
+
+# =========================
+
+# BEAQ ==================== 
+SWLS_Validation$BEAQ <-  SWLS_Validation$MEAQ_58 +  SWLS_Validation$MEAQ_59 + SWLS_Validation$MEAQ_33 + SWLS_Validation$MEAQ_56 + SWLS_Validation$MEAQ_42 + SWLS_Validation$MEAQ_29 + SWLS_Validation$MEAQ_44 + SWLS_Validation$MEAQ_14 + SWLS_Validation$MEAQ_41 + SWLS_Validation$MEAQ_36 + SWLS_Validation$MEAQ_45 + SWLS_Validation$MEAQ_25 + SWLS_Validation$MEAQ_27 + SWLS_Validation$MEAQ_32 + SWLS_Validation$MEAQ_50
+# =========================
+
+# MEAQ-ACO-SF ============= 
+SWLS_Validation$MEAQACOSF_BA <- SWLS_Validation$MEAQ_14 + SWLS_Validation$MEAQ_26 + SWLS_Validation$MEAQ_32 + SWLS_Validation$MEAQ_51 + SWLS_Validation$MEAQ_55 
+
+SWLS_Validation$MEAQACOSF_DA <- SWLS_Validation$MEAQ_2 + SWLS_Validation$MEAQ_19 + SWLS_Validation$MEAQ_25 + SWLS_Validation$MEAQ_34 + SWLS_Validation$MEAQ_54 + SWLS_Validation$MEAQ_61 
+
+SWLS_Validation$MEAQACOSF_PR <- SWLS_Validation$MEAQ_17 + SWLS_Validation$MEAQ_42 + SWLS_Validation$MEAQ_47
+
+SWLS_Validation$MEAQACOSF_DS <- SWLS_Validation$MEAQ_15 + SWLS_Validation$MEAQ_33 + SWLS_Validation$MEAQ_40 
+
+SWLS_Validation$MEAQACOSF_RD <- SWLS_Validation$MEAQ_10 + SWLS_Validation$MEAQ_21 + SWLS_Validation$MEAQ_23_r + SWLS_Validation$MEAQ_28 + SWLS_Validation$MEAQ_49 + SWLS_Validation$MEAQ_60 
+
+SWLS_Validation$MEAQACOSF_DE <- SWLS_Validation$MEAQ_6 + SWLS_Validation$MEAQ_12 + SWLS_Validation$MEAQ_37 + SWLS_Validation$MEAQ_53 + SWLS_Validation$MEAQ_62
+
+SWLS_Validation$MEAQACOSF_DE_R <- SWLS_Validation$MEAQ_6 + SWLS_Validation$MEAQ_12 + SWLS_Validation$MEAQ_37 + SWLS_Validation$MEAQ_53 + SWLS_Validation$MEAQ_62
+
+SWLS_Validation$MEAQACOSF_Total <- SWLS_Validation$MEAQACOSF_BA + SWLS_Validation$MEAQACOSF_DA + SWLS_Validation$MEAQACOSF_PR + SWLS_Validation$MEAQACOSF_DS + SWLS_Validation$MEAQACOSF_RD + SWLS_Validation$MEAQACOSF_DE_R
+
+# =========================
+
+# MEAQ-ACO-BF ============= 
+SWLS_Validation$MEAQACOBF_BA <- SWLS_Validation$MEAQ_51 + SWLS_Validation$MEAQ_59 
+
+SWLS_Validation$MEAQACOBF_DA <- SWLS_Validation$MEAQ_7 + SWLS_Validation$MEAQ_58 
+
+SWLS_Validation$MEAQACOBF_PR <- SWLS_Validation$MEAQ_5 + SWLS_Validation$MEAQ_36 
+
+SWLS_Validation$MEAQACOBF_DS <- SWLS_Validation$MEAQ_22 + SWLS_Validation$MEAQ_33 
+
+SWLS_Validation$MEAQACOBF_RD <- SWLS_Validation$MEAQ_4 + SWLS_Validation$MEAQ_41 
+
+SWLS_Validation$MEAQACOBF_DE <- SWLS_Validation$MEAQ_53 + SWLS_Validation$MEAQ_62
+
+SWLS_Validation$MEAQACOBF_DE_R <- SWLS_Validation$MEAQ_53_r + SWLS_Validation$MEAQ_62_r
+
+SWLS_Validation$MEAQACOBF_Total <- SWLS_Validation$MEAQACOBF_BA + SWLS_Validation$MEAQACOBF_DA + SWLS_Validation$MEAQACOBF_PR + SWLS_Validation$MEAQACOBF_DS + SWLS_Validation$MEAQACOBF_RD + SWLS_Validation$MEAQACOBF_DE_R
+# =========================
+
+```
+
+```{r}
+SWLS_Validation1 <- SWLS_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "SWLS_Total")]
+
+SWLS_Validation2 <- SWLS_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "SWLS_Total")]
+
+SWLS_Validation3 <- SWLS_Validation[,c("MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOSF_Total", "SWLS_Total")]
+
+SWLS_Validation4 <- SWLS_Validation[,c("MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE", "MEAQACOBF_Total", "SWLS_Total")]
+
+cor.test(SWLS_Validation$BEAQ, SWLS_Validation$SWLS_Total)
+```
+
+```{r}
+rcorr(as.matrix(SWLS_Validation1),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(SWLS_Validation2),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(SWLS_Validation3),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(SWLS_Validation4),type="pearson") 
+```
+
+### Psychopathology Measures 
+
+```{r}
+# IDAS - Depression ============================
+# MEAQ_Dev_Phase3_Patient (N=297 before cleaning missing data for MEAQ & validation measures)
+
+colnames(MEAQ_Dev_Phase3_Patient)
+
+IDASGD_Validation <- rename(MEAQ_Dev_Phase3_Patient, MEAQ_1 = meaq01, 
+                                  MEAQ_2 = meaq02, 
+                                  MEAQ_3 = meaq03, 
+                                  MEAQ_4 = meaq04, 
+                                  MEAQ_5 = meaq05, 
+                                  MEAQ_6 = meaq06, 
+                                  MEAQ_7 = meaq07, 
+                                  MEAQ_8 = meaq08, 
+                                  MEAQ_9 = meaq09, 
+                                  MEAQ_10 = meaq10, 
+                                  MEAQ_11 = meaq11, 
+                                  MEAQ_12 = meaq12, 
+                                  MEAQ_13 = meaq13, 
+                                  MEAQ_14 = meaq14,
+                                  MEAQ_15 = meaq15, 
+                                  MEAQ_16 = meaq16, 
+                                  MEAQ_17 = meaq17, 
+                                  MEAQ_18 = meaq18, 
+                                  MEAQ_19 = meaq19, 
+                                  MEAQ_20 = meaq20, 
+                                  MEAQ_21 = meaq21, 
+                                  MEAQ_22 = meaq22, 
+                                  MEAQ_23 = meaq23, 
+                                  MEAQ_24 = meaq24, 
+                                  MEAQ_25 = meaq25, 
+                                  MEAQ_26 = meaq26, 
+                                  MEAQ_27 = meaq27, 
+                                   MEAQ_28 = meaq28, 
+                                   MEAQ_29 = meaq29, 
+                                   MEAQ_30 = meaq30, 
+                                   MEAQ_31 = meaq31, 
+                                   MEAQ_32 = meaq32, 
+                                   MEAQ_33 = meaq33, 
+                                   MEAQ_34 = meaq34, 
+                                   MEAQ_35 = meaq35, 
+                                   MEAQ_36 = meaq36, 
+                                   MEAQ_37 = meaq37, 
+                                   MEAQ_38 = meaq38, 
+                                   MEAQ_39 = meaq39, 
+                                   MEAQ_40 = meaq40, 
+                                   MEAQ_41 = meaq41, 
+                                   MEAQ_42 = meaq42, 
+                                   MEAQ_43 = meaq43, 
+                                   MEAQ_44 = meaq44, 
+                                   MEAQ_45 = meaq45, 
+                                   MEAQ_46 = meaq46, 
+                                   MEAQ_47 = meaq47,
+                                   MEAQ_48 = meaq48,
+                                   MEAQ_49 = meaq49, 
+                                   MEAQ_50 = meaq50, 
+                                   MEAQ_51 = meaq51, 
+                                   MEAQ_52 = meaq52, 
+                                   MEAQ_53 = meaq53, 
+                                   MEAQ_54 = meaq54, 
+                                   MEAQ_55 = meaq55, 
+                                   MEAQ_56 = meaq56, 
+                                   MEAQ_57 = meaq57, 
+                                   MEAQ_58 = meaq58, 
+                                   MEAQ_59 = meaq59, 
+                                   MEAQ_60 = meaq60, 
+                                   MEAQ_61 = meaq61,
+                                   MEAQ_62 = meaq62) 
+
+IDASGD_Validation <- IDASGD_Validation[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "idas_gd")]
+
+IDASGD_Validation <- na.omit(IDASGD_Validation)
+
+IDASGD_Validation <- round_df(IDASGD_Validation, 0)
+```
+
+```{r}
+### Reverse coding apart from DE ### 
+IDASGD_Validation$MEAQ_23_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_23 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_23 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_23 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_23 %in% 4 ~ 3,   
+  IDASGD_Validation$MEAQ_23 %in% 5 ~ 2, 
+  IDASGD_Validation$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_23)
+) 
+
+IDASGD_Validation$MEAQ_30_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_30 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_30 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_30 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_30 %in% 4 ~ 3,   
+  IDASGD_Validation$MEAQ_30 %in% 5 ~ 2, 
+  IDASGD_Validation$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_30)
+)
+
+### Reverse coding for DE items (for total score) ###
+
+IDASGD_Validation$MEAQ_6_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_6 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_6 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_6 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_6 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_6 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_6 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_6)
+)
+
+IDASGD_Validation$MEAQ_12_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_12 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_12 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_12 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_12 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_12 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_12 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_12)
+)
+
+IDASGD_Validation$MEAQ_18_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_18 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_18 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_18 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_18 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_18 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_18 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_18)
+)
+
+IDASGD_Validation$MEAQ_24_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_24 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_24 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_24 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_24 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_24 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_24 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_24)
+)
+
+IDASGD_Validation$MEAQ_29_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_29 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_29 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_29 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_29 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_29 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_29 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_29)
+)
+
+IDASGD_Validation$MEAQ_37_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_37 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_37 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_37 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_37 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_37 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_37 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_37)
+)
+
+IDASGD_Validation$MEAQ_43_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_43 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_43 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_43 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_43 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_43 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_43 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_43)
+)
+
+IDASGD_Validation$MEAQ_48_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_48 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_48 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_48 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_48 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_48 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_48 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_48)
+)
+
+IDASGD_Validation$MEAQ_53_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_53 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_53 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_53 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_53 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_53 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_53 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_53)
+)
+
+IDASGD_Validation$MEAQ_57_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_57 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_57 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_57 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_57 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_57 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_57 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_57)
+)
+
+IDASGD_Validation$MEAQ_62_r <- dplyr::case_when(
+  IDASGD_Validation$MEAQ_62 %in% 1 ~ 6, 
+  IDASGD_Validation$MEAQ_62 %in% 2 ~ 5, 
+  IDASGD_Validation$MEAQ_62 %in% 3 ~ 4,   
+  IDASGD_Validation$MEAQ_62 %in% 4 ~ 3, 
+  IDASGD_Validation$MEAQ_62 %in% 5 ~ 2,  
+  IDASGD_Validation$MEAQ_62 %in% 6 ~ 1,
+  TRUE ~ as.numeric(IDASGD_Validation$MEAQ_62)
+)
+
+# MEAQ-62 =================
+IDASGD_Validation$MEAQ62_BA <- IDASGD_Validation$MEAQ_1 + IDASGD_Validation$MEAQ_8 + IDASGD_Validation$MEAQ_14 +  IDASGD_Validation$MEAQ_20 + IDASGD_Validation$MEAQ_26 + IDASGD_Validation$MEAQ_32 + IDASGD_Validation$MEAQ_39 + IDASGD_Validation$MEAQ_45 + IDASGD_Validation$MEAQ_51 + IDASGD_Validation$MEAQ_55 + IDASGD_Validation$MEAQ_59
+
+IDASGD_Validation$MEAQ62_DA <- IDASGD_Validation$MEAQ_2 + IDASGD_Validation$MEAQ_7 + IDASGD_Validation$MEAQ_13 + IDASGD_Validation$MEAQ_19 + IDASGD_Validation$MEAQ_25 + IDASGD_Validation$MEAQ_31 + IDASGD_Validation$MEAQ_34 + IDASGD_Validation$MEAQ_38 + IDASGD_Validation$MEAQ_44 + IDASGD_Validation$MEAQ_50 + IDASGD_Validation$MEAQ_54 + IDASGD_Validation$MEAQ_58 + IDASGD_Validation$MEAQ_61
+
+IDASGD_Validation$MEAQ62_PR <- IDASGD_Validation$MEAQ_5 + IDASGD_Validation$MEAQ_11 + IDASGD_Validation$MEAQ_17 + IDASGD_Validation$MEAQ_30_r + IDASGD_Validation$MEAQ_36 + IDASGD_Validation$MEAQ_42 + IDASGD_Validation$MEAQ_47 
+
+IDASGD_Validation$MEAQ62_DS <- IDASGD_Validation$MEAQ_3 + IDASGD_Validation$MEAQ_9 + IDASGD_Validation$MEAQ_15 + IDASGD_Validation$MEAQ_22 + IDASGD_Validation$MEAQ_27 + IDASGD_Validation$MEAQ_33 + IDASGD_Validation$MEAQ_40 
+
+IDASGD_Validation$MEAQ62_RD <- IDASGD_Validation$MEAQ_4 + IDASGD_Validation$MEAQ_10 + IDASGD_Validation$MEAQ_16 + IDASGD_Validation$MEAQ_21 + IDASGD_Validation$MEAQ_23_r + IDASGD_Validation$MEAQ_28 + IDASGD_Validation$MEAQ_35 + IDASGD_Validation$MEAQ_41 + IDASGD_Validation$MEAQ_46 + IDASGD_Validation$MEAQ_49 + IDASGD_Validation$MEAQ_52 + IDASGD_Validation$MEAQ_56 + IDASGD_Validation$MEAQ_60
+
+IDASGD_Validation$MEAQ62_DE <- IDASGD_Validation$MEAQ_6 + IDASGD_Validation$MEAQ_12 + IDASGD_Validation$MEAQ_18 + IDASGD_Validation$MEAQ_24 + IDASGD_Validation$MEAQ_29 + IDASGD_Validation$MEAQ_37 + IDASGD_Validation$MEAQ_43 + IDASGD_Validation$MEAQ_48 + IDASGD_Validation$MEAQ_53 + IDASGD_Validation$MEAQ_57 + IDASGD_Validation$MEAQ_62
+
+IDASGD_Validation$MEAQ62_DE_R <- IDASGD_Validation$MEAQ_6_r + IDASGD_Validation$MEAQ_12_r + IDASGD_Validation$MEAQ_18_r + IDASGD_Validation$MEAQ_24_r + IDASGD_Validation$MEAQ_29_r + IDASGD_Validation$MEAQ_37_r + IDASGD_Validation$MEAQ_43_r + IDASGD_Validation$MEAQ_48_r + IDASGD_Validation$MEAQ_53_r + IDASGD_Validation$MEAQ_57_r + IDASGD_Validation$MEAQ_62_r
+
+IDASGD_Validation$MEAQ62_Total <- IDASGD_Validation$MEAQ62_BA + IDASGD_Validation$MEAQ62_DA + IDASGD_Validation$MEAQ62_PR + IDASGD_Validation$MEAQ62_DS + IDASGD_Validation$MEAQ62_RD + IDASGD_Validation$MEAQ62_DE_R
+
+# =========================
+
+# MEAQ-GA =================
+IDASGD_Validation$MEAQGA_BA <- IDASGD_Validation$MEAQ_1 + IDASGD_Validation$MEAQ_8 + IDASGD_Validation$MEAQ_39 + IDASGD_Validation$MEAQ_51 + IDASGD_Validation$MEAQ_55
+
+IDASGD_Validation$MEAQGA_DA <- IDASGD_Validation$MEAQ_2 + IDASGD_Validation$MEAQ_7 + IDASGD_Validation$MEAQ_25 + IDASGD_Validation$MEAQ_31 + IDASGD_Validation$MEAQ_44 
+
+IDASGD_Validation$MEAQGA_PR <- IDASGD_Validation$MEAQ_5 + IDASGD_Validation$MEAQ_17 + IDASGD_Validation$MEAQ_30_r + IDASGD_Validation$MEAQ_36 + IDASGD_Validation$MEAQ_42 
+  
+IDASGD_Validation$MEAQGA_DS <- IDASGD_Validation$MEAQ_9 + IDASGD_Validation$MEAQ_22 + IDASGD_Validation$MEAQ_27 + IDASGD_Validation$MEAQ_33 + IDASGD_Validation$MEAQ_40
+  
+IDASGD_Validation$MEAQGA_RD <- IDASGD_Validation$MEAQ_35 + IDASGD_Validation$MEAQ_41 + IDASGD_Validation$MEAQ_52 + IDASGD_Validation$MEAQ_56 + IDASGD_Validation$MEAQ_60 
+  
+IDASGD_Validation$MEAQGA_DE <- IDASGD_Validation$MEAQ_12 + IDASGD_Validation$MEAQ_13 + IDASGD_Validation$MEAQ_43 + IDASGD_Validation$MEAQ_57 + IDASGD_Validation$MEAQ_62
+
+# =========================
+
+# BEAQ ==================== 
+IDASGD_Validation$BEAQ <-  IDASGD_Validation$MEAQ_58 +  IDASGD_Validation$MEAQ_59 + IDASGD_Validation$MEAQ_33 + IDASGD_Validation$MEAQ_56 + IDASGD_Validation$MEAQ_42 + IDASGD_Validation$MEAQ_29 + IDASGD_Validation$MEAQ_44 + IDASGD_Validation$MEAQ_14 + IDASGD_Validation$MEAQ_41 + IDASGD_Validation$MEAQ_36 + IDASGD_Validation$MEAQ_45 + IDASGD_Validation$MEAQ_25 + IDASGD_Validation$MEAQ_27 + IDASGD_Validation$MEAQ_32 + IDASGD_Validation$MEAQ_50
+# =========================
+
+# MEAQ-ACO-SF ============= 
+IDASGD_Validation$MEAQACOSF_BA <- IDASGD_Validation$MEAQ_14 + IDASGD_Validation$MEAQ_26 + IDASGD_Validation$MEAQ_32 + IDASGD_Validation$MEAQ_51 + IDASGD_Validation$MEAQ_55 
+
+IDASGD_Validation$MEAQACOSF_DA <- IDASGD_Validation$MEAQ_2 + IDASGD_Validation$MEAQ_19 + IDASGD_Validation$MEAQ_25 + IDASGD_Validation$MEAQ_34 + IDASGD_Validation$MEAQ_54 + IDASGD_Validation$MEAQ_61 
+
+IDASGD_Validation$MEAQACOSF_PR <- IDASGD_Validation$MEAQ_17 + IDASGD_Validation$MEAQ_42 + IDASGD_Validation$MEAQ_47
+
+IDASGD_Validation$MEAQACOSF_DS <- IDASGD_Validation$MEAQ_15 + IDASGD_Validation$MEAQ_33 + IDASGD_Validation$MEAQ_40 
+
+IDASGD_Validation$MEAQACOSF_RD <- IDASGD_Validation$MEAQ_10 + IDASGD_Validation$MEAQ_21 + IDASGD_Validation$MEAQ_23_r + IDASGD_Validation$MEAQ_28 + IDASGD_Validation$MEAQ_49 + IDASGD_Validation$MEAQ_60 
+
+IDASGD_Validation$MEAQACOSF_DE <- IDASGD_Validation$MEAQ_6 + IDASGD_Validation$MEAQ_12 + IDASGD_Validation$MEAQ_37 + IDASGD_Validation$MEAQ_53 + IDASGD_Validation$MEAQ_62
+
+IDASGD_Validation$MEAQACOSF_DE_R <- IDASGD_Validation$MEAQ_6 + IDASGD_Validation$MEAQ_12 + IDASGD_Validation$MEAQ_37 + IDASGD_Validation$MEAQ_53 + IDASGD_Validation$MEAQ_62
+
+IDASGD_Validation$MEAQACOSF_Total <- IDASGD_Validation$MEAQACOSF_BA + IDASGD_Validation$MEAQACOSF_DA + IDASGD_Validation$MEAQACOSF_PR + IDASGD_Validation$MEAQACOSF_DS + IDASGD_Validation$MEAQACOSF_RD + IDASGD_Validation$MEAQACOSF_DE_R
+
+# =========================
+
+# MEAQ-ACO-BF ============= 
+IDASGD_Validation$MEAQACOBF_BA <- IDASGD_Validation$MEAQ_51 + IDASGD_Validation$MEAQ_59 
+
+IDASGD_Validation$MEAQACOBF_DA <- IDASGD_Validation$MEAQ_7 + IDASGD_Validation$MEAQ_58 
+
+IDASGD_Validation$MEAQACOBF_PR <- IDASGD_Validation$MEAQ_5 + IDASGD_Validation$MEAQ_36 
+
+IDASGD_Validation$MEAQACOBF_DS <- IDASGD_Validation$MEAQ_22 + IDASGD_Validation$MEAQ_33 
+
+IDASGD_Validation$MEAQACOBF_RD <- IDASGD_Validation$MEAQ_4 + IDASGD_Validation$MEAQ_41 
+
+IDASGD_Validation$MEAQACOBF_DE <- IDASGD_Validation$MEAQ_53 + IDASGD_Validation$MEAQ_62
+
+IDASGD_Validation$MEAQACOBF_DE_R <- IDASGD_Validation$MEAQ_53_r + IDASGD_Validation$MEAQ_62_r
+
+IDASGD_Validation$MEAQACOBF_Total <- IDASGD_Validation$MEAQACOBF_BA + IDASGD_Validation$MEAQACOBF_DA + IDASGD_Validation$MEAQACOBF_PR + IDASGD_Validation$MEAQACOBF_DS + IDASGD_Validation$MEAQACOBF_RD + IDASGD_Validation$MEAQACOBF_DE_R
+# =========================
+
+```
+
+```{r}
+IDASGD_Validation1 <- IDASGD_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "idas_gd")]
+
+IDASGD_Validation2 <- IDASGD_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "idas_gd")]
+
+IDASGD_Validation3 <- IDASGD_Validation[,c("MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOSF_Total", "idas_gd")]
+
+IDASGD_Validation4 <- IDASGD_Validation[,c("MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE", "MEAQACOBF_Total", "idas_gd")]
+
+cor.test(IDASGD_Validation$BEAQ, IDASGD_Validation$idas_gd)
+```
+
+```{r}
+rcorr(as.matrix(IDASGD_Validation1),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(IDASGD_Validation2),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(IDASGD_Validation3),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(IDASGD_Validation4),type="pearson") 
+```
+
+
+
