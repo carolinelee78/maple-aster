@@ -238,6 +238,68 @@ CAMD_Undergrad_SMU_Clean <- CAMD_Undergrad_SMU[CAMD_Undergrad_SMU$FCheckPass != 
 ### MEAQ New Undergrad - no check for attentive responding
 
 ```
+### Demographics 
+
+```{r}
+### CAMD MTurk ### 
+
+summary(CAMD_MTurk_Clean$Age)
+
+table(CAMD_MTurk_Clean$Gender) # 1=male;2=female;3=transgender
+
+table(CAMD_MTurk_Clean$RaceEthnicity) # 1=ai/an;2=asian;3=aa;4=nh/pi;5=wh;6=multi;7=his;8=other;9=mideas
+
+### CAMD Undergrad SMU ### 
+
+CAMD_Undergrad_SMU_Clean$Age <- as.numeric(CAMD_Undergrad_SMU_Clean$Age)
+
+summary(CAMD_Undergrad_SMU_Clean$Age) 
+
+table(CAMD_Undergrad_SMU_Clean$Gender) # 1=male;2=female;3=transgender
+
+table(CAMD_Undergrad_SMU_Clean$R_AI_AN) # n=2
+
+table(CAMD_Undergrad_SMU_Clean$R_Asian) # n=20
+
+table(CAMD_Undergrad_SMU_Clean$R_Black) # n=7
+
+table(CAMD_Undergrad_SMU_Clean$R_HisLat) # n=19
+
+table(CAMD_Undergrad_SMU_Clean$R_Multi) # n=5
+
+table(CAMD_Undergrad_SMU_Clean$R_NH) # N/A
+
+table(CAMD_Undergrad_SMU_Clean$R_other) # n=2 
+
+table(CAMD_Undergrad_SMU_Clean$R_White) # n=176
+
+### EAI MTurk ### 
+
+### EAI Undergrad SMU ### 
+
+### LTC MTurk ### 
+
+### LTC Undergrad SMU ### 
+
+### MEAQ AAQ MTurk ### 
+
+### MEAQ AAQ Undergrad SMU ### 
+
+### MEAQ Dev Outpatient Clinical ###
+
+### MEAQ Dev Phase3 Patient ### 
+
+### MEAQ Dev Undergrad Iowa ### 
+
+### MEAQ New Community ### 
+
+### MEAQ New Patient S1 ### 
+
+### MEAQ New Patient S2 ### 
+
+### MEAQ New Undergrad ### 
+
+```
 
 ### Subsetting for MEAQ 
 ```{r, results='hide'}
