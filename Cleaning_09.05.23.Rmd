@@ -238,23 +238,32 @@ CAMD_Undergrad_SMU_Clean <- CAMD_Undergrad_SMU[CAMD_Undergrad_SMU$FCheckPass != 
 ### MEAQ New Undergrad - no check for attentive responding
 
 ```
+
 ### Demographics 
 
 ```{r}
 ### CAMD MTurk ### 
 
-summary(CAMD_MTurk_Clean$Age)
+mean(CAMD_MTurk_Clean$Age)
+
+sd(CAMD_MTurk_Clean$Age)
 
 table(CAMD_MTurk_Clean$Gender) # 1=male;2=female;3=transgender
 
 table(CAMD_MTurk_Clean$RaceEthnicity) # 1=ai/an;2=asian;3=aa;4=nh/pi;5=wh;6=multi;7=his;8=other;9=mideas
+```
 
+```{r}
 ### CAMD Undergrad SMU ### 
 
 CAMD_Undergrad_SMU_Clean$Age <- as.numeric(CAMD_Undergrad_SMU_Clean$Age)
 
-summary(CAMD_Undergrad_SMU_Clean$Age) 
+mean(CAMD_Undergrad_SMU_Clean$Age, na.rm = T) 
 
+sd(CAMD_Undergrad_SMU_Clean$Age, na.rm = T)
+```
+
+```{r}
 table(CAMD_Undergrad_SMU_Clean$Gender) # 1=male;2=female 
 
 table(CAMD_Undergrad_SMU_Clean$R_AI_AN) # n=2
@@ -272,29 +281,45 @@ table(CAMD_Undergrad_SMU_Clean$R_NH) # N/A
 table(CAMD_Undergrad_SMU_Clean$R_other) # n=2 
 
 table(CAMD_Undergrad_SMU_Clean$R_White) # n=176
+```
 
+```{r}
 ### EAI MTurk ### 
 
-summary(EAI_MTurk$age)
+mean(EAI_MTurk$age, na.rm=T)
 
+sd(EAI_MTurk$age, na.rm=T)
+```
+
+```{r}
 table(EAI_MTurk$gender) 
 
 table(EAI_MTurk$race) 
+```
 
+```{r}
 ### EAI Undergrad SMU ### 
 
-summary(EAI_Undergrad_SMU$age)
+mean(EAI_Undergrad_SMU$age, na.rm=T)
+
+sd(EAI_Undergrad_SMU$age, na.rm=T)
 
 table(EAI_Undergrad_SMU$gender) # 1=male;2=female?
 
 table(EAI_Undergrad_SMU$race) # 1=white;2=?;3=?;6=other?
+```
 
+```{r}
 ### LTC MTurk ### 
 
-summary(LTC_MTurk_T1$Q8) # Q8=age
+mean(LTC_MTurk_T1$Q8, na.rm=T) # Q8=age
+
+sd(LTC_MTurk_T1$Q8, na.rm=T)
 
 table(LTC_MTurk_T1$Q5) # 1=male;2=female
+```
 
+```{r}
 table(LTC_MTurk_T1$Q93_1) # american indian; n=65
 
 table(LTC_MTurk_T1$Q93_2) # asian; n=160
@@ -304,35 +329,49 @@ table(LTC_MTurk_T1$Q93_3) # aa/black; n=194
 table(LTC_MTurk_T1$Q93_4) # nh/pi; n=21
 
 table(LTC_MTurk_T1$Q93_5) # white; n=1674
+```
 
+```{r}
 ### LTC Undergrad SMU ### 
 
 # missing?
 
 ### MEAQ AAQ MTurk ### 
 
-summary(MEAQ_AAQ_MTurk_T1$Age)
+mean(MEAQ_AAQ_MTurk_T1$Age, na.rm=T)
+
+sd(MEAQ_AAQ_MTurk_T1$Age, na.rm=T)
 
 table(MEAQ_AAQ_MTurk_T1$Gender) # 1=male;2=female 
 
 table(MEAQ_AAQ_MTurk_T1$Race) # 1=ai/an;2=asian;3=nh/pi;4=aa/black;5=white;6=multi;7=other
+```
 
+```{r}
 ### MEAQ AAQ Undergrad SMU ### 
 
-summary(MEAQ_AAQ_Undergrad_SMU_T1$Age)
+mean(MEAQ_AAQ_Undergrad_SMU_T1$Age, na.rm=T)
+
+sd(MEAQ_AAQ_Undergrad_SMU_T1$Age, na.rm=T)
 
 table(MEAQ_AAQ_Undergrad_SMU_T1$Gender) # 1=male;2=female
 
 table(MEAQ_AAQ_Undergrad_SMU_T1$Race) # 1=ai/an;2=asian;3=nh/pi;4=aa/black;5=white;6=multi;7=other
+```
 
+```{r}
 ### MEAQ Dev Outpatient Clinical ###
 
-summary(MEAQ_Dev_Outpatient_Clinical$age) # 1=female;2=male;3=transgender
+mean(MEAQ_Dev_Outpatient_Clinical$age, na.rm=T) # 1=female;2=male;3=transgender
+
+sd(MEAQ_Dev_Outpatient_Clinical$age, na.rm=T)
 
 table(MEAQ_Dev_Outpatient_Clinical$gender) 
 
 table(MEAQ_Dev_Outpatient_Clinical$ethnic) # 1=aa/black;2=asian;3=white;4=hisp;5=nat;6=other
+```
 
+```{r}
 ### MEAQ Dev Phase3 Patient ### 
 
 # missing?
