@@ -378,15 +378,17 @@ table(MEAQ_Dev_Outpatient_Clinical$ethnic) # 1=aa/black;2=asian;3=white;4=hisp;5
 
 ### MEAQ Dev Undergrad Iowa ### 
 
-summary(MEAQ_Dev_Undergrad_Iowa$AGE)
+mean(MEAQ_Dev_Undergrad_Iowa$AGE, na.rm=T)
+
+sd(MEAQ_Dev_Undergrad_Iowa$AGE, na.rm=T)
 
 table(MEAQ_Dev_Undergrad_Iowa$GENDER) # 1=female;2=male
 
-table(MEAQ_Dev_Undergrad_Iowa$ETHNIC) # 1=aa/black;2=asian;3=white;4=hisp;5=nat;6=other
+table(MEAQ_Dev_Undergrad_Iowa$ETHNIC) #1=aa/black;2=asian;3=white;4=hisp;5=nat;6=other
+```
 
+```{r}
 ### MEAQ New Community ### 
-
-colnames(MEAQ_New_Community)
 
 table(MEAQ_New_Community$gender) # no labels...
 
@@ -399,17 +401,22 @@ table(MEAQ_New_Community$ethnicit) # again, no labels
 ### MEAQ New Patient S2 ### 
 
 # missing? 
+```
 
+```{r}
 ### MEAQ New Undergrad ### 
 
-summary(MEAQ_New_Undergrad$Age)
+mean(MEAQ_New_Undergrad$Age, na.rm=T)
+
+sd(MEAQ_New_Undergrad$Age, na.rm=T)
 
 table(MEAQ_New_Undergrad$Gender) # 0=female;1=male
 
-table(MEAQ_New_Undergrad$Race) # 1=white;2=black/aa;3=ai/an;4=asian;5=nh/pi6=other
+table(MEAQ_New_Undergrad$Race) # 1=white;2=black/aa;3=ai/an;4=asian;5=nh/pi; 6=other
 ```
 
 ### Subsetting for MEAQ 
+
 ```{r, results='hide'}
 ### Committed Action Measure Development - MTurk ###
 
