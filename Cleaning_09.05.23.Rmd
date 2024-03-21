@@ -414,6 +414,13 @@ table(MEAQ_New_Undergrad$Gender) # 0=female;1=male
 
 table(MEAQ_New_Undergrad$Race) # 1=white;2=black/aa;3=ai/an;4=asian;5=nh/pi; 6=other
 ```
+```{r}
+male_total <- 112 + 46 + 267 + 137 + 1552 + 378 + 79 + 52 + 75 + 54 + 88
+
+female_total <- 151 + 168 + 376 + 345 + 1960 + 661 + 282 + 147 + 239 + 162 + 274
+
+4765 + 2840 + 4
+```
 
 ### Subsetting for MEAQ 
 
