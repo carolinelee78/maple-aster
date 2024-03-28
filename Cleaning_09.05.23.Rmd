@@ -3826,6 +3826,10 @@ BFIN_Validation <- round_df(BFIN_Validation, 0)
 
 BFIN_Validation <- BFIN_Validation %>%
   select("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5", "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10", "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25", "MEAQ_26", "MEAQ_27", "MEAQ_28", "MEAQ_29", "MEAQ_30", "MEAQ_31", "MEAQ_32", "MEAQ_33", "MEAQ_34", "MEAQ_35", "MEAQ_36", "MEAQ_37", "MEAQ_38", "MEAQ_39", "MEAQ_40", "MEAQ_41", "MEAQ_42", "MEAQ_43", "MEAQ_44", "MEAQ_45", "MEAQ_46", "MEAQ_47", "MEAQ_48", "MEAQ_49", "MEAQ_50", "MEAQ_51", "MEAQ_52", "MEAQ_53", "MEAQ_54", "MEAQ_55", "MEAQ_56", "MEAQ_57", "MEAQ_58", "MEAQ_59", "MEAQ_60", "MEAQ_61", "MEAQ_62", "BFI_N")
+
+BFIN_Validation <- na.omit(BFIN_Validation)
+
+BFIN_Validation <- round_df(BFIN_Validation, 0)
 ```
 
 ```{r}
@@ -6857,6 +6861,54 @@ rcorr(as.matrix(IDASGD_Validation3),type="pearson")
 
 ```{r}
 rcorr(as.matrix(IDASGD_Validation4),type="pearson") 
+```
+
+### Demographics ###
+
+## Age ======================================
+
+```{r}
+Age1 <- as.vector(CAMD_MTurk_Clean$Age)
+Age2 <- as.vector(CAMD_Undergrad_SMU_Clean$Age)
+Age3 <- as.vector(EAI_MTurk$age)
+Age4 <- as.vector(EAI_Undergrad_SMU$age)
+Age5 <- as.vector(LTC_MTurk_T1$Q8)
+Age6 <- as.vector(MEAQ_AAQ_MTurk_T1$Age)
+Age7 <- as.vector(MEAQ_AAQ_Undergrad_SMU_T1$Age)
+Age8 <- as.vector(MEAQ_New_Undergrad$Age)
+
+mean(c(Age1, Age2, Age3, Age4, Age5, Age6, Age7, Age8), na.rm=T)
+sd(c(Age1, Age2, Age3, Age4, Age5, Age6, Age7, Age8), na.rm=T)
+```
+
+## Sex =====================================
+
+```{r}
+male <- 112+46+267+137+1552+378+79+52+75+54+88
+female <- 151+168+376+345+1960+661+282+147+239+162+274
+female/(male+female)
+```
+
+## Race/Ethnicity ==========================
+
+```{r}
+AIAN <- 4+3+5+1+65+15+1+1
+ASIAN <- 28+22+49+64+160+56+33+24
+BLACK <- 28+11+57+2+194+105+30+45
+NH_WHITE <- 202+189+454+310+1505+764+264+230
+MULTI <- 8+7+12+18+54+17
+HISP <- 12+24+62+85+169+76+47+72
+NHPI <- 1+21+1+1
+
+TOTAL <- AIAN+ASIAN+BLACK+NH_WHITE+MULTI+HISP+NHPI
+
+AIAN/TOTAL
+ASIAN/TOTAL
+BLACK/TOTAL
+NH_WHITE/TOTAL
+MULTI/TOTAL
+HISP/TOTAL
+NHPI/TOTAL
 ```
 
 
