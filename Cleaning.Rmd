@@ -3048,7 +3048,7 @@ CAMD_MTurk_Clean$BFI_49R <- dplyr::case_when(
 ) 
 
 BFI2N_Validation_S1 <- CAMD_MTurk_Clean[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5",
-                                           "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",           
+                                           "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",         
                                            "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", 
                                            "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", 
                                            "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25",
@@ -3113,7 +3113,7 @@ CAMD_Undergrad_SMU_Clean$BFI_49R <- dplyr::case_when(
 ) 
 
 BFI2N_Validation_S2 <- CAMD_Undergrad_SMU_Clean[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5",
-                                           "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",           
+                                           "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",       
                                            "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", 
                                            "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", 
                                            "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25",
@@ -3127,7 +3127,9 @@ BFI2N_Validation_S2 <- CAMD_Undergrad_SMU_Clean[,c("MEAQ_1", "MEAQ_2", "MEAQ_3",
                                            "MEAQ_61", "MEAQ_62", "BFI_4R", "BFI_9R", "BFI_14",
                                            "BFI_19", "BFI_24R", "BFI_29R", "BFI_34", "BFI_39",
                                            "BFI_44R", "BFI_49R", "BFI_54", "BFI_59")]
+```
 
+```{r}
 ### EAI MTurk ### 
 
 EAI_MTurk <- rename(EAI_MTurk, MEAQ_1 = meaq1, 
@@ -3256,7 +3258,7 @@ EAI_MTurk$BFI_49R <- dplyr::case_when(
 ) 
 
 BFI2N_Validation_S3 <- EAI_MTurk[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5",
-                                           "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",           
+                                           "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",       
                                            "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", 
                                            "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", 
                                            "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25",
@@ -3270,7 +3272,9 @@ BFI2N_Validation_S3 <- EAI_MTurk[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEA
                                            "MEAQ_61", "MEAQ_62", "BFI_4R", "BFI_9R", "BFI_14",
                                            "BFI_19", "BFI_24R", "BFI_29R", "BFI_34", "BFI_39",
                                            "BFI_44R", "BFI_49R", "BFI_54", "BFI_59")]
+```
 
+```{r}
 ### EAI Undergrad ###
 
 EAI_Undergrad_SMU <- rename(EAI_Undergrad_SMU, MEAQ_1 = meaq1, 
@@ -3399,7 +3403,7 @@ EAI_Undergrad_SMU$BFI_49R <- dplyr::case_when(
 ) 
 
 BFI2N_Validation_S4 <- EAI_Undergrad_SMU[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5",
-                                           "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",           
+                                           "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",         
                                            "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", 
                                            "MEAQ_16", "MEAQ_17", "MEAQ_18", "MEAQ_19", "MEAQ_20", 
                                            "MEAQ_21", "MEAQ_22", "MEAQ_23", "MEAQ_24", "MEAQ_25",
@@ -3430,13 +3434,222 @@ cronbach.alpha(BFI2N_alpha_df)
 ```
 
 ```{r}
+# BFI-2 Scale  =======================================
+# Extraversion: 1, 6, 11R, 16R, 21, 26R, 31R, 36R, 41, 46, 51R, 56
+# Agreeableness: 2, 7, 12R, 17R, 22R, 27, 32, 37R, 42R, 47R, 52, 57
+# Conscientiousness: 3R, 8R, 13, 18, 23R, 28R, 33, 38, 43, 48R, 53, 58R
+# Negative Emotionality: 4R, 9R, 14, 19, 24R, 39R, 34, 39, 44R, 49R, 54, 59
+# Open-Mindedness: 5R, 10, 15, 20, 25R, 30R, 35, 40, 45R, 50R, 55R, 60 
+
+### CAMD MTurk ### 
+
+# Extraversion 
+
+CAMD_MTurk_Clean$BFI_11R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_11 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_11 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_11 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_11 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_11)
+) 
+
+CAMD_MTurk_Clean$BFI_16R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_16 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_16 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_16 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_16 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_16)
+) 
+
+CAMD_MTurk_Clean$BFI_26R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_26 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_26 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_26 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_26 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_26)
+) 
+
+CAMD_MTurk_Clean$BFI_31R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_31 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_31 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_31 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_31 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_31)
+) 
+
+CAMD_MTurk_Clean$BFI_36R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_36 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_36 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_36 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_36 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_36)
+) 
+
+CAMD_MTurk_Clean$BFI_51R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_51 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_51 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_51 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_51 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_51)
+) 
+
+# Agreeableness 
+
+CAMD_MTurk_Clean$BFI_12R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_12 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_12 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_12 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_12 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_12)
+) 
+
+CAMD_MTurk_Clean$BFI_17R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_17 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_17 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_17 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_17 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_17)
+) 
+
+CAMD_MTurk_Clean$BFI_22R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_22 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_22 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_22 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_22 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_22)
+) 
+
+CAMD_MTurk_Clean$BFI_37R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_37 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_37 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_37 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_37 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_37)
+) 
+
+CAMD_MTurk_Clean$BFI_42R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_42 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_42 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_42 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_42 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_42)
+) 
+
+CAMD_MTurk_Clean$BFI_47R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_47 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_47 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_47 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_47 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_47)
+) 
+
+# Conscientiousness 
+
+CAMD_MTurk_Clean$BFI_3R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_3 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_3 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_3 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_3 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_3)
+) 
+
+CAMD_MTurk_Clean$BFI_8R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_8 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_8 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_8 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_8 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_8)
+) 
+
+CAMD_MTurk_Clean$BFI_23R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_23 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_23 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_23 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_23 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_23)
+) 
+
+CAMD_MTurk_Clean$BFI_28R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_28 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_28 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_28 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_28 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_28)
+) 
+
+CAMD_MTurk_Clean$BFI_48R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_48 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_48 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_48 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_48 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_48)
+) 
+
+CAMD_MTurk_Clean$BFI_58R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_58 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_58 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_58 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_58 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_58)
+) 
+
+# Open-mindedness 
+
+CAMD_MTurk_Clean$BFI_5R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_5 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_5 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_5 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_5 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_5)
+) 
+
+CAMD_MTurk_Clean$BFI_25R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_25 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_25 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_25 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_25 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_25)
+) 
+
+CAMD_MTurk_Clean$BFI_30R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_30 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_30 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_30 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_30 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_30)
+) 
+
+CAMD_MTurk_Clean$BFI_45R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_45 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_45 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_45 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_45 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_45)
+) 
+
+CAMD_MTurk_Clean$BFI_50R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_50 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_50 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_50 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_50 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_50)
+) 
+
+CAMD_MTurk_Clean$BFI_55R <- dplyr::case_when(
+  CAMD_MTurk_Clean$BFI_55 %in% 1 ~ 5, 
+  CAMD_MTurk_Clean$BFI_55 %in% 2 ~ 4, 
+  CAMD_MTurk_Clean$BFI_55 %in% 4 ~ 2, 
+  CAMD_MTurk_Clean$BFI_55 %in% 5 ~ 1,  
+  TRUE ~ as.numeric(CAMD_MTurk_Clean$BFI_55)
+) 
+```
+
+```{r}
 # BFAS Neuroticism Scale ==============================
 
 # MEAQ_AAQ_MTurk_T1 (N=1052 before cleaning missing data)
 # MEAQ_AAQ_Undergrad_SMU_T1 (N=364 before cleaning missing data)
-```
 
-```{r}
 ### MEAQ_AAQ_MTurk_T1 ###
 
 colnames(MEAQ_AAQ_MTurk_T1)
@@ -4665,6 +4878,14 @@ PANAS_XN_alpha_S2 <- PANAS_XN_alpha_S2[,c("PANAS_XN1", "PANAS_XN2", "PANAS_XN3",
                                           "PANAS_XN6", "PANAS_XN7", "PANAS_XN8", "PANAS_XN9", "PANAS_XN10")]
 
 PANAS_XN_alpha_df <- rbind(PANAS_XN_alpha_S1, PANAS_XN_alpha_S2)
+
+PANAS_XN_alpha_df <- na.omit(PANAS_XN_alpha_df) 
+
+PANAS_XN_alpha_df <- round_df(PANAS_XN_alpha_df, 0)
+
+cronbach.alpha(PANAS_XN_alpha_df)
+
+0.927/(10+((0.927)*(1-10))) #AIC
 ```
 
 ```{r}
@@ -5959,6 +6180,43 @@ IDASGD_Validation <- IDASGD_Validation[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4"
 IDASGD_Validation <- na.omit(IDASGD_Validation)
 
 IDASGD_Validation <- round_df(IDASGD_Validation, 0)
+```
+
+```{r}
+IDAS_GD_alpha_df <- rename(MEAQ_Dev_Phase3_Patient,
+                           IDAS_GD1 = idas002,
+                           IDAS_GD2 = idas003,
+                           IDAS_GD3 = idas004,
+                           IDAS_GD4 = idas006,
+                           IDAS_GD5 = idas007,
+                           IDAS_GD6 = idas010,
+                           IDAS_GD7 = idas011, 
+                           IDAS_GD8 = idas012,
+                           IDAS_GD9 = idas013,
+                           IDAS_GD10 = idas015,
+                           IDAS_GD11 = idas016,
+                           IDAS_GD12 = idas017,
+                           IDAS_GD13 = idas024,
+                           IDAS_GD14 = idas035,
+                           IDAS_GD15 = idas042,
+                           IDAS_GD16 = idas047,
+                           IDAS_GD17 = idas048,
+                           IDAS_GD18 = idas049,
+                           IDAS_GD19 = idas051,
+                           IDAS_GD20 = idas053)
+
+IDAS_GD_alpha_df <- IDAS_GD_alpha_df[,c("IDAS_GD1", "IDAS_GD2", "IDAS_GD3", "IDAS_GD4", "IDAS_GD5",
+                                        "IDAS_GD6", "IDAS_GD7", "IDAS_GD8", "IDAS_GD9", "IDAS_GD10",
+                                        "IDAS_GD11", "IDAS_GD12", "IDAS_GD13", "IDAS_GD14", "IDAS_GD15",
+                                        "IDAS_GD16", "IDAS_GD17", "IDAS_GD18", "IDAS_GD19", "IDAS_GD20")]
+
+IDAS_GD_alpha_df <- na.omit(IDAS_GD_alpha_df)
+
+IDAS_GD_alpha_df <- round_df(IDAS_GD_alpha_df, 0)
+
+cronbach.alpha(IDAS_GD_alpha_df)
+
+0.843/(20+((0.843)*(1-20))) #AIC
 ```
 
 ```{r}
