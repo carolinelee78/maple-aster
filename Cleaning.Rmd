@@ -5088,8 +5088,7 @@ PANAS_SFN_alpha_S1 <- rename(MEAQ_Dev_Undergrad_Iowa,
                              PANAS_SFN9 = PANAS18,
                              PANAS_SFN10 = PANAS20)
 
-PANAS_SFN_alpha_S1 <- PANAS_SFN_alpha_S1[,c("PANAS_SFN1", "PANAS_SFN2", "PANAS_SFN3", "PANAS_SFN4", "PANAS_SFN5",
-                                            "PANAS_SFN6", "PANAS_SFN7", "PANAS_SFN8", "PANAS_SFN9", "PANAS_SFN10")]
+PANAS_SFN_alpha_S1 <- PANAS_SFN_alpha_S1[,c("PANAS_SFN1", "PANAS_SFN2", "PANAS_SFN3", "PANAS_SFN4", "PANAS_SFN5", "PANAS_SFN6", "PANAS_SFN7", "PANAS_SFN8", "PANAS_SFN9", "PANAS_SFN10")]
 
 PANAS_SFN_alpha_S2 <- rename(MEAQ_Dev_Outpatient_Clinical, 
                              PANAS_SFN1 = panas2,
@@ -5103,8 +5102,7 @@ PANAS_SFN_alpha_S2 <- rename(MEAQ_Dev_Outpatient_Clinical,
                              PANAS_SFN9 = panas18,
                              PANAS_SFN10 = panas20)
 
-PANAS_SFN_alpha_S2 <- PANAS_SFN_alpha_S2[,c("PANAS_SFN1", "PANAS_SFN2", "PANAS_SFN3", "PANAS_SFN4", "PANAS_SFN5",
-                                            "PANAS_SFN6", "PANAS_SFN7", "PANAS_SFN8", "PANAS_SFN9", "PANAS_SFN10")]
+PANAS_SFN_alpha_S2 <- PANAS_SFN_alpha_S2[,c("PANAS_SFN1", "PANAS_SFN2", "PANAS_SFN3", "PANAS_SFN4", "PANAS_SFN5", "PANAS_SFN6", "PANAS_SFN7", "PANAS_SFN8", "PANAS_SFN9", "PANAS_SFN10")]
 
 PANAS_SFN_alpha_df <- rbind(PANAS_SFN_alpha_S1, PANAS_SFN_alpha_S2)
 
@@ -5115,7 +5113,6 @@ PANAS_SFN_alpha_df <- round_df(PANAS_SFN_alpha_df, 0)
 cronbach.alpha(PANAS_SFN_alpha_df)
 
 0.889/(10+((0.889)*(1-10))) #AIC
-  
 ```
 
 ```{r}
@@ -5763,7 +5760,7 @@ PANAS_SFP_Validation_S1$PANAS_PA <- PANAS_SFP_Validation_S1$PANAS1 + PANAS_SFP_V
 PANAS_SFP_Validation_S1$PANAS12 + PANAS_SFP_Validation_S1$PANAS14 + 
 PANAS_SFP_Validation_S1$PANAS16 + PANAS_SFP_Validation_S1$PANAS17 + PANAS_SFP_Validation_S1$PANAS19
 
-PANAS_SFP_Validation_S1 <- rename(PANAS_SFP_Validation_S1, MEAQ_1 = MEAQ1,  
+PANAS_SFP_Validation_S1 <- dplyr::rename(PANAS_SFP_Validation_S1, MEAQ_1 = MEAQ1,  
                                        MEAQ_2 = MEAQ2, 
                                        MEAQ_3 = MEAQ3, 
                                        MEAQ_4 = MEAQ4, 
@@ -5838,7 +5835,7 @@ which(colnames(MEAQ_Dev_Outpatient_Clinical) == "panas20")
 
 PANAS_SFP_Validation_S2 <- MEAQ_Dev_Outpatient_Clinical
 
-PANAS_SFP_Validation_S2 <- rename(PANAS_SFP_Validation_S2, 
+PANAS_SFP_Validation_S2 <- dplyr::rename(PANAS_SFP_Validation_S2, 
                                        PANAS1 = panas1, 
                                        PANAS3 = panas3,
                                        PANAS5 = panas5,
@@ -5925,6 +5922,46 @@ PANAS_SFP_Validation <- rbind(PANAS_SFP_Validation_S1, PANAS_SFP_Validation_S2)
 PANAS_SFP_Validation <- na.omit(PANAS_SFP_Validation)
 
 PANAS_SFP_Validation <- round_df(PANAS_SFP_Validation)
+```
+
+```{r}
+PANAS_SFP_alpha_S1 <- dplyr::rename(MEAQ_Dev_Undergrad_Iowa, 
+                             PANAS_SFP1 = PANAS1,
+                             PANAS_SFP2 = PANAS3,
+                             PANAS_SFP3 = PANAS5,
+                             PANAS_SFP4 = PANAS9,
+                             PANAS_SFP5 = PANAS10,
+                             PANAS_SFP6 = PANAS12,
+                             PANAS_SFP7 = PANAS14,
+                             PANAS_SFP8 = PANAS16,
+                             PANAS_SFP9 = PANAS17,
+                             PANAS_SFP10 = PANAS19)
+
+PANAS_SFP_alpha_S1 <- PANAS_SFP_alpha_S1[,c("PANAS_SFP1", "PANAS_SFP2", "PANAS_SFP3", "PANAS_SFP4", "PANAS_SFP5", "PANAS_SFP6", "PANAS_SFP7", "PANAS_SFP8", "PANAS_SFP9", "PANAS_SFP10")]
+
+PANAS_SFP_alpha_S2 <- dplyr::rename(MEAQ_Dev_Outpatient_Clinical, 
+                             PANAS_SFP1 = panas1,
+                             PANAS_SFP2 = panas3,
+                             PANAS_SFP3 = panas5,
+                             PANAS_SFP4 = panas9,
+                             PANAS_SFP5 = panas10,
+                             PANAS_SFP6 = panas12,
+                             PANAS_SFP7 = panas14,
+                             PANAS_SFP8 = panas16,
+                             PANAS_SFP9 = panas17,
+                             PANAS_SFP10 = panas19)
+
+PANAS_SFP_alpha_S2 <- PANAS_SFP_alpha_S2[,c("PANAS_SFP1", "PANAS_SFP2", "PANAS_SFP3", "PANAS_SFP4", "PANAS_SFP5", "PANAS_SFP6", "PANAS_SFP7", "PANAS_SFP8", "PANAS_SFP9", "PANAS_SFP10")]
+
+PANAS_SFP_alpha_df <- rbind(PANAS_SFP_alpha_S1, PANAS_SFP_alpha_S2)
+
+PANAS_SFP_alpha_df <- na.omit(PANAS_SFP_alpha_df) 
+
+PANAS_SFP_alpha_df <- round_df(PANAS_SFP_alpha_df, 0)
+
+cronbach.alpha(PANAS_SFP_alpha_df)
+
+0.906/(10+((0.906)*(1-10))) #AIC
 ```
 
 ```{r}
