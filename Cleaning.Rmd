@@ -3269,8 +3269,6 @@ BFI2N_Validation_S1 <- CAMD_MTurk_Clean[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4
                                            "BFI_19", "BFI_24R", "BFI_29R", "BFI_34", "BFI_39",
                                            "BFI_44R", "BFI_49R", "BFI_54", "BFI_59")]
 
-BFI2N_Validation_S1$BFI2_NE <- BFI2N_Validation_S1$BFI_4R + BFI2N_Validation_S1$BFI_9R + BFI2N_Validation_S1$BFI_14 + BFI2N_Validation_S1$
-
 BFI2_Validation_S1 <- CAMD_MTurk_Clean[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5",
                                            "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",         
                                            "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", 
@@ -4442,6 +4440,248 @@ BFI2N_Validation <- na.omit(BFI2N_Validation)
 
 BFI2N_Validation <- round_df(BFI2N_Validation, 0)
 
+### Reverse coding apart from DE ### 
+BFI2N_Validation$MEAQ_23_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_23 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_23 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_23 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_23 %in% 4 ~ 3,   
+  BFI2N_Validation$MEAQ_23 %in% 5 ~ 2, 
+  BFI2N_Validation$MEAQ_23 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_23)
+) 
+
+BFI2N_Validation$MEAQ_30_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_30 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_30 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_30 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_30 %in% 4 ~ 3,   
+  BFI2N_Validation$MEAQ_30 %in% 5 ~ 2, 
+  BFI2N_Validation$MEAQ_30 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_30)
+)
+
+### Reverse coding for DE items (for total score) ###
+
+BFI2N_Validation$MEAQ_6_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_6 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_6 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_6 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_6 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_6 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_6 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_6)
+)
+
+BFI2N_Validation$MEAQ_12_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_12 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_12 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_12 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_12 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_12 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_12 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_12)
+)
+
+BFI2N_Validation$MEAQ_18_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_18 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_18 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_18 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_18 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_18 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_18 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_18)
+)
+
+BFI2N_Validation$MEAQ_24_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_24 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_24 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_24 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_24 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_24 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_24 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_24)
+)
+
+BFI2N_Validation$MEAQ_29_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_29 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_29 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_29 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_29 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_29 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_29 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_29)
+)
+
+BFI2N_Validation$MEAQ_37_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_37 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_37 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_37 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_37 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_37 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_37 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_37)
+)
+
+BFI2N_Validation$MEAQ_43_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_43 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_43 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_43 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_43 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_43 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_43 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_43)
+)
+
+BFI2N_Validation$MEAQ_48_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_48 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_48 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_48 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_48 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_48 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_48 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_48)
+)
+
+BFI2N_Validation$MEAQ_53_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_53 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_53 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_53 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_53 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_53 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_53 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_53)
+)
+
+BFI2N_Validation$MEAQ_57_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_57 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_57 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_57 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_57 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_57 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_57 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_57)
+)
+
+BFI2N_Validation$MEAQ_62_r <- dplyr::case_when(
+  BFI2N_Validation$MEAQ_62 %in% 1 ~ 6, 
+  BFI2N_Validation$MEAQ_62 %in% 2 ~ 5, 
+  BFI2N_Validation$MEAQ_62 %in% 3 ~ 4,   
+  BFI2N_Validation$MEAQ_62 %in% 4 ~ 3, 
+  BFI2N_Validation$MEAQ_62 %in% 5 ~ 2,  
+  BFI2N_Validation$MEAQ_62 %in% 6 ~ 1,
+  TRUE ~ as.numeric(BFI2N_Validation$MEAQ_62)
+)
+
+# MEAQ-62 =================
+BFI2N_Validation$MEAQ62_BA <- BFI2N_Validation$MEAQ_1 + BFI2N_Validation$MEAQ_8 + BFI2N_Validation$MEAQ_14 +  BFI2N_Validation$MEAQ_20 + BFI2N_Validation$MEAQ_26 + BFI2N_Validation$MEAQ_32 + BFI2N_Validation$MEAQ_39 + BFI2N_Validation$MEAQ_45 + BFI2N_Validation$MEAQ_51 + BFI2N_Validation$MEAQ_55 + BFI2N_Validation$MEAQ_59
+
+BFI2N_Validation$MEAQ62_DA <- BFI2N_Validation$MEAQ_2 + BFI2N_Validation$MEAQ_7 + BFI2N_Validation$MEAQ_13 + BFI2N_Validation$MEAQ_19 + BFI2N_Validation$MEAQ_25 + BFI2N_Validation$MEAQ_31 + BFI2N_Validation$MEAQ_34 + BFI2N_Validation$MEAQ_38 + BFI2N_Validation$MEAQ_44 + BFI2N_Validation$MEAQ_50 + BFI2N_Validation$MEAQ_54 + BFI2N_Validation$MEAQ_58 + BFI2N_Validation$MEAQ_61
+
+BFI2N_Validation$MEAQ62_PR <- BFI2N_Validation$MEAQ_5 + BFI2N_Validation$MEAQ_11 + BFI2N_Validation$MEAQ_17 + BFI2N_Validation$MEAQ_30_r + BFI2N_Validation$MEAQ_36 + BFI2N_Validation$MEAQ_42 + BFI2N_Validation$MEAQ_47 
+
+BFI2N_Validation$MEAQ62_DS <- BFI2N_Validation$MEAQ_3 + BFI2N_Validation$MEAQ_9 + BFI2N_Validation$MEAQ_15 + BFI2N_Validation$MEAQ_22 + BFI2N_Validation$MEAQ_27 + BFI2N_Validation$MEAQ_33 + BFI2N_Validation$MEAQ_40 
+
+BFI2N_Validation$MEAQ62_RD <- BFI2N_Validation$MEAQ_4 + BFI2N_Validation$MEAQ_10 + BFI2N_Validation$MEAQ_16 + BFI2N_Validation$MEAQ_21 + BFI2N_Validation$MEAQ_23_r + BFI2N_Validation$MEAQ_28 + BFI2N_Validation$MEAQ_35 + BFI2N_Validation$MEAQ_41 + BFI2N_Validation$MEAQ_46 + BFI2N_Validation$MEAQ_49 + BFI2N_Validation$MEAQ_52 + BFI2N_Validation$MEAQ_56 + BFI2N_Validation$MEAQ_60
+
+BFI2N_Validation$MEAQ62_DE <- BFI2N_Validation$MEAQ_6 + BFI2N_Validation$MEAQ_12 + BFI2N_Validation$MEAQ_18 + BFI2N_Validation$MEAQ_24 + BFI2N_Validation$MEAQ_29 + BFI2N_Validation$MEAQ_37 + BFI2N_Validation$MEAQ_43 + BFI2N_Validation$MEAQ_48 + BFI2N_Validation$MEAQ_53 + BFI2N_Validation$MEAQ_57 + BFI2N_Validation$MEAQ_62
+
+BFI2N_Validation$MEAQ62_DE_R <- BFI2N_Validation$MEAQ_6_r + BFI2N_Validation$MEAQ_12_r + BFI2N_Validation$MEAQ_18_r + BFI2N_Validation$MEAQ_24_r + BFI2N_Validation$MEAQ_29_r + BFI2N_Validation$MEAQ_37_r + BFI2N_Validation$MEAQ_43_r + BFI2N_Validation$MEAQ_48_r + BFI2N_Validation$MEAQ_53_r + BFI2N_Validation$MEAQ_57_r + BFI2N_Validation$MEAQ_62_r
+
+BFI2N_Validation$MEAQ62_Total <- BFI2N_Validation$MEAQ62_BA + BFI2N_Validation$MEAQ62_DA + BFI2N_Validation$MEAQ62_PR + BFI2N_Validation$MEAQ62_DS + BFI2N_Validation$MEAQ62_RD + BFI2N_Validation$MEAQ62_DE_R
+
+# =========================
+
+# MEAQ-GA =================
+BFI2N_Validation$MEAQGA_BA <- BFI2N_Validation$MEAQ_1 + BFI2N_Validation$MEAQ_8 + BFI2N_Validation$MEAQ_39 + BFI2N_Validation$MEAQ_51 + BFI2N_Validation$MEAQ_55
+
+BFI2N_Validation$MEAQGA_DA <- BFI2N_Validation$MEAQ_2 + BFI2N_Validation$MEAQ_7 + BFI2N_Validation$MEAQ_25 + BFI2N_Validation$MEAQ_31 + BFI2N_Validation$MEAQ_44 
+
+BFI2N_Validation$MEAQGA_PR <- BFI2N_Validation$MEAQ_5 + BFI2N_Validation$MEAQ_17 + BFI2N_Validation$MEAQ_30_r + BFI2N_Validation$MEAQ_36 + BFI2N_Validation$MEAQ_42 
+  
+BFI2N_Validation$MEAQGA_DS <- BFI2N_Validation$MEAQ_9 + BFI2N_Validation$MEAQ_22 + BFI2N_Validation$MEAQ_27 + BFI2N_Validation$MEAQ_33 + BFI2N_Validation$MEAQ_40
+  
+BFI2N_Validation$MEAQGA_RD <- BFI2N_Validation$MEAQ_35 + BFI2N_Validation$MEAQ_41 + BFI2N_Validation$MEAQ_52 + BFI2N_Validation$MEAQ_56 + BFI2N_Validation$MEAQ_60 
+  
+BFI2N_Validation$MEAQGA_DE <- BFI2N_Validation$MEAQ_12 + BFI2N_Validation$MEAQ_13 + BFI2N_Validation$MEAQ_43 + BFI2N_Validation$MEAQ_57 + BFI2N_Validation$MEAQ_62
+
+# =========================
+
+# BEAQ ==================== 
+BFI2N_Validation$BEAQ <-  BFI2N_Validation$MEAQ_58 +  BFI2N_Validation$MEAQ_59 + BFI2N_Validation$MEAQ_33 + BFI2N_Validation$MEAQ_56 + BFI2N_Validation$MEAQ_42 + BFI2N_Validation$MEAQ_29 + BFI2N_Validation$MEAQ_44 + BFI2N_Validation$MEAQ_14 + BFI2N_Validation$MEAQ_41 + BFI2N_Validation$MEAQ_36 + BFI2N_Validation$MEAQ_45 + BFI2N_Validation$MEAQ_25 + BFI2N_Validation$MEAQ_27 + BFI2N_Validation$MEAQ_32 + BFI2N_Validation$MEAQ_50
+# =========================
+
+# MEAQ-ACO-SF ============= 
+BFI2N_Validation$MEAQACOSF_BA <- BFI2N_Validation$MEAQ_14 + BFI2N_Validation$MEAQ_26 + BFI2N_Validation$MEAQ_32 + BFI2N_Validation$MEAQ_51 + BFI2N_Validation$MEAQ_55 
+
+BFI2N_Validation$MEAQACOSF_DA <- BFI2N_Validation$MEAQ_2 + BFI2N_Validation$MEAQ_19 + BFI2N_Validation$MEAQ_25 + BFI2N_Validation$MEAQ_34 + BFI2N_Validation$MEAQ_54 + BFI2N_Validation$MEAQ_61 
+
+BFI2N_Validation$MEAQACOSF_PR <- BFI2N_Validation$MEAQ_17 + BFI2N_Validation$MEAQ_42 + BFI2N_Validation$MEAQ_47
+
+BFI2N_Validation$MEAQACOSF_DS <- BFI2N_Validation$MEAQ_15 + BFI2N_Validation$MEAQ_33 + BFI2N_Validation$MEAQ_40 
+
+BFI2N_Validation$MEAQACOSF_RD <- BFI2N_Validation$MEAQ_10 + BFI2N_Validation$MEAQ_21 + BFI2N_Validation$MEAQ_23_r + BFI2N_Validation$MEAQ_28 + BFI2N_Validation$MEAQ_49 + BFI2N_Validation$MEAQ_60 
+
+BFI2N_Validation$MEAQACOSF_DE <- BFI2N_Validation$MEAQ_6 + BFI2N_Validation$MEAQ_12 + BFI2N_Validation$MEAQ_37 + BFI2N_Validation$MEAQ_53 + BFI2N_Validation$MEAQ_62
+
+BFI2N_Validation$MEAQACOSF_DE_R <- BFI2N_Validation$MEAQ_6 + BFI2N_Validation$MEAQ_12 + BFI2N_Validation$MEAQ_37 + BFI2N_Validation$MEAQ_53 + BFI2N_Validation$MEAQ_62
+
+BFI2N_Validation$MEAQACOSF_Total <- BFI2N_Validation$MEAQACOSF_BA + BFI2N_Validation$MEAQACOSF_DA + BFI2N_Validation$MEAQACOSF_PR + BFI2N_Validation$MEAQACOSF_DS + BFI2N_Validation$MEAQACOSF_RD + BFI2N_Validation$MEAQACOSF_DE_R
+
+# =========================
+
+# MEAQ-ACO-BF ============= 
+BFI2N_Validation$MEAQACOBF_BA <- BFI2N_Validation$MEAQ_51 + BFI2N_Validation$MEAQ_59 
+
+BFI2N_Validation$MEAQACOBF_DA <- BFI2N_Validation$MEAQ_7 + BFI2N_Validation$MEAQ_58 
+
+BFI2N_Validation$MEAQACOBF_PR <- BFI2N_Validation$MEAQ_5 + BFI2N_Validation$MEAQ_36 
+
+BFI2N_Validation$MEAQACOBF_DS <- BFI2N_Validation$MEAQ_22 + BFI2N_Validation$MEAQ_33 
+
+BFI2N_Validation$MEAQACOBF_RD <- BFI2N_Validation$MEAQ_4 + BFI2N_Validation$MEAQ_41 
+
+BFI2N_Validation$MEAQACOBF_DE <- BFI2N_Validation$MEAQ_53 + BFI2N_Validation$MEAQ_62
+
+BFI2N_Validation$MEAQACOBF_DE_R <- BFI2N_Validation$MEAQ_53_r + BFI2N_Validation$MEAQ_62_r
+
+BFI2N_Validation$MEAQACOBF_Total <- BFI2N_Validation$MEAQACOBF_BA + BFI2N_Validation$MEAQACOBF_DA + BFI2N_Validation$MEAQACOBF_PR + BFI2N_Validation$MEAQACOBF_DS + BFI2N_Validation$MEAQACOBF_RD + BFI2N_Validation$MEAQACOBF_DE_R
+# =========================
+
+BFI2N_Validation$BFI2_NE <- BFI2N_Validation$BFI_4R + BFI2N_Validation$BFI_9R + BFI2N_Validation$BFI_14 + BFI2N_Validation$BFI_19 + BFI2N_Validation$BFI_24R + BFI2N_Validation$BFI_29R + BFI2N_Validation$BFI_34 + BFI2N_Validation$BFI_39 + BFI2N_Validation$BFI_44R + BFI2N_Validation$BFI_49R + BFI2N_Validation$BFI_54 + BFI2N_Validation$BFI_59
+
+BFI2N_Validation <- na.omit(BFI2N_Validation)
+```
+
+```{r}
+BFI2N_Validation1 <- BFI2N_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "BFI2_NE")]
+
+BFI2N_Validation2 <- BFI2N_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "BFI2_NE")]
+
+BFI2N_Validation3 <- BFI2N_Validation[,c("MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOSF_Total", "BFI2_NE")]
+
+BFI2N_Validation4 <- BFI2N_Validation[,c("MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE", "MEAQACOBF_Total", "BFI2_NE")]
+
+cor.test(BFI2N_Validation$BEAQ, BFI2N_Validation$BFI2_NE)
+```
+
+```{r}
+rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(BFI2N_Validation2),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(BFI2N_Validation3),type="pearson") 
+```
+
+```{r}
+rcorr(as.matrix(BFI2N_Validation4),type="pearson") 
+```
+
+```{r}
 BFI2N_alpha_df <- BFI2N_Validation[,c("BFI_4R", "BFI_9R", "BFI_14", "BFI_19", "BFI_24R", "BFI_29R", "BFI_34", "BFI_39", "BFI_44R", "BFI_49R", "BFI_54", "BFI_59")]
 
 cronbach.alpha(BFI2N_alpha_df)
