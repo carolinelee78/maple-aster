@@ -3269,6 +3269,8 @@ BFI2N_Validation_S1 <- CAMD_MTurk_Clean[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4
                                            "BFI_19", "BFI_24R", "BFI_29R", "BFI_34", "BFI_39",
                                            "BFI_44R", "BFI_49R", "BFI_54", "BFI_59")]
 
+BFI2N_Validation_S1$BFI2_NE <- BFI2N_Validation_S1$BFI_4R + BFI2N_Validation_S1$BFI_9R + BFI2N_Validation_S1$BFI_14 + BFI2N_Validation_S1$
+
 BFI2_Validation_S1 <- CAMD_MTurk_Clean[,c("MEAQ_1", "MEAQ_2", "MEAQ_3", "MEAQ_4", "MEAQ_5",
                                            "MEAQ_6", "MEAQ_7", "MEAQ_8", "MEAQ_9", "MEAQ_10",         
                                            "MEAQ_11", "MEAQ_12", "MEAQ_13", "MEAQ_14", "MEAQ_15", 
@@ -4470,6 +4472,10 @@ BFI2_alpha_df <- BFI2_Validation[,c("BFI_1", "BFI_2", "BFI_3R",
 cronbach.alpha(BFI2_alpha_df)
 
 0.78/(59+((0.78)*(1-59))) #AIC
+```
+
+```{r}
+
 ```
 
 ```{r}
