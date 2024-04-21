@@ -2208,7 +2208,7 @@ cronbach.alpha(MEAQACOBF_DE_DF)
 ```{r}
 MEAQACOBF_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_51", "MEAQ_59", "MEAQ_7", "MEAQ_58", "MEAQ_5", "MEAQ_36", "MEAQ_22", "MEAQ_33", "MEAQ_4", "MEAQ_41", "MEAQ_53_r", "MEAQ_62_r") 
-
+ 
 cronbach.alpha(MEAQACOBF_DF)
 
 0.794/(12 + (0.794)*(1-12)) #AIC
@@ -2332,6 +2332,27 @@ writeLines(model_syntax)
 MEAQ62_EwC <- lavaan::cfa(model = model_syntax, data = validation_longform_esem, std.lv =T)
 
 lavaan::summary(MEAQ62_EwC, fit.measures = TRUE, std = TRUE)
+```
+
+```{r}
+inspect(MEAQ62_EwC,what="std")$lambda
+```
+
+```{r}
+omega_esem(MEAQ62_EwC, target_rot)
+```
+
+```{r}
+MEAQ62_BA_DF %>%
+  pivot_longer(cols = c("MEAQ_1", "MEAQ_8", "MEAQ_14", "MEAQ_20", "MEAQ_26", "MEAQ_32", "MEAQ_39", "MEAQ_45", "MEAQ_51", "MEAQ_55", "MEAQ_59"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
 ```
 
 ### MEAQ-GA
