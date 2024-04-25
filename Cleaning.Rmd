@@ -2355,6 +2355,58 @@ MEAQ62_BA_DF %>%
             CI_upper = mean + (1.96 * se))
 ```
 
+```{r}
+MEAQ62_DA_DF %>%
+  pivot_longer(cols = c("MEAQ_2", "MEAQ_7", "MEAQ_13", "MEAQ_19", "MEAQ_25", "MEAQ_31", "MEAQ_34", "MEAQ_38", "MEAQ_44", "MEAQ_50", "MEAQ_54", "MEAQ_58", "MEAQ_61"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
+```{r}
+MEAQ62_PR_DF %>%
+  pivot_longer(cols = c("MEAQ_5", "MEAQ_11", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_47"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
+```{r}
+MEAQ62_DS_DF %>%
+  pivot_longer(cols = c("MEAQ_3", "MEAQ_9", "MEAQ_15", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
+```{r}
+MEAQ62_RD_DF %>%
+  pivot_longer(cols = c("MEAQ_4", "MEAQ_10", "MEAQ_16", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_35", "MEAQ_41", "MEAQ_46", "MEAQ_52", "MEAQ_56", "MEAQ_60"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
 ### MEAQ-GA
 
 ```{r}
@@ -6949,6 +7001,7 @@ LTC_Undergrad_SMU_T1 <- rename(LTC_Undergrad_SMU_T1, MEAQ_1 = Q18_1,
                                     MEAQ_59 = Q18_59, 
                                     MEAQ_61 = Q18_60, 
                                     MEAQ_62 = Q18_61) 
+
 y2 <- sample(1:6, 293, prob=c(0.10,0.10,0.20,0.25,0.25, 0.20), replace=TRUE)
 
 LTC_Undergrad_SMU_T1 <- LTC_Undergrad_SMU_T1 %>% 
