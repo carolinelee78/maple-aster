@@ -2335,17 +2335,29 @@ lavaan::summary(MEAQ62_EwC, fit.measures = TRUE, std = TRUE)
 ```
 
 ```{r}
-inspect(MEAQ62_EwC,what="std")$lambda
-```
-
-```{r}
-omega(MEAQ62_DF, nfactors=6)
+omega_62 <- omega(MEAQ62_DF, nfactors=6)
 # F1 = DA = .88
 # F2 = RD = .88
 # F3 = DE = .84
 # F4 = BA = .88
 # F5 = DS = .85
 # F6 = PR = .80
+```
+
+```{r}
+MEAQ62_loadings <- omega_BF[["schmid"]][["sl"]][,2:7]
+MEAQ62_loadings <- as.data.frame(MEAQ62_loadings)
+MEAQ62_loadings<- dplyr::rename(MEAQ62_loadings, 
+                                           RD = "F1*", 
+                                           DS = "F2*", 
+                                           PR = "F3*", 
+                                           BA = "F4*", 
+                                           DA = "F5*", 
+                                           DE = "F6*")
+col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
+MEAQ62_loadings <- MEAQ62_loadings[, col_order]
+MEAQ62_loadings <- round_df(MEAQ62_loadings, 2)
+write.csv(MEAQ62_loadings, file = "MEAQ62_loadings.csv")
 ```
 
 ```{r}
@@ -2507,17 +2519,29 @@ lavaan::summary(MEAQGA_EwC, fit.measures = TRUE, std = TRUE)
 ```
 
 ```{r}
-inspect(MEAQGA_EwC,what="std")$lambda
-```
-
-```{r}
-omega(MEAQGA_DF, nfactors=6)
+omega_GA <- omega(MEAQGA_DF, nfactors=6)
 # F1 = DE = .80
 # F2 = DS = .84
 # F3 = RD = .82
 # F4 = BA = .79
 # F5 = PR = .81
 # F6 = DA = .77
+```
+
+```{r}
+MEAQGA_loadings <- omega_GA[["schmid"]][["sl"]][,2:7]
+MEAQGA_loadings <- as.data.frame(MEAQGA_loadings)
+MEAQGA_loadings<- dplyr::rename(MEAQGA_loadings, 
+                                           RD = "F1*", 
+                                           DS = "F2*", 
+                                           PR = "F3*", 
+                                           BA = "F4*", 
+                                           DA = "F5*", 
+                                           DE = "F6*")
+col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
+MEAQGA_loadings <- MEAQGA_loadings[, col_order]
+MEAQGA_loadings <- round_df(MEAQGA_loadings, 2)
+write.csv(MEAQGA_loadings, file = "MEAQGA_loadings.csv")
 ```
 
 ```{r}
@@ -2692,13 +2716,29 @@ inspect(MEAQACOSF_EwC,what="std")$lambda
 ```
 
 ```{r}
-omega(MEAQACOSF_DF, nfactors=6)
+omega_SF <- omega(MEAQACOSF_DF, nfactors=6)
 # F1 = DA = .82 
 # F2 = RD = .82
 # F3 = DE = .76
 # F4 = BA = .82 
 # F5 = DS = .77
 # F6 = PR = .72 
+```
+
+```{r}
+MEAQACOSF_loadings <- omega_SF[["schmid"]][["sl"]][,2:7]
+MEAQACOSF_loadings <- as.data.frame(MEAQACOSF_loadings)
+MEAQACOSF_loadings<- dplyr::rename(MEAQACOSF_loadings, 
+                                           RD = "F1*", 
+                                           DS = "F2*", 
+                                           PR = "F3*", 
+                                           BA = "F4*", 
+                                           DA = "F5*", 
+                                           DE = "F6*")
+col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
+MEAQACOSF_loadings <- MEAQACOSF_loadings[, col_order]
+MEAQACOSF_loadings <- round_df(MEAQACOSF_loadings, 2)
+write.csv(MEAQACOSF_loadings, file = "MEAQACOSF_loadings.csv")
 ```
 
 ```{r}
@@ -2853,14 +2893,17 @@ omega_BF <- omega(MEAQACOBF_DF, nfactors=6)
 ```{r}
 MEAQACOBF_loadings <- omega_BF[["schmid"]][["sl"]][,2:7]
 MEAQACOBF_loadings <- as.data.frame(MEAQACOBF_loadings)
-dplyr::rename(MEAQACOBF_loadings, 
-       RD = "F1*", 
-       DS = "F2*", 
-       PR = "F3*", 
-       BA = "F4*", 
-       DA = "F5*", 
-       DE = "F6*")
+MEAQACOBF_loadings<- dplyr::rename(MEAQACOBF_loadings, 
+                                           RD = "F1*", 
+                                           DS = "F2*", 
+                                           PR = "F3*", 
+                                           BA = "F4*", 
+                                           DA = "F5*", 
+                                           DE = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
+MEAQACOBF_loadings <- MEAQACOBF_loadings[, col_order]
+MEAQACOBF_loadings <- round_df(MEAQACOBF_loadings, 2)
+write.csv(MEAQACOBF_loadings, file = "MEAQACOBF_loadings.csv")
 ```
 
 ```{r}
