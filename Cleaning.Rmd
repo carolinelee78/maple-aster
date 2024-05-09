@@ -2839,12 +2839,28 @@ MEAQACOBF_EwC <- lavaan::cfa(model = model_syntax, data = validation_ubrief_esem
 lavaan::summary(MEAQACOBF_EwC, fit.measures = TRUE, std = TRUE)
 ```
 
+
 ```{r}
-inspect(MEAQACOBF_EwC,what="std")$lambda
+omega_BF <- omega(MEAQACOBF_DF, nfactors=6)
+# F1 = RD = .84
+# F2 = DS = .81
+# F3 = PR = .81
+# F4 = BA = .81
+# F5 = DA = .76
+# F6 = DE = .67
 ```
 
 ```{r}
-omega(MEAQACOBF_DF, nfactors=6)
+MEAQACOBF_loadings <- omega_BF[["schmid"]][["sl"]][,2:7]
+MEAQACOBF_loadings <- as.data.frame(MEAQACOBF_loadings)
+dplyr::rename(MEAQACOBF_loadings, 
+       RD = "F1*", 
+       DS = "F2*", 
+       PR = "F3*", 
+       BA = "F4*", 
+       DA = "F5*", 
+       DE = "F6*")
+col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 ```
 
 ```{r}
