@@ -2345,7 +2345,7 @@ omega_62 <- omega(MEAQ62_DF, nfactors=6)
 ```
 
 ```{r}
-MEAQ62_loadings <- omega_BF[["schmid"]][["sl"]][,2:7]
+MEAQ62_loadings <- omega_62[["schmid"]][["sl"]][,2:7]
 MEAQ62_loadings <- as.data.frame(MEAQ62_loadings)
 MEAQ62_loadings<- dplyr::rename(MEAQ62_loadings, 
                                            RD = "F1*", 
@@ -2356,7 +2356,7 @@ MEAQ62_loadings<- dplyr::rename(MEAQ62_loadings,
                                            DE = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQ62_loadings <- MEAQ62_loadings[, col_order]
-MEAQ62_loadings <- round_df(MEAQ62_loadings, 2)
+MEAQ62_loadings <- round_df(MEAQ62_loadings, 3)
 write.csv(MEAQ62_loadings, file = "MEAQ62_loadings.csv")
 ```
 
@@ -2540,7 +2540,7 @@ MEAQGA_loadings<- dplyr::rename(MEAQGA_loadings,
                                            DE = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQGA_loadings <- MEAQGA_loadings[, col_order]
-MEAQGA_loadings <- round_df(MEAQGA_loadings, 2)
+MEAQGA_loadings <- round_df(MEAQGA_loadings, 3)
 write.csv(MEAQGA_loadings, file = "MEAQGA_loadings.csv")
 ```
 
@@ -2737,7 +2737,7 @@ MEAQACOSF_loadings<- dplyr::rename(MEAQACOSF_loadings,
                                            DE = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQACOSF_loadings <- MEAQACOSF_loadings[, col_order]
-MEAQACOSF_loadings <- round_df(MEAQACOSF_loadings, 2)
+MEAQACOSF_loadings <- round_df(MEAQACOSF_loadings, 3)
 write.csv(MEAQACOSF_loadings, file = "MEAQACOSF_loadings.csv")
 ```
 
@@ -2902,7 +2902,7 @@ MEAQACOBF_loadings<- dplyr::rename(MEAQACOBF_loadings,
                                            DE = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQACOBF_loadings <- MEAQACOBF_loadings[, col_order]
-MEAQACOBF_loadings <- round_df(MEAQACOBF_loadings, 2)
+MEAQACOBF_loadings <- round_df(MEAQACOBF_loadings, 3)
 write.csv(MEAQACOBF_loadings, file = "MEAQACOBF_loadings.csv")
 ```
 
