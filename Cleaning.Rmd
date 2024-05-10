@@ -1987,7 +1987,7 @@ MEAQ_Valid_DF$MEAQGA_RD <- MEAQ_Valid_DF$MEAQ_35 + MEAQ_Valid_DF$MEAQ_41 + MEAQ_
 ```{r}
 MEAQ_DF$MEAQGA_DE <- MEAQ_DF$MEAQ_12 + MEAQ_DF$MEAQ_13 + MEAQ_DF$MEAQ_43 + MEAQ_DF$MEAQ_57 + MEAQ_DF$MEAQ_62
 
-MEAQ_Const_DF$MEAQGA_DE <- MEAQ_DF$MEAQ_12 + MEAQ_DF$MEAQ_13 + MEAQ_DF$MEAQ_43 + MEAQ_DF$MEAQ_57 + MEAQ_DF$MEAQ_62
+MEAQ_Const_DF$MEAQGA_DE <- MEAQ_Const_DF$MEAQ_12 + MEAQ_Const_DF$MEAQ_13 + MEAQ_Const_DF$MEAQ_43 + MEAQ_Const_DF$MEAQ_57 + MEAQ_Const_DF$MEAQ_62
 
 MEAQ_Valid_DF$MEAQGA_DE <- MEAQ_Valid_DF$MEAQ_12 + MEAQ_Valid_DF$MEAQ_13 + MEAQ_Valid_DF$MEAQ_43 + MEAQ_Valid_DF$MEAQ_57 + MEAQ_Valid_DF$MEAQ_62
 # =========================
@@ -2073,19 +2073,65 @@ MEAQ_Valid_DF$MEAQACOSF_Total <- MEAQ_Valid_DF$MEAQACOSF_BA + MEAQ_Valid_DF$MEAQ
 # MEAQ-ACO-BF ============= 
 MEAQ_DF$MEAQACOBF_BA <- MEAQ_DF$MEAQ_51 + MEAQ_DF$MEAQ_59 
 
+MEAQ_Const_DF$MEAQACOBF_BA <- MEAQ_Const_DF$MEAQ_51 + MEAQ_Const_DF$MEAQ_59 
+
+MEAQ_Valid_DF$MEAQACOBF_BA <- MEAQ_Valid_DF$MEAQ_51 + MEAQ_Valid_DF$MEAQ_59 
+```
+
+```{r}
 MEAQ_DF$MEAQACOBF_DA <- MEAQ_DF$MEAQ_7 + MEAQ_DF$MEAQ_58 
 
+MEAQ_Const_DF$MEAQACOBF_DA <- MEAQ_Const_DF$MEAQ_7 + MEAQ_Const_DF$MEAQ_58 
+
+MEAQ_Valid_DF$MEAQACOBF_DA <- MEAQ_Valid_DF$MEAQ_7 + MEAQ_Valid_DF$MEAQ_58 
+```
+
+```{r}
 MEAQ_DF$MEAQACOBF_PR <- MEAQ_DF$MEAQ_5 + MEAQ_DF$MEAQ_36 
 
+MEAQ_Const_DF$MEAQACOBF_PR <- MEAQ_Const_DF$MEAQ_5 + MEAQ_Const_DF$MEAQ_36 
+
+MEAQ_Valid_DF$MEAQACOBF_PR <- MEAQ_Valid_DF$MEAQ_5 + MEAQ_Valid_DF$MEAQ_36 
+```
+
+```{r}
 MEAQ_DF$MEAQACOBF_DS <- MEAQ_DF$MEAQ_22 + MEAQ_DF$MEAQ_33 
 
+MEAQ_Const_DF$MEAQACOBF_DS <- MEAQ_Const_DF$MEAQ_22 + MEAQ_Const_DF$MEAQ_33 
+
+MEAQ_Valid_DF$MEAQACOBF_DS <- MEAQ_Valid_DF$MEAQ_22 + MEAQ_Valid_DF$MEAQ_33 
+```
+
+```{r}
 MEAQ_DF$MEAQACOBF_RD <- MEAQ_DF$MEAQ_4 + MEAQ_DF$MEAQ_41 
 
+MEAQ_Const_DF$MEAQACOBF_RD <- MEAQ_Const_DF$MEAQ_4 + MEAQ_Const_DF$MEAQ_41 
+
+MEAQ_Valid_DF$MEAQACOBF_RD <- MEAQ_Valid_DF$MEAQ_4 + MEAQ_Valid_DF$MEAQ_41 
+```
+
+```{r}
 MEAQ_DF$MEAQACOBF_DE <- MEAQ_DF$MEAQ_53 + MEAQ_DF$MEAQ_62
 
+MEAQ_Const_DF$MEAQACOBF_DE <- MEAQ_Const_DF$MEAQ_53 + MEAQ_Const_DF$MEAQ_62
+
+MEAQ_Valid_DF$MEAQACOBF_DE <- MEAQ_Valid_DF$MEAQ_53 + MEAQ_Valid_DF$MEAQ_62
+```
+
+```{r}
 MEAQ_DF$MEAQACOBF_DE_R <- MEAQ_DF$MEAQ_53_r + MEAQ_DF$MEAQ_62_r
 
+MEAQ_Const_DF$MEAQACOBF_DE_R <- MEAQ_Const_DF$MEAQ_53_r + MEAQ_Const_DF$MEAQ_62_r
+
+MEAQ_Valid_DF$MEAQACOBF_DE_R <- MEAQ_Valid_DF$MEAQ_53_r + MEAQ_Valid_DF$MEAQ_62_r
+```
+
+```{r}
 MEAQ_DF$MEAQACOBF_Total <- MEAQ_DF$MEAQACOBF_BA + MEAQ_DF$MEAQACOBF_DA + MEAQ_DF$MEAQACOBF_PR + MEAQ_DF$MEAQACOBF_DS + MEAQ_DF$MEAQACOBF_RD + MEAQ_DF$MEAQACOBF_DE_R
+
+MEAQ_Const_DF$MEAQACOBF_Total <- MEAQ_Const_DF$MEAQACOBF_BA + MEAQ_Const_DF$MEAQACOBF_DA + MEAQ_Const_DF$MEAQACOBF_PR + MEAQ_Const_DF$MEAQACOBF_DS + MEAQ_Const_DF$MEAQACOBF_RD + MEAQ_Const_DF$MEAQACOBF_DE_R
+
+MEAQ_Valid_DF$MEAQACOBF_Total <- MEAQ_Valid_DF$MEAQACOBF_BA + MEAQ_Valid_DF$MEAQACOBF_DA + MEAQ_Valid_DF$MEAQACOBF_PR + MEAQ_Valid_DF$MEAQACOBF_DS + MEAQ_Valid_DF$MEAQACOBF_RD + MEAQ_Valid_DF$MEAQACOBF_DE_R
 
 # =========================
 ```
@@ -2100,12 +2146,48 @@ cronbach.alpha(MEAQ62_BA_DF)
 ```
 
 ```{r}
+MEAQ62_BA_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_14", "MEAQ_20", "MEAQ_26", "MEAQ_32", "MEAQ_39", "MEAQ_45", "MEAQ_51", "MEAQ_55", "MEAQ_59")
+
+cronbach.alpha(MEAQ62_BA_ConstDF)
+
+0.903/(11+((0.903)*(1-11))) #AIC
+```
+
+```{r}
+MEAQ62_BA_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_14", "MEAQ_20", "MEAQ_26", "MEAQ_32", "MEAQ_39", "MEAQ_45", "MEAQ_51", "MEAQ_55", "MEAQ_59")
+
+cronbach.alpha(MEAQ62_BA_ValidDF)
+
+0.881/(11+((0.881)*(1-11))) #AIC
+```
+
+```{r}
 MEAQ62_DA_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_2", "MEAQ_7", "MEAQ_13", "MEAQ_19", "MEAQ_25", "MEAQ_31", "MEAQ_34", "MEAQ_38", "MEAQ_44", "MEAQ_50", "MEAQ_54", "MEAQ_58", "MEAQ_61")
 
 cronbach.alpha(MEAQ62_DA_DF)
 
 0.893/(13+((0.893)*(1-13))) #AIC
+```
+
+```{r}
+MEAQ62_DA_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_2", "MEAQ_7", "MEAQ_13", "MEAQ_19", "MEAQ_25", "MEAQ_31", "MEAQ_34", "MEAQ_38", "MEAQ_44", "MEAQ_50", "MEAQ_54", "MEAQ_58", "MEAQ_61")
+
+cronbach.alpha(MEAQ62_DA_ConstDF)
+
+0.897/(13+((0.897)*(1-13))) #AIC
+```
+
+```{r}
+MEAQ62_DA_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_2", "MEAQ_7", "MEAQ_13", "MEAQ_19", "MEAQ_25", "MEAQ_31", "MEAQ_34", "MEAQ_38", "MEAQ_44", "MEAQ_50", "MEAQ_54", "MEAQ_58", "MEAQ_61")
+
+cronbach.alpha(MEAQ62_DA_ValidDF)
+
+0.864/(13+((0.864)*(1-13))) #AIC
 ```
 
 ```{r}
@@ -2118,12 +2200,48 @@ cronbach.alpha(MEAQ62_PR_DF)
 ```
 
 ```{r}
+MEAQ62_PR_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_5", "MEAQ_11", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_47")
+
+cronbach.alpha(MEAQ62_PR_ConstDF)
+
+0.874/(7+((0.874)*(1-7))) #AIC
+```
+
+```{r}
+MEAQ62_PR_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_5", "MEAQ_11", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_47")
+
+cronbach.alpha(MEAQ62_PR_ValidDF)
+
+0.825/(7+((0.825)*(1-7))) #AIC
+```
+
+```{r}
 MEAQ62_DS_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_3", "MEAQ_9", "MEAQ_15", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40")
 
 cronbach.alpha(MEAQ62_DS_DF)
 
 0.879/(7+((0.879)*(1-7))) #AIC
+```
+
+```{r}
+MEAQ62_DS_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_3", "MEAQ_9", "MEAQ_15", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40")
+
+cronbach.alpha(MEAQ62_DS_ConstDF)
+
+0.885/(7+((0.885)*(1-7))) #AIC
+```
+
+```{r}
+MEAQ62_DS_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_3", "MEAQ_9", "MEAQ_15", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40")
+
+cronbach.alpha(MEAQ62_DS_ValidDF)
+
+0.818/(7+((0.818)*(1-7))) #AIC
 ```
 
 ```{r}
@@ -2136,12 +2254,48 @@ cronbach.alpha(MEAQ62_RD_DF)
 ```
 
 ```{r}
+MEAQ62_RD_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_4", "MEAQ_10", "MEAQ_16", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_35", "MEAQ_41", "MEAQ_46", "MEAQ_49", "MEAQ_52", "MEAQ_56", "MEAQ_60")
+
+cronbach.alpha(MEAQ62_RD_ConstDF)
+
+0.881/(13+((0.881)*(1-13))) #AIC
+```
+
+```{r}
+MEAQ62_RD_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_4", "MEAQ_10", "MEAQ_16", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_35", "MEAQ_41", "MEAQ_46", "MEAQ_49", "MEAQ_52", "MEAQ_56", "MEAQ_60")
+
+cronbach.alpha(MEAQ62_RD_ValidDF)
+
+0.838/(13+((0.838)*(1-13))) #AIC
+```
+
+```{r}
 MEAQ62_DE_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_6_r", "MEAQ_12_r", "MEAQ_18_r", "MEAQ_24_r", "MEAQ_29_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_48_r", "MEAQ_53_r", "MEAQ_57_r", "MEAQ_62_r")
 
 cronbach.alpha(MEAQ62_DE_DF)
 
 0.87/(11+((0.87)*(1-11))) #AIC
+```
+
+```{r}
+MEAQ62_DE_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_6_r", "MEAQ_12_r", "MEAQ_18_r", "MEAQ_24_r", "MEAQ_29_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_48_r", "MEAQ_53_r", "MEAQ_57_r", "MEAQ_62_r")
+
+cronbach.alpha(MEAQ62_DE_ConstDF)
+
+0.877/(11+((0.877)*(1-11))) #AIC
+```
+
+```{r}
+MEAQ62_DE_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_6_r", "MEAQ_12_r", "MEAQ_18_r", "MEAQ_24_r", "MEAQ_29_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_48_r", "MEAQ_53_r", "MEAQ_57_r", "MEAQ_62_r")
+
+cronbach.alpha(MEAQ62_DE_ValidDF)
+
+0.803/(11+((0.803)*(1-11))) #AIC
 ```
 
 ```{r}
@@ -2154,12 +2308,49 @@ cronbach.alpha(MEAQ62_DF)
 ```
 
 ```{r}
+MEAQ62_ConstDF <- MEAQ_Const_DF %>%
+  dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_14", "MEAQ_20", "MEAQ_26", "MEAQ_32", "MEAQ_39", "MEAQ_45", "MEAQ_51", "MEAQ_55", "MEAQ_59", "MEAQ_2", "MEAQ_7", "MEAQ_13", "MEAQ_19", "MEAQ_25", "MEAQ_31", "MEAQ_34", "MEAQ_38", "MEAQ_44", "MEAQ_50", "MEAQ_54", "MEAQ_58", "MEAQ_61", "MEAQ_5", "MEAQ_11", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_47", "MEAQ_3", "MEAQ_9", "MEAQ_15", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40", "MEAQ_4", "MEAQ_10", "MEAQ_16", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_35", "MEAQ_41", "MEAQ_46", "MEAQ_49", "MEAQ_52", "MEAQ_56", "MEAQ_60", "MEAQ_6_r", "MEAQ_12_r", "MEAQ_18_r", "MEAQ_24_r", "MEAQ_29_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_48_r", "MEAQ_53_r", "MEAQ_57_r", "MEAQ_62_r")
+
+cronbach.alpha(MEAQ62_ConstDF)
+
+0.948/(62+((0.948)*(1-62))) #AIC
+```
+
+```{r}
+MEAQ62_ValidDF <- MEAQ_Valid_DF %>%
+  dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_14", "MEAQ_20", "MEAQ_26", "MEAQ_32", "MEAQ_39", "MEAQ_45", "MEAQ_51", "MEAQ_55", "MEAQ_59", "MEAQ_2", "MEAQ_7", "MEAQ_13", "MEAQ_19", "MEAQ_25", "MEAQ_31", "MEAQ_34", "MEAQ_38", "MEAQ_44", "MEAQ_50", "MEAQ_54", "MEAQ_58", "MEAQ_61", "MEAQ_5", "MEAQ_11", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_47", "MEAQ_3", "MEAQ_9", "MEAQ_15", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40", "MEAQ_4", "MEAQ_10", "MEAQ_16", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_35", "MEAQ_41", "MEAQ_46", "MEAQ_49", "MEAQ_52", "MEAQ_56", "MEAQ_60", "MEAQ_6_r", "MEAQ_12_r", "MEAQ_18_r", "MEAQ_24_r", "MEAQ_29_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_48_r", "MEAQ_53_r", "MEAQ_57_r", "MEAQ_62_r")
+
+cronbach.alpha(MEAQ62_ValidDF)
+
+0.924/(62+((0.924)*(1-62))) #AIC
+```
+
+
+```{r}
 MEAQGA_BA_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_39", "MEAQ_51", "MEAQ_55")
 
 cronbach.alpha(MEAQGA_BA_DF)
 
 0.787/(5+((0.787)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_BA_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_39", "MEAQ_51", "MEAQ_55")
+
+cronbach.alpha(MEAQGA_BA_ConstDF)
+
+0.796/(5+((0.796)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_BA_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_39", "MEAQ_51", "MEAQ_55")
+
+cronbach.alpha(MEAQGA_BA_ValidDF)
+
+0.715/(5+((0.715)*(1-5))) #AIC
 ```
 
 ```{r}
@@ -2172,12 +2363,48 @@ cronbach.alpha(MEAQGA_DA_DF)
 ```
 
 ```{r}
+MEAQGA_DA_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_2", "MEAQ_7", "MEAQ_25", "MEAQ_31", "MEAQ_44")
+
+cronbach.alpha(MEAQGA_DA_ConstDF)
+
+0.774/(5+((0.774)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_DA_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_2", "MEAQ_7", "MEAQ_25", "MEAQ_31", "MEAQ_44")
+
+cronbach.alpha(MEAQGA_DA_ValidDF)
+
+0.712/(5+((0.712)*(1-5))) #AIC
+```
+
+```{r}
 MEAQGA_PR_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_5", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42")
 
 cronbach.alpha(MEAQGA_PR_DF)
 
 0.818/(5+((0.818)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_PR_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_5", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42")
+
+cronbach.alpha(MEAQGA_PR_ConstDF)
+
+0.824/(5+((0.824)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_PR_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_5", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42")
+
+cronbach.alpha(MEAQGA_PR_ValidDF)
+
+0.754/(5+((0.754)*(1-5))) #AIC
 ```
 
 ```{r}
@@ -2190,12 +2417,48 @@ cronbach.alpha(MEAQGA_DS_DF)
 ```
 
 ```{r}
+MEAQGA_DS_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_9", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40")
+
+cronbach.alpha(MEAQGA_DS_ConstDF)
+
+0.856/(5+((0.856)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_DS_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_9", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40")
+
+cronbach.alpha(MEAQGA_DS_ValidDF)
+
+0.806/(5+((0.806)*(1-5))) #AIC
+```
+
+```{r}
 MEAQGA_RD_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_35", "MEAQ_41", "MEAQ_52", "MEAQ_56", "MEAQ_60")
 
 cronbach.alpha(MEAQGA_RD_DF)
 
 0.816/(5+((0.816)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_RD_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_35", "MEAQ_41", "MEAQ_52", "MEAQ_56", "MEAQ_60")
+
+cronbach.alpha(MEAQGA_RD_ConstDF)
+
+0.821/(5+((0.821)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_RD_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_35", "MEAQ_41", "MEAQ_52", "MEAQ_56", "MEAQ_60")
+
+cronbach.alpha(MEAQGA_RD_ValidDF)
+
+0.77/(5+((0.77)*(1-5))) #AIC
 ```
 
 ```{r}
@@ -2208,6 +2471,24 @@ cronbach.alpha(MEAQGA_DE_DF)
 ```
 
 ```{r}
+MEAQGA_DE_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_12_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_57_r", "MEAQ_62_r")
+
+cronbach.alpha(MEAQGA_DE_ConstDF)
+
+0.825/(5+((0.825)*(1-5))) #AIC
+```
+
+```{r}
+MEAQGA_DE_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_12_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_57_r", "MEAQ_62_r")
+
+cronbach.alpha(MEAQGA_DE_ValidDF)
+
+0.679/(5+((0.679)*(1-5))) #AIC
+```
+
+```{r}
 MEAQGA_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_39", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_7", "MEAQ_25", "MEAQ_31", "MEAQ_44", "MEAQ_5", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_9", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40", "MEAQ_35", "MEAQ_41", "MEAQ_52", "MEAQ_56", "MEAQ_60", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_57_r", "MEAQ_62_r")
 
@@ -2216,6 +2497,23 @@ cronbach.alpha(MEAQGA_DF)
 0.901/(30+((0.901)*(1-30))) #AIC
 ```
 
+```{r}
+MEAQGA_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_39", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_7", "MEAQ_25", "MEAQ_31", "MEAQ_44", "MEAQ_5", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_9", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40", "MEAQ_35", "MEAQ_41", "MEAQ_52", "MEAQ_56", "MEAQ_60", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_57_r", "MEAQ_62_r")
+
+cronbach.alpha(MEAQGA_ConstDF)
+
+0.905/(30+((0.905)*(1-30))) #AIC
+```
+
+```{r}
+MEAQGA_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_1", "MEAQ_8", "MEAQ_39", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_7", "MEAQ_25", "MEAQ_31", "MEAQ_44", "MEAQ_5", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_9", "MEAQ_22", "MEAQ_27", "MEAQ_33", "MEAQ_40", "MEAQ_35", "MEAQ_41", "MEAQ_52", "MEAQ_56", "MEAQ_60", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_43_r", "MEAQ_57_r", "MEAQ_62_r")
+
+cronbach.alpha(MEAQGA_ValidDF)
+
+0.868/(30+((0.868)*(1-30))) #AIC
+```
 
 ```{r}
 BEAQ_DF <- MEAQ_DF %>% 
@@ -2226,6 +2524,23 @@ cronbach.alpha(BEAQ_DF)
 0.879/(15+((0.879)*(1-15))) #AIC
 ```
 
+```{r}
+BEAQ_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_58", "MEAQ_59", "MEAQ_33", "MEAQ_56", "MEAQ_42", "MEAQ_29_r", "MEAQ_44", "MEAQ_14", "MEAQ_41", "MEAQ_36", "MEAQ_45", "MEAQ_25", "MEAQ_27", "MEAQ_32", "MEAQ_50")
+
+cronbach.alpha(BEAQ_ConstDF)
+
+0.884/(15+((0.884)*(1-15))) #AIC
+```
+
+```{r}
+BEAQ_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_58", "MEAQ_59", "MEAQ_33", "MEAQ_56", "MEAQ_42", "MEAQ_29_r", "MEAQ_44", "MEAQ_14", "MEAQ_41", "MEAQ_36", "MEAQ_45", "MEAQ_25", "MEAQ_27", "MEAQ_32", "MEAQ_50")
+
+cronbach.alpha(BEAQ_ValidDF)
+
+0.835/(15+((0.835)*(1-15))) #AIC
+```
 
 ```{r}
 MEAQACOSF_BA_DF <- MEAQ_DF %>% 
@@ -2234,6 +2549,24 @@ MEAQACOSF_BA_DF <- MEAQ_DF %>%
 cronbach.alpha(MEAQACOSF_BA_DF)
 
 0.82/(5+((0.82)*(1-5))) #AIC
+```
+
+```{r}
+MEAQACOSF_BA_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55")
+
+cronbach.alpha(MEAQACOSF_BA_ConstDF)
+
+0.825/(5+((0.825)*(1-5))) #AIC
+```
+
+```{r}
+MEAQACOSF_BA_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55")
+
+cronbach.alpha(MEAQACOSF_BA_ValidDF)
+
+0.784/(5+((0.784)*(1-5))) #AIC
 ```
 
 ```{r}
@@ -2246,6 +2579,24 @@ cronbach.alpha(MEAQACOSF_DA_DF)
 ```
 
 ```{r}
+MEAQACOSF_DA_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61")
+
+cronbach.alpha(MEAQACOSF_DA_ConstDF)
+
+0.835/(6+((0.835)*(1-6))) #AIC
+```
+
+```{r}
+MEAQACOSF_DA_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61")
+
+cronbach.alpha(MEAQACOSF_DA_ValidDF)
+
+0.759/(6+((0.759)*(1-6))) #AIC
+```
+
+```{r}
 MEAQACOSF_PR_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_17", "MEAQ_42", "MEAQ_47")
 
@@ -2255,12 +2606,48 @@ cronbach.alpha(MEAQACOSF_PR_DF)
 ```
 
 ```{r}
+MEAQACOSF_PR_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_17", "MEAQ_42", "MEAQ_47")
+
+cronbach.alpha(MEAQACOSF_PR_ConstDF)
+
+0.758/(3+((0.758)*(1-3))) #AIC
+```
+
+```{r}
+MEAQACOSF_PR_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_17", "MEAQ_42", "MEAQ_47")
+
+cronbach.alpha(MEAQACOSF_PR_ValidDF)
+
+0.674/(3+((0.674)*(1-3))) #AIC
+```
+
+```{r}
 MEAQACOSF_DS_DF <- MEAQ_DF %>% 
   dplyr::select("MEAQ_15", "MEAQ_33", "MEAQ_40")
 
 cronbach.alpha(MEAQACOSF_DS_DF)
 
 0.781/(3+((0.781)*(1-3))) #AIC
+```
+
+```{r}
+MEAQACOSF_DS_ConstDF <- MEAQ_Const_DF %>% 
+  dplyr::select("MEAQ_15", "MEAQ_33", "MEAQ_40")
+
+cronbach.alpha(MEAQACOSF_DS_ConstDF)
+
+0.79/(3+((0.79)*(1-3))) #AIC
+```
+
+```{r}
+MEAQACOSF_DS_ValidDF <- MEAQ_Valid_DF %>% 
+  dplyr::select("MEAQ_15", "MEAQ_33", "MEAQ_40")
+
+cronbach.alpha(MEAQACOSF_DS_ValidDF)
+
+0.715/(3+((0.715)*(1-3))) #AIC
 ```
 
 ```{r}
