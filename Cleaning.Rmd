@@ -2706,7 +2706,7 @@ cronbach.alpha(MEAQACOSF_DE_ValidDF)
 
 ```{r}
 MEAQACOSF_DF <- MEAQ_DF %>% 
-  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60", "MEAQ_6", "MEAQ_12", "MEAQ_37", "MEAQ_53", "MEAQ_62")
+  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60",  "MEAQ_6_r", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_53_r", "MEAQ_62_r")
 
 cronbach.alpha(MEAQACOSF_DF)
 
@@ -2715,7 +2715,7 @@ cronbach.alpha(MEAQACOSF_DF)
 
 ```{r}
 MEAQACOSF_ConstDF <- MEAQ_Const_DF %>% 
-  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60", "MEAQ_6", "MEAQ_12", "MEAQ_37", "MEAQ_53", "MEAQ_62")
+  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60", "MEAQ_6_r", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_53_r", "MEAQ_62_r")
 
 cronbach.alpha(MEAQACOSF_ConstDF)
 
@@ -2724,7 +2724,7 @@ cronbach.alpha(MEAQACOSF_ConstDF)
 
 ```{r}
 MEAQACOSF_ValidDF <- MEAQ_Valid_DF %>% 
-  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60", "MEAQ_6", "MEAQ_12", "MEAQ_37", "MEAQ_53", "MEAQ_62")
+  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60", "MEAQ_6_r", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_53_r", "MEAQ_62_r")
 
 cronbach.alpha(MEAQACOSF_ValidDF)
 
@@ -3052,10 +3052,22 @@ omega_62 <- omega(MEAQ62_DF, nfactors=6)
 
 ```{r}
 omega_62Const <- omega(MEAQ62_ConstDF, nfactors=6)
+# F1 = DA = .89
+# F2 = RD = .88
+# F3 = DE = .84
+# F4 = BA = .88
+# F5 = DS = .84
+# F6 = PR = .80
 ```
 
 ```{r}
 omega_62Valid <- omega(MEAQ62_ValidDF, nfactors=6)
+# F1 = DA = .86
+# F2 = BA = .87
+# F3 = RD = .84
+# F4 = PR = .81
+# F5 = DE = .77
+# F6 = DS = .82
 ```
 
 ```{r}
@@ -3094,12 +3106,12 @@ write.csv(MEAQ62Const_loadings, file = "MEAQ62Const_loadings.csv")
 MEAQ62Valid_loadings <- omega_62Valid[["schmid"]][["sl"]][,2:7]
 MEAQ62Valid_loadings <- as.data.frame(MEAQ62Valid_loadings)
 MEAQ62Valid_loadings<- dplyr::rename(MEAQ62Valid_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
-                                           BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           DA = "F1*", 
+                                           BA = "F2*", 
+                                           RD = "F3*", 
+                                           PR = "F4*", 
+                                           DE = "F5*", 
+                                           DS = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQ62Valid_loadings <- MEAQ62Valid_loadings[, col_order]
 MEAQ62Valid_loadings <- round_df(MEAQ62Valid_loadings, 2)
@@ -3432,10 +3444,22 @@ omega_GA <- omega(MEAQGA_DF, nfactors=6)
 
 ```{r}
 omega_GAConst <- omega(MEAQGA_ConstDF, nfactors=6)
+# F1 = DE = .81
+# F2 = DS = .84
+# F3 = RD = .82
+# F4 = BA = .80
+# F5 = PR = .81
+# F6 = DA = .77
 ```
 
 ```{r}
 omega_GAValid <- omega(MEAQGA_ValidDF, nfactors=6)
+# F1 = DS = .81
+# F2 = RD = .77
+# F3 = DE = .67
+# F4 = PR = .77
+# F5 = DA = .68
+# F6 = BA = .70
 ```
 
 ```{r}
@@ -3458,12 +3482,12 @@ write.csv(MEAQGA_loadings, file = "MEAQGA_loadings.csv")
 MEAQGAConst_loadings <- omega_GAConst[["schmid"]][["sl"]][,2:7]
 MEAQGAConst_loadings <- as.data.frame(MEAQGAConst_loadings)
 MEAQGAConst_loadings<- dplyr::rename(MEAQGAConst_loadings, 
-                                           RD = "F1*", 
+                                           DE = "F1*", 
                                            DS = "F2*", 
-                                           PR = "F3*", 
+                                           RD = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           PR = "F5*", 
+                                           DA = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQGAConst_loadings <- MEAQGAConst_loadings[, col_order]
 MEAQGAConst_loadings <- round_df(MEAQGAConst_loadings, 2)
@@ -3474,12 +3498,12 @@ write.csv(MEAQGAConst_loadings, file = "MEAQGAConst_loadings.csv")
 MEAQGAValid_loadings <- omega_GAValid[["schmid"]][["sl"]][,2:7]
 MEAQGAValid_loadings <- as.data.frame(MEAQGAValid_loadings)
 MEAQGAValid_loadings<- dplyr::rename(MEAQGAValid_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
-                                           BA = "F4*", 
+                                           DS = "F1*", 
+                                           RD = "F2*", 
+                                           DE = "F3*", 
+                                           PR = "F4*", 
                                            DA = "F5*", 
-                                           DE = "F6*")
+                                           BA = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQGAValid_loadings <- MEAQGAValid_loadings[, col_order]
 MEAQGAValid_loadings <- round_df(MEAQGAValid_loadings, 2)
@@ -3824,10 +3848,22 @@ omega_ACOSF <- omega(MEAQACOSF_DF, nfactors=6)
 
 ```{r}
 omega_ACOSFConst <- omega(MEAQACOSF_ConstDF, nfactors=6)
+# F1 = DA = .83
+# F2 = RD = .83
+# F3 = DE = .76
+# F4 = BA = .82
+# F5 = DS = .78
+# F6 = PR = .72
 ```
 
 ```{r}
 omega_ACOSFValid <- omega(MEAQACOSF_ValidDF, nfactors=6)
+# F1 = DA = .75
+# F2 = BA = .79
+# F3 = RD = .72
+# F4 = DE = .64
+# F5 = DS = .67
+# F6 = PR = .71
 ```
 
 ```{r}
@@ -3850,12 +3886,12 @@ write.csv(MEAQACOSF_loadings, file = "MEAQACOSF_loadings.csv")
 MEAQACOSFConst_loadings <- omega_ACOSFConst[["schmid"]][["sl"]][,2:7]
 MEAQACOSFConst_loadings <- as.data.frame(MEAQACOSFConst_loadings)
 MEAQACOSFConst_loadings<- dplyr::rename(MEAQACOSFConst_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
+                                           DA = "F1*", 
+                                           RD = "F2*", 
+                                           DE = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           DS = "F5*", 
+                                           PR = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQACOSFConst_loadings <- MEAQACOSFConst_loadings[, col_order]
 MEAQACOSFConst_loadings <- round_df(MEAQACOSFConst_loadings, 2)
@@ -3866,12 +3902,12 @@ write.csv(MEAQACOSFConst_loadings, file = "MEAQACOSFConst_loadings.csv")
 MEAQACOSFValid_loadings <- omega_ACOSFValid[["schmid"]][["sl"]][,2:7]
 MEAQACOSFValid_loadings <- as.data.frame(MEAQACOSFValid_loadings)
 MEAQACOSFValid_loadings<- dplyr::rename(MEAQACOSFValid_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
-                                           BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           DA = "F1*", 
+                                           BA = "F2*", 
+                                           RD = "F3*", 
+                                           DE = "F4*", 
+                                           DS = "F5*", 
+                                           PR = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQACOSFValid_loadings <- MEAQACOSFValid_loadings[, col_order]
 MEAQACOSFValid_loadings <- round_df(MEAQACOSFValid_loadings, 2)
@@ -4184,10 +4220,22 @@ omega_ACOBF <- omega(MEAQACOBF_DF, nfactors=6)
 
 ```{r}
 omega_ACOBFConst <- omega(MEAQACOBF_ConstDF, nfactors=6)
+# F1 = RD = .85
+# F2 = DS = .81
+# F3 = PR = .82
+# F4 = BA = .81
+# F5 = DA = .76
+# F6 = DE = .68
 ```
 
 ```{r}
 omega_ACOBFValid <- omega(MEAQACOBF_ValidDF, nfactors=6)
+# F1 = DA = .77
+# F2 = PR = .74
+# F3 = DS = .75
+# F4 = BA = .74
+# F5 = RD = .71
+# F6 = DE = .60
 ```
 
 ```{r}
@@ -4226,11 +4274,11 @@ write.csv(MEAQACOBFConst_loadings, file = "MEAQACOBFConst_loadings.csv")
 MEAQACOBFValid_loadings <- omega_ACOBFValid[["schmid"]][["sl"]][,2:7]
 MEAQACOBFValid_loadings <- as.data.frame(MEAQACOBFValid_loadings)
 MEAQACOBFValid_loadings<- dplyr::rename(MEAQACOBFValid_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
+                                           DA = "F1*", 
+                                           PR = "F2*", 
+                                           DS = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
+                                           RD = "F5*", 
                                            DE = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQACOBFValid_loadings <- MEAQACOBFValid_loadings[, col_order]
