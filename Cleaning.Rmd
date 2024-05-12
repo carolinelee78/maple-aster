@@ -3051,6 +3051,14 @@ omega_62 <- omega(MEAQ62_DF, nfactors=6)
 ```
 
 ```{r}
+omega_62Const <- omega(MEAQ62_ConstDF, nfactors=6)
+```
+
+```{r}
+omega_62Valid <- omega(MEAQ62_ValidDF, nfactors=6)
+```
+
+```{r}
 MEAQ62_loadings <- omega_62[["schmid"]][["sl"]][,2:7]
 MEAQ62_loadings <- as.data.frame(MEAQ62_loadings)
 MEAQ62_loadings<- dplyr::rename(MEAQ62_loadings, 
@@ -3067,7 +3075,65 @@ write.csv(MEAQ62_loadings, file = "MEAQ62_loadings.csv")
 ```
 
 ```{r}
+MEAQ62Const_loadings <- omega_62Const[["schmid"]][["sl"]][,2:7]
+MEAQ62Const_loadings <- as.data.frame(MEAQ62Const_loadings)
+MEAQ62Const_loadings<- dplyr::rename(MEAQ62Const_loadings, 
+                                           RD = "F1*", 
+                                           DS = "F2*", 
+                                           PR = "F3*", 
+                                           BA = "F4*", 
+                                           DA = "F5*", 
+                                           DE = "F6*")
+col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
+MEAQ62Const_loadings <- MEAQ62Const_loadings[, col_order]
+MEAQ62Const_loadings <- round_df(MEAQ62Const_loadings, 3)
+write.csv(MEAQ62Const_loadings, file = "MEAQ62Const_loadings.csv")
+```
+
+```{r}
+MEAQ62Validloadings <- omega_62Valid[["schmid"]][["sl"]][,2:7]
+MEAQ62Valid_loadings <- as.data.frame(MEAQ62Valid_loadings)
+MEAQ62Valid_loadings<- dplyr::rename(MEAQ62Valid_loadings, 
+                                           RD = "F1*", 
+                                           DS = "F2*", 
+                                           PR = "F3*", 
+                                           BA = "F4*", 
+                                           DA = "F5*", 
+                                           DE = "F6*")
+col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
+MEAQ62Valid_loadings <- MEAQ62Valid_loadings[, col_order]
+MEAQ62Valid_loadings <- round_df(MEAQ62Valid_loadings, 3)
+write.csv(MEAQ62Valid_loadings, file = "MEAQ62Valid_loadings.csv")
+```
+
+```{r}
 MEAQ62_BA_DF %>%
+  pivot_longer(cols = c("MEAQ_1", "MEAQ_8", "MEAQ_14", "MEAQ_20", "MEAQ_26", "MEAQ_32", "MEAQ_39", "MEAQ_45", "MEAQ_51", "MEAQ_55", "MEAQ_59"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
+```{r}
+MEAQ62_BA_ConstDF %>%
+  pivot_longer(cols = c("MEAQ_1", "MEAQ_8", "MEAQ_14", "MEAQ_20", "MEAQ_26", "MEAQ_32", "MEAQ_39", "MEAQ_45", "MEAQ_51", "MEAQ_55", "MEAQ_59"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
+```{r}
+MEAQ62Valid_BA_DF %>%
   pivot_longer(cols = c("MEAQ_1", "MEAQ_8", "MEAQ_14", "MEAQ_20", "MEAQ_26", "MEAQ_32", "MEAQ_39", "MEAQ_45", "MEAQ_51", "MEAQ_55", "MEAQ_59"),
                names_to = "variable",
                values_to = "value") %>%
@@ -3093,6 +3159,32 @@ MEAQ62_DA_DF %>%
 ```
 
 ```{r}
+MEAQ62_DA_ConstDF %>%
+  pivot_longer(cols = c("MEAQ_2", "MEAQ_7", "MEAQ_13", "MEAQ_19", "MEAQ_25", "MEAQ_31", "MEAQ_34", "MEAQ_38", "MEAQ_44", "MEAQ_50", "MEAQ_54", "MEAQ_58", "MEAQ_61"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
+```{r}
+MEAQ62_DA_ValidDF %>%
+  pivot_longer(cols = c("MEAQ_2", "MEAQ_7", "MEAQ_13", "MEAQ_19", "MEAQ_25", "MEAQ_31", "MEAQ_34", "MEAQ_38", "MEAQ_44", "MEAQ_50", "MEAQ_54", "MEAQ_58", "MEAQ_61"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
+```{r}
 MEAQ62_PR_DF %>%
   pivot_longer(cols = c("MEAQ_5", "MEAQ_11", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_47"),
                names_to = "variable",
@@ -3104,6 +3196,34 @@ MEAQ62_PR_DF %>%
             CI_lower = mean - (1.96 * se),
             CI_upper = mean + (1.96 * se))
 ```
+
+```{r}
+MEAQ62_PR_ConstDF %>%
+  pivot_longer(cols = c("MEAQ_5", "MEAQ_11", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_47"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
+
+```{r}
+MEAQ62_PR_ValidDF %>%
+  pivot_longer(cols = c("MEAQ_5", "MEAQ_11", "MEAQ_17", "MEAQ_30_r", "MEAQ_36", "MEAQ_42", "MEAQ_47"),
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(variable) %>%
+  summarize(mean = mean(value),
+            sd = sd(value),
+            se = sd / sqrt(n()),
+            CI_lower = mean - (1.96 * se),
+            CI_upper = mean + (1.96 * se))
+```
+
 
 ```{r}
 MEAQ62_DS_DF %>%
