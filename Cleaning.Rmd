@@ -3074,12 +3074,12 @@ omega_62Valid <- omega(MEAQ62_ValidDF, nfactors=6)
 MEAQ62_loadings <- omega_62[["schmid"]][["sl"]][,2:7]
 MEAQ62_loadings <- as.data.frame(MEAQ62_loadings)
 MEAQ62_loadings<- dplyr::rename(MEAQ62_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
+                                           DA = "F1*", 
+                                           RD = "F2*", 
+                                           DE = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           DS = "F5*", 
+                                           PR = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQ62_loadings <- MEAQ62_loadings[, col_order]
 MEAQ62_loadings <- round_df(MEAQ62_loadings, 3)
@@ -3090,12 +3090,12 @@ write.csv(MEAQ62_loadings, file = "MEAQ62_loadings.csv")
 MEAQ62Const_loadings <- omega_62Const[["schmid"]][["sl"]][,2:7]
 MEAQ62Const_loadings <- as.data.frame(MEAQ62Const_loadings)
 MEAQ62Const_loadings<- dplyr::rename(MEAQ62Const_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
+                                           DA = "F1*", 
+                                           RD = "F2*", 
+                                           DE = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           DS = "F5*", 
+                                           PR = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQ62Const_loadings <- MEAQ62Const_loadings[, col_order]
 MEAQ62Const_loadings <- round_df(MEAQ62Const_loadings, 2)
@@ -3466,12 +3466,12 @@ omega_GAValid <- omega(MEAQGA_ValidDF, nfactors=6)
 MEAQGA_loadings <- omega_GA[["schmid"]][["sl"]][,2:7]
 MEAQGA_loadings <- as.data.frame(MEAQGA_loadings)
 MEAQGA_loadings<- dplyr::rename(MEAQGA_loadings, 
-                                           RD = "F1*", 
+                                           DE = "F1*", 
                                            DS = "F2*", 
-                                           PR = "F3*", 
+                                           RD = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           PR = "F5*", 
+                                           DA = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQGA_loadings <- MEAQGA_loadings[, col_order]
 MEAQGA_loadings <- round_df(MEAQGA_loadings, 2)
@@ -3870,12 +3870,12 @@ omega_ACOSFValid <- omega(MEAQACOSF_ValidDF, nfactors=6)
 MEAQACOSF_loadings <- omega_ACOSF[["schmid"]][["sl"]][,2:7]
 MEAQACOSF_loadings <- as.data.frame(MEAQACOSF_loadings)
 MEAQACOSF_loadings<- dplyr::rename(MEAQACOSF_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
+                                           DA = "F1*", 
+                                           RD = "F2*", 
+                                           DE = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           DS = "F5*", 
+                                           PR = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQACOSF_loadings <- MEAQACOSF_loadings[, col_order]
 MEAQACOSF_loadings <- round_df(MEAQACOSF_loadings, 2)
