@@ -67,6 +67,7 @@ lapply(c("stats"),pkgTest)
 lapply(c("stuart"),pkgTest)
 lapply(c("tidyverse"),pkgTest)
 lapply(c("xtable"),pkgTest)
+lapply(c("naniar"),pkgTest)
 install.packages("msm")
 install.packages("expm")
 
@@ -94,6 +95,7 @@ library(stuart)
 library(tidyverse)
 library(xtable)
 library(dplyr)
+library(naniar)
 
 # install.packages("devtools")
 devtools::install_github("MateusPsi/esemComp", build_vignettes = TRUE)
@@ -3862,8 +3864,8 @@ omega_ACOSFValid <- omega(MEAQACOSF_ValidDF, nfactors=6)
 # F2 = BA = .79
 # F3 = RD = .72
 # F4 = DE = .64
-# F5 = DS = .67
-# F6 = PR = .71
+# F5 = PR = .67
+# F6 = DS = .71
 ```
 
 ```{r}
@@ -3906,8 +3908,8 @@ MEAQACOSFValid_loadings<- dplyr::rename(MEAQACOSFValid_loadings,
                                            BA = "F2*", 
                                            RD = "F3*", 
                                            DE = "F4*", 
-                                           DS = "F5*", 
-                                           PR = "F6*")
+                                           PR = "F5*", 
+                                           DS = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQACOSFValid_loadings <- MEAQACOSFValid_loadings[, col_order]
 MEAQACOSFValid_loadings <- round_df(MEAQACOSFValid_loadings, 2)
@@ -9575,5 +9577,46 @@ HISP/TOTAL
 NHPI/TOTAL
 ```
 
+# Graphing ================================================================
 
+```{r}
+df <- read.csv("~/Repositories/maple-aster/MEAQ_Loadings.csv")
+```
 
+```{r}
+ggplot(df, aes(x=Facet, y=Loading, fill=Sample)) + 
+    geom_boxplot() + 
+    scale_fill_manual(values=c("#40B0A6", "#E1BE6A")) + 
+    facet_wrap(~Scale)
+```
+
+```{r}
+library(grid) #for adjusting plot margins
+#place the tests on the x- and y-axes, 
+#fill the elements with the strength of the correlation
+p1 <- ggplot(corrs.m, aes(Test2, Test, fill=abs(Correlation))) + 
+  geom_tile() + #rectangles for each correlation
+  #add actual correlation value in the rectangle
+  geom_text(aes(label = round(Correlation, 2)), size=2.5) + 
+  theme_bw(base_size=10) + #black and white theme with set font size
+  #rotate x-axis labels so they don't overlap, 
+  #get rid of unnecessary axis titles
+  #adjust plot margins
+  theme(axis.text.x = element_text(angle = 90), 
+        axis.title.x=element_blank(), 
+        axis.title.y=element_blank(), 
+        plot.margin = unit(c(3, 1, 0, 0), "mm")) +
+  #set correlation fill gradient
+  scale_fill_gradient(low="white", high="red") + 
+  guides(fill=F) #omit unnecessary gradient legend
+ 
+p2 <- ggplot(loadings.m, aes(Test, abs(Loading), fill=Factor)) + 
+  geom_bar(stat="identity") + coord_flip() + 
+  ylab("Loading Strength") + theme_bw(base_size=10) + 
+  #remove labels and tweak margins for combining with the correlation matrix plot
+  theme(axis.text.y = element_blank(), 
+        axis.title.y = element_blank(), 
+        plot.margin = unit(c(3,1,39,-3), "mm"))
+library(gridExtra) #for combining the two plots
+grid.arrange(p1, p2, ncol=2, widths=c(2, 1)) #side-by-side, matrix gets more space
+```
