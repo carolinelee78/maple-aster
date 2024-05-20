@@ -9591,32 +9591,35 @@ ggplot(df, aes(x=Facet, y=Loading, fill=Sample)) +
 ```
 
 ```{r}
-library(grid) #for adjusting plot margins
-#place the tests on the x- and y-axes, 
-#fill the elements with the strength of the correlation
-p1 <- ggplot(corrs.m, aes(Test2, Test, fill=abs(Correlation))) + 
-  geom_tile() + #rectangles for each correlation
-  #add actual correlation value in the rectangle
-  geom_text(aes(label = round(Correlation, 2)), size=2.5) + 
-  theme_bw(base_size=10) + #black and white theme with set font size
-  #rotate x-axis labels so they don't overlap, 
-  #get rid of unnecessary axis titles
-  #adjust plot margins
-  theme(axis.text.x = element_text(angle = 90), 
-        axis.title.x=element_blank(), 
-        axis.title.y=element_blank(), 
-        plot.margin = unit(c(3, 1, 0, 0), "mm")) +
-  #set correlation fill gradient
-  scale_fill_gradient(low="white", high="red") + 
-  guides(fill=F) #omit unnecessary gradient legend
- 
-p2 <- ggplot(loadings.m, aes(Test, abs(Loading), fill=Factor)) + 
-  geom_bar(stat="identity") + coord_flip() + 
-  ylab("Loading Strength") + theme_bw(base_size=10) + 
-  #remove labels and tweak margins for combining with the correlation matrix plot
-  theme(axis.text.y = element_blank(), 
-        axis.title.y = element_blank(), 
-        plot.margin = unit(c(3,1,39,-3), "mm"))
-library(gridExtra) #for combining the two plots
-grid.arrange(p1, p2, ncol=2, widths=c(2, 1)) #side-by-side, matrix gets more space
+pheromones <- read.csv("~/Repositories/maple-aster/pheromone.csv")
+pheromones$Iteration <- as.factor(pheromones$Iteration)
 ```
+
+```{r}
+pheromones %>% 
+  ggplot(aes(x = Run, y = Pheromone, color = Iteration, fill = Iteration, group = Iteration)) + 
+  geom_smooth(se = FALSE, alpha = 0.1) + 
+  labs(x = 'Colony Counter', y = 'Avg. Solution Quality') +
+  xlim(0,120) +
+  geom_point() + 
+theme_classic()
+ggsave("pheromone.png")
+```
+
+```{r}
+preset <- stuart:::objective.preset
+
+ggplot(test, aes(x=RMSEA, y=Pheromone) ) +
+  stat_density_2d(aes(fill = ..density..), geom = "raster", contour = FALSE) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  scale_fill_viridis() +
+  theme(
+    legend.position='none'
+  )
+```
+
+
+
+
+
