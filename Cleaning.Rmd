@@ -68,6 +68,8 @@ lapply(c("stuart"),pkgTest)
 lapply(c("tidyverse"),pkgTest)
 lapply(c("xtable"),pkgTest)
 lapply(c("naniar"),pkgTest)
+lapply(c("ggridges"),pkgTest)
+lapply(c("reshape2"),pkgTest)
 install.packages("msm")
 install.packages("expm")
 
@@ -96,6 +98,8 @@ library(tidyverse)
 library(xtable)
 library(dplyr)
 library(naniar)
+library(ggridges)
+library(reshape2)
 
 # install.packages("devtools")
 devtools::install_github("MateusPsi/esemComp", build_vignettes = TRUE)
@@ -9588,6 +9592,8 @@ ggplot(df, aes(x=Facet, y=Loading, fill=Sample)) +
     geom_boxplot() + 
     scale_fill_manual(values=c("#40B0A6", "#E1BE6A")) + 
     facet_wrap(~Scale)
+
+ggsave("loadings.png")
 ```
 
 ```{r}
@@ -9607,19 +9613,30 @@ ggsave("pheromone.png")
 ```
 
 ```{r}
-preset <- stuart:::objective.preset
-
-ggplot(test, aes(x=RMSEA, y=Pheromone) ) +
-  stat_density_2d(aes(fill = ..density..), geom = "raster", contour = FALSE) +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(expand = c(0, 0)) +
-  scale_fill_viridis() +
-  theme(
-    legend.position='none'
-  )
+MEAQCorr <- MEAQ_Const_DF[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "BEAQ", "MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE")]
 ```
 
+```
+MEAQCorr$MEAQ62_Total <- MEAQCorr$MEAQ62_BA + MEAQCorr$MEAQ62_DA + MEAQCorr$MEAQ62_PR + MEAQCorr$MEAQ62_DS + MEAQCorr$MEAQ62_RD + (77 - MEAQCorr$MEAQ62_DE)
 
+MEAQCorr$MEAQGA_Total <- MEAQCorr$MEAQGA_BA + MEAQCorr$MEAQGA_DA + MEAQCorr$MEAQGA_PR + MEAQCorr$MEAQGA_DS + MEAQCorr$MEAQGA_RD + (35 - MEAQCorr$MEAQGA_DE)
 
+MEAQCorr$MEAQACOSF_Total <- MEAQCorr$MEAQACOSF_BA + MEAQCorr$MEAQACOSF_DA + MEAQCorr$MEAQACOSF_PR + MEAQCorr$MEAQACOSF_DS + MEAQCorr$MEAQACOSF_RD + (35 - MEAQCorr$MEAQACOSF_DE)
 
+MEAQCorr$MEAQACOBF_Total <- MEAQCorr$MEAQACOBF_BA + MEAQCorr$MEAQACOBF_DA + MEAQCorr$MEAQACOBF_PR + MEAQCorr$MEAQACOBF_DS + MEAQCorr$MEAQACOBF_RD + (14 - MEAQCorr$MEAQACOBF_DE)
+```
+
+```{r}
+meaq_cormatrix <- round(cor(MEAQCorr), 2)
+
+melted_cor <- melt(meaq_cormatrix)
+
+ggplot(data = melted_cor, aes(x=Var1, y=Var2,
+                                   fill=value)) + 
+        geom_tile() +
+        geom_text(aes(Var1, Var2, label = value), 
+                  color = "white", size = 4) + 
+         labs(x = NULL, y = NULL) 
+ggsave("cor.png", height = 10, width = 30)
+```
 
