@@ -2706,7 +2706,9 @@ cronbach.alpha(MEAQACOSF_DE_ValidDF)
 
 ```{r}
 MEAQACOSF_DF <- MEAQ_DF %>% 
-  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60",  "MEAQ_6_r", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_53_r", "MEAQ_62_r")
+  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23", "MEAQ_28", "MEAQ_49", "MEAQ_60",  "MEAQ_6", "MEAQ_12", "MEAQ_37", "MEAQ_53", "MEAQ_62")
+
+# dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60",  "MEAQ_6_r", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_53_r", "MEAQ_62_r")
 
 cronbach.alpha(MEAQACOSF_DF)
 
@@ -2895,8 +2897,10 @@ cronbach.alpha(MEAQACOBF_DE_ValidDF)
 
 ```{r}
 MEAQACOBF_DF <- MEAQ_DF %>% 
-  dplyr::select("MEAQ_51", "MEAQ_59", "MEAQ_7", "MEAQ_58", "MEAQ_5", "MEAQ_36", "MEAQ_22", "MEAQ_33", "MEAQ_4", "MEAQ_41", "MEAQ_53_r", "MEAQ_62_r") 
+  dplyr::select("MEAQ_51", "MEAQ_59", "MEAQ_7", "MEAQ_58", "MEAQ_5", "MEAQ_36", "MEAQ_22", "MEAQ_33", "MEAQ_4", "MEAQ_41", "MEAQ_53", "MEAQ_62") 
  
+# dplyr::select("MEAQ_51", "MEAQ_59", "MEAQ_7", "MEAQ_58", "MEAQ_5", "MEAQ_36", "MEAQ_22", "MEAQ_33", "MEAQ_4", "MEAQ_41", "MEAQ_53_r", "MEAQ_62_r") 
+
 cronbach.alpha(MEAQACOBF_DF)
 
 0.794/(12 + (0.794)*(1-12)) #AIC
@@ -3844,6 +3848,7 @@ omega_ACOSF <- omega(MEAQACOSF_DF, nfactors=6)
 # F4 = BA = .82 
 # F5 = DS = .77
 # F6 = PR = .72 
+mean(c(.82,.82,.76,.82,.77,.72))
 ```
 
 ```{r}
@@ -4216,6 +4221,7 @@ omega_ACOBF <- omega(MEAQACOBF_DF, nfactors=6)
 # F4 = BA = .81
 # F5 = DA = .76
 # F6 = DE = .67
+mean(c(.84,.81,.81,.81,.76,.67))
 ```
 
 ```{r}
