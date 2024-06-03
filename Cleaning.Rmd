@@ -67,6 +67,9 @@ lapply(c("stats"),pkgTest)
 lapply(c("stuart"),pkgTest)
 lapply(c("tidyverse"),pkgTest)
 lapply(c("xtable"),pkgTest)
+lapply(c("naniar"),pkgTest)
+lapply(c("ggridges"),pkgTest)
+lapply(c("reshape2"),pkgTest)
 install.packages("msm")
 install.packages("expm")
 
@@ -94,6 +97,9 @@ library(stuart)
 library(tidyverse)
 library(xtable)
 library(dplyr)
+library(naniar)
+library(ggridges)
+library(reshape2)
 
 # install.packages("devtools")
 devtools::install_github("MateusPsi/esemComp", build_vignettes = TRUE)
@@ -3078,12 +3084,12 @@ omega_62Valid <- omega(MEAQ62_ValidDF, nfactors=6)
 MEAQ62_loadings <- omega_62[["schmid"]][["sl"]][,2:7]
 MEAQ62_loadings <- as.data.frame(MEAQ62_loadings)
 MEAQ62_loadings<- dplyr::rename(MEAQ62_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
+                                           DA = "F1*", 
+                                           RD = "F2*", 
+                                           DE = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           DS = "F5*", 
+                                           PR = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQ62_loadings <- MEAQ62_loadings[, col_order]
 MEAQ62_loadings <- round_df(MEAQ62_loadings, 3)
@@ -3094,12 +3100,12 @@ write.csv(MEAQ62_loadings, file = "MEAQ62_loadings.csv")
 MEAQ62Const_loadings <- omega_62Const[["schmid"]][["sl"]][,2:7]
 MEAQ62Const_loadings <- as.data.frame(MEAQ62Const_loadings)
 MEAQ62Const_loadings<- dplyr::rename(MEAQ62Const_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
+                                           DA = "F1*", 
+                                           RD = "F2*", 
+                                           DE = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           DS = "F5*", 
+                                           PR = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQ62Const_loadings <- MEAQ62Const_loadings[, col_order]
 MEAQ62Const_loadings <- round_df(MEAQ62Const_loadings, 2)
@@ -3470,12 +3476,12 @@ omega_GAValid <- omega(MEAQGA_ValidDF, nfactors=6)
 MEAQGA_loadings <- omega_GA[["schmid"]][["sl"]][,2:7]
 MEAQGA_loadings <- as.data.frame(MEAQGA_loadings)
 MEAQGA_loadings<- dplyr::rename(MEAQGA_loadings, 
-                                           RD = "F1*", 
+                                           DE = "F1*", 
                                            DS = "F2*", 
-                                           PR = "F3*", 
+                                           RD = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           PR = "F5*", 
+                                           DA = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQGA_loadings <- MEAQGA_loadings[, col_order]
 MEAQGA_loadings <- round_df(MEAQGA_loadings, 2)
@@ -3867,20 +3873,20 @@ omega_ACOSFValid <- omega(MEAQACOSF_ValidDF, nfactors=6)
 # F2 = BA = .79
 # F3 = RD = .72
 # F4 = DE = .64
-# F5 = DS = .67
-# F6 = PR = .71
+# F5 = PR = .67
+# F6 = DS = .71
 ```
 
 ```{r}
 MEAQACOSF_loadings <- omega_ACOSF[["schmid"]][["sl"]][,2:7]
 MEAQACOSF_loadings <- as.data.frame(MEAQACOSF_loadings)
 MEAQACOSF_loadings<- dplyr::rename(MEAQACOSF_loadings, 
-                                           RD = "F1*", 
-                                           DS = "F2*", 
-                                           PR = "F3*", 
+                                           DA = "F1*", 
+                                           RD = "F2*", 
+                                           DE = "F3*", 
                                            BA = "F4*", 
-                                           DA = "F5*", 
-                                           DE = "F6*")
+                                           DS = "F5*", 
+                                           PR = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQACOSF_loadings <- MEAQACOSF_loadings[, col_order]
 MEAQACOSF_loadings <- round_df(MEAQACOSF_loadings, 2)
@@ -3911,8 +3917,8 @@ MEAQACOSFValid_loadings<- dplyr::rename(MEAQACOSFValid_loadings,
                                            BA = "F2*", 
                                            RD = "F3*", 
                                            DE = "F4*", 
-                                           DS = "F5*", 
-                                           PR = "F6*")
+                                           PR = "F5*", 
+                                           DS = "F6*")
 col_order <- c("BA", "DA", "PR", "DS", "RD", "DE")
 MEAQACOSFValid_loadings <- MEAQACOSFValid_loadings[, col_order]
 MEAQACOSFValid_loadings <- round_df(MEAQACOSFValid_loadings, 2)
@@ -9581,5 +9587,62 @@ HISP/TOTAL
 NHPI/TOTAL
 ```
 
+# Graphing ================================================================
 
+```{r}
+df <- read.csv("~/Repositories/maple-aster/MEAQ_Loadings.csv")
+```
+
+```{r}
+ggplot(df, aes(x=Facet, y=Loading, fill=Sample)) + 
+    geom_boxplot() + 
+    scale_fill_manual(values=c("#40B0A6", "#E1BE6A")) + 
+    facet_wrap(~Scale)
+
+ggsave("loadings.png")
+```
+
+```{r}
+pheromones <- read.csv("~/Repositories/maple-aster/pheromone.csv")
+pheromones$Iteration <- as.factor(pheromones$Iteration)
+```
+
+```{r}
+pheromones %>% 
+  ggplot(aes(x = Run, y = Pheromone, color = Iteration, fill = Iteration, group = Iteration)) + 
+  geom_smooth(se = FALSE, alpha = 0.1) + 
+  labs(x = 'Colony Counter', y = 'Avg. Solution Quality') +
+  xlim(0,120) +
+  geom_point() + 
+theme_classic()
+ggsave("pheromone.png")
+```
+
+```{r}
+MEAQCorr <- MEAQ_Const_DF[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "BEAQ", "MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE")]
+```
+
+```
+MEAQCorr$MEAQ62_Total <- MEAQCorr$MEAQ62_BA + MEAQCorr$MEAQ62_DA + MEAQCorr$MEAQ62_PR + MEAQCorr$MEAQ62_DS + MEAQCorr$MEAQ62_RD + (77 - MEAQCorr$MEAQ62_DE)
+
+MEAQCorr$MEAQGA_Total <- MEAQCorr$MEAQGA_BA + MEAQCorr$MEAQGA_DA + MEAQCorr$MEAQGA_PR + MEAQCorr$MEAQGA_DS + MEAQCorr$MEAQGA_RD + (35 - MEAQCorr$MEAQGA_DE)
+
+MEAQCorr$MEAQACOSF_Total <- MEAQCorr$MEAQACOSF_BA + MEAQCorr$MEAQACOSF_DA + MEAQCorr$MEAQACOSF_PR + MEAQCorr$MEAQACOSF_DS + MEAQCorr$MEAQACOSF_RD + (35 - MEAQCorr$MEAQACOSF_DE)
+
+MEAQCorr$MEAQACOBF_Total <- MEAQCorr$MEAQACOBF_BA + MEAQCorr$MEAQACOBF_DA + MEAQCorr$MEAQACOBF_PR + MEAQCorr$MEAQACOBF_DS + MEAQCorr$MEAQACOBF_RD + (14 - MEAQCorr$MEAQACOBF_DE)
+```
+
+```{r}
+meaq_cormatrix <- round(cor(MEAQCorr), 2)
+
+melted_cor <- melt(meaq_cormatrix)
+
+ggplot(data = melted_cor, aes(x=Var1, y=Var2,
+                                   fill=value)) + 
+        geom_tile() +
+        geom_text(aes(Var1, Var2, label = value), 
+                  color = "white", size = 4) + 
+         labs(x = NULL, y = NULL) 
+ggsave("cor.png", height = 10, width = 30)
+```
 
