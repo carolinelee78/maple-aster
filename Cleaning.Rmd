@@ -9641,11 +9641,11 @@ ggcorrmat(data = MEAQCorr,
 
 
 ```{r}
-cronbach.alpha(MEAQ62_DF)
-cronbach.alpha(MEAQGA_DF)
-cronbach.alpha(BEAQ_DF)
-cronbach.alpha(MEAQACOSF_DF)
-cronbach.alpha(MEAQACOBF_DF)
+cronbach.alpha(MEAQ62_ConstDF)
+cronbach.alpha(MEAQGA_ConstDF)
+cronbach.alpha(BEAQ_ConstDF)
+cronbach.alpha(MEAQACOSF_ConstDF)
+cronbach.alpha(MEAQACOBF_ConstDF)
 ```
 
 
