@@ -9614,9 +9614,7 @@ ggsave("pheromone.png")
 
 ```{r}
 MEAQCorr <- MEAQ_Const_DF[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "BEAQ", "MEAQACOSF_BA", "MEAQACOSF_DA", "MEAQACOSF_PR", "MEAQACOSF_DS", "MEAQACOSF_RD", "MEAQACOSF_DE", "MEAQACOBF_BA", "MEAQACOBF_DA", "MEAQACOBF_PR", "MEAQACOBF_DS", "MEAQACOBF_RD", "MEAQACOBF_DE")]
-```
 
-```
 MEAQCorr$MEAQ62_Total <- MEAQCorr$MEAQ62_BA + MEAQCorr$MEAQ62_DA + MEAQCorr$MEAQ62_PR + MEAQCorr$MEAQ62_DS + MEAQCorr$MEAQ62_RD + (77 - MEAQCorr$MEAQ62_DE)
 
 MEAQCorr$MEAQGA_Total <- MEAQCorr$MEAQGA_BA + MEAQCorr$MEAQGA_DA + MEAQCorr$MEAQGA_PR + MEAQCorr$MEAQGA_DS + MEAQCorr$MEAQGA_RD + (35 - MEAQCorr$MEAQGA_DE)
@@ -9624,6 +9622,8 @@ MEAQCorr$MEAQGA_Total <- MEAQCorr$MEAQGA_BA + MEAQCorr$MEAQGA_DA + MEAQCorr$MEAQ
 MEAQCorr$MEAQACOSF_Total <- MEAQCorr$MEAQACOSF_BA + MEAQCorr$MEAQACOSF_DA + MEAQCorr$MEAQACOSF_PR + MEAQCorr$MEAQACOSF_DS + MEAQCorr$MEAQACOSF_RD + (35 - MEAQCorr$MEAQACOSF_DE)
 
 MEAQCorr$MEAQACOBF_Total <- MEAQCorr$MEAQACOBF_BA + MEAQCorr$MEAQACOBF_DA + MEAQCorr$MEAQACOBF_PR + MEAQCorr$MEAQACOBF_DS + MEAQCorr$MEAQACOBF_RD + (14 - MEAQCorr$MEAQACOBF_DE)
+
+describe(MEAQCorr)
 ```
 
 ```{r}
@@ -9639,4 +9639,28 @@ ggplot(data = melted_cor, aes(x=Var1, y=Var2,
          labs(x = NULL, y = NULL) 
 ggsave("cor.png", height = 10, width = 30)
 ```
+
+```{r}
+sf_const_loadings <- (.30 + .30 + .31 + .31 + .37 + 
+                        .42 + .46 + .51 + .35 + .54 + .49 + 
+                        .56 + .47 + .47 + 
+                        .54 + .67 + .70 + 
+                        .54 + .41 + .26 + .55 + .52 + .68 + 
+                        .44 + .69 + .62 + .65 + .63)/28
+
+sf_valid_loadings <- (.45 + .43 + .42 + .56 + .51 + 
+                        .37 + .34 + .52 + .34 + .61 + .43 + 
+                        .47 + .57 + .52 + 
+                        .53 + .53 + .70 + 
+                        .48 + .40 + .25 + .53 + .38 + .70 + 
+                        .37 + .44 + .39 + .46 + .37)/28
+
+bf_const_loadings <- (.46 + .54 + .59 + .67 + .44 + .78 + 
+                        .97 + .54 + .87 + .53 + .69 + .65)/12 
+
+bf_valid_loadings <- (.62 + .59 + .94 + .46 + .90 + .48 + 
+                        .63 + .67 + .50 + .87 + .81 + .33)/12
+```
+
+
 
