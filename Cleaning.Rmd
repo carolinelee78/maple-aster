@@ -49,7 +49,6 @@ lapply(c("ltm"),pkgTest)
 lapply(c("corrplot"),pkgTest)
 lapply(c("data.table"),pkgTest)
 lapply(c("foreign"),pkgTest)
-lapply(c("ggraph"),pkgTest)
 lapply(c("ggplot2"),pkgTest)
 lapply(c("GPArotation"),pkgTest)
 lapply(c("gridExtra"),pkgTest)
@@ -70,15 +69,17 @@ lapply(c("xtable"),pkgTest)
 lapply(c("naniar"),pkgTest)
 lapply(c("ggridges"),pkgTest)
 lapply(c("reshape2"),pkgTest)
+lapply(c("ggstatsplot"),pkgTest)
 install.packages("msm")
 install.packages("expm")
+
+remove.packages("msm")
 
 library(expm)
 library(msm)
 library(corrplot)
 library(data.table)
 library(foreign)
-library(ggraph)
 library(ggplot2)
 library(GPArotation)
 library(gridExtra)
@@ -100,6 +101,7 @@ library(dplyr)
 library(naniar)
 library(ggridges)
 library(reshape2)
+library(ggstatsplot)
 
 # install.packages("devtools")
 devtools::install_github("MateusPsi/esemComp", build_vignettes = TRUE)
@@ -2712,7 +2714,9 @@ cronbach.alpha(MEAQACOSF_DE_ValidDF)
 
 ```{r}
 MEAQACOSF_DF <- MEAQ_DF %>% 
-  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60",  "MEAQ_6_r", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_53_r", "MEAQ_62_r")
+  dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23", "MEAQ_28", "MEAQ_49", "MEAQ_60",  "MEAQ_6", "MEAQ_12", "MEAQ_37", "MEAQ_53", "MEAQ_62")
+
+# dplyr::select("MEAQ_14", "MEAQ_26", "MEAQ_32", "MEAQ_51", "MEAQ_55", "MEAQ_2", "MEAQ_19", "MEAQ_25", "MEAQ_34", "MEAQ_54", "MEAQ_61", "MEAQ_17", "MEAQ_42", "MEAQ_47", "MEAQ_15", "MEAQ_33", "MEAQ_40", "MEAQ_10", "MEAQ_21", "MEAQ_23_r", "MEAQ_28", "MEAQ_49", "MEAQ_60",  "MEAQ_6_r", "MEAQ_12_r", "MEAQ_37_r", "MEAQ_53_r", "MEAQ_62_r")
 
 cronbach.alpha(MEAQACOSF_DF)
 
@@ -2901,8 +2905,10 @@ cronbach.alpha(MEAQACOBF_DE_ValidDF)
 
 ```{r}
 MEAQACOBF_DF <- MEAQ_DF %>% 
-  dplyr::select("MEAQ_51", "MEAQ_59", "MEAQ_7", "MEAQ_58", "MEAQ_5", "MEAQ_36", "MEAQ_22", "MEAQ_33", "MEAQ_4", "MEAQ_41", "MEAQ_53_r", "MEAQ_62_r") 
+  dplyr::select("MEAQ_51", "MEAQ_59", "MEAQ_7", "MEAQ_58", "MEAQ_5", "MEAQ_36", "MEAQ_22", "MEAQ_33", "MEAQ_4", "MEAQ_41", "MEAQ_53", "MEAQ_62") 
  
+# dplyr::select("MEAQ_51", "MEAQ_59", "MEAQ_7", "MEAQ_58", "MEAQ_5", "MEAQ_36", "MEAQ_22", "MEAQ_33", "MEAQ_4", "MEAQ_41", "MEAQ_53_r", "MEAQ_62_r") 
+
 cronbach.alpha(MEAQACOBF_DF)
 
 0.794/(12 + (0.794)*(1-12)) #AIC
@@ -3850,6 +3856,7 @@ omega_ACOSF <- omega(MEAQACOSF_DF, nfactors=6)
 # F4 = BA = .82 
 # F5 = DS = .77
 # F6 = PR = .72 
+mean(c(.82,.82,.76,.82,.77,.72))
 ```
 
 ```{r}
@@ -4222,6 +4229,7 @@ omega_ACOBF <- omega(MEAQACOBF_DF, nfactors=6)
 # F4 = BA = .81
 # F5 = DA = .76
 # F6 = DE = .67
+mean(c(.84,.81,.81,.81,.76,.67))
 ```
 
 ```{r}
@@ -9584,7 +9592,9 @@ NHPI/TOTAL
 # Graphing ================================================================
 
 ```{r}
-df <- read.csv("~/Repositories/maple-aster/MEAQ_Loadings.csv")
+# df <- read.csv("~/Repositories/maple-aster/MEAQ_Loadings.csv")
+
+df <- read.csv("~/Desktop/maple-aster/MEAQ_Loadings.csv")
 ```
 
 ```{r}
@@ -9597,13 +9607,15 @@ ggsave("loadings.png")
 ```
 
 ```{r}
-pheromones <- read.csv("~/Repositories/maple-aster/pheromone.csv")
-pheromones$Iteration <- as.factor(pheromones$Iteration)
+# pheromones <- read.csv("~/Repositories/maple-aster/pheromone.csv")
+pheromones <- read.csv("~/Desktop/maple-aster/pheromone.csv")
+
+pheromones$Run <- as.factor(pheromones$Run)
 ```
 
 ```{r}
 pheromones %>% 
-  ggplot(aes(x = Run, y = Pheromone, color = Iteration, fill = Iteration, group = Iteration)) + 
+  ggplot(aes(x = Iteration, y = Pheromone, color = Run, fill = Run, group = Run)) + 
   geom_smooth(se = FALSE, alpha = 0.1) + 
   labs(x = 'Colony Counter', y = 'Avg. Solution Quality') +
   xlim(0,120) +
@@ -9623,21 +9635,20 @@ MEAQCorr$MEAQACOSF_Total <- MEAQCorr$MEAQACOSF_BA + MEAQCorr$MEAQACOSF_DA + MEAQ
 
 MEAQCorr$MEAQACOBF_Total <- MEAQCorr$MEAQACOBF_BA + MEAQCorr$MEAQACOBF_DA + MEAQCorr$MEAQACOBF_PR + MEAQCorr$MEAQACOBF_DS + MEAQCorr$MEAQACOBF_RD + (14 - MEAQCorr$MEAQACOBF_DE)
 
+
 describe(MEAQCorr)
+
+ggcorrmat(data = MEAQCorr, 
+          colors = c("cadetblue4", "white", "lightsalmon1"))
 ```
 
+
 ```{r}
-meaq_cormatrix <- round(cor(MEAQCorr), 2)
-
-melted_cor <- melt(meaq_cormatrix)
-
-ggplot(data = melted_cor, aes(x=Var1, y=Var2,
-                                   fill=value)) + 
-        geom_tile() +
-        geom_text(aes(Var1, Var2, label = value), 
-                  color = "white", size = 4) + 
-         labs(x = NULL, y = NULL) 
-ggsave("cor.png", height = 10, width = 30)
+cronbach.alpha(MEAQ62_ConstDF)
+cronbach.alpha(MEAQGA_ConstDF)
+cronbach.alpha(BEAQ_ConstDF)
+cronbach.alpha(MEAQACOSF_ConstDF)
+cronbach.alpha(MEAQACOBF_ConstDF)
 ```
 
 ```{r}
