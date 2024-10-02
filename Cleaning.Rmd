@@ -4939,6 +4939,23 @@ cor.test(WBSI_Validation$BEAQ, WBSI_Validation$wbsi)
 ```
 
 ```{r}
+WBSI_Total_62SF_Wide <- WBSI_Validation[,c("MEAQ62_Total", "MEAQSF_Total", "wbsi")]
+
+WBSI_Total_62SF_Wide$ID <- 1:nrow(WBSI_Total_62SF_Wide) 
+
+# Reshape data from wide to long format
+WBSI_Total_62SF_Long <- melt(WBSI_Total_62SF_Wide, id.vars = c("ID", "wbsi"), variable.name = "MEAQ", value.name = "MEAQ_Score")
+  
+colors = c( "#440154FF","#1565c0")
+ggplot(WBSI_Total_62SF_Long, aes(x = MEAQ_Score, y = wbsi, color = MEAQ)) +
+  geom_point(alpha = 0.7) +
+  scale_color_manual(values = colors) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  theme(axis.line = element_line(color = "grey70"))
+```
+
+```{r}
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
 ```
 
