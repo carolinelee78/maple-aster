@@ -7979,6 +7979,9 @@ PANAS_XN_Validation$MEAQGA_RD <- PANAS_XN_Validation$MEAQ_35 + PANAS_XN_Validati
 PANAS_XN_Validation$MEAQGA_DE <- PANAS_XN_Validation$MEAQ_12 + PANAS_XN_Validation$MEAQ_37 + PANAS_XN_Validation$MEAQ_43 + PANAS_XN_Validation$MEAQ_57 + PANAS_XN_Validation$MEAQ_62
 
 PANAS_XN_Validation$MEAQGA_DE_R <- PANAS_XN_Validation$MEAQ_12_r + PANAS_XN_Validation$MEAQ_37_r + PANAS_XN_Validation$MEAQ_43_r + PANAS_XN_Validation$MEAQ_57_r + PANAS_XN_Validation$MEAQ_62_r
+
+PANAS_XN_Validation$MEAQGA_Total <- PANAS_XN_Validation$MEAQGA_BA + PANAS_XN_Validation$MEAQGA_DA + PANAS_XN_Validation$MEAQGA_PR + PANAS_XN_Validation$MEAQGA_DS + PANAS_XN_Validation$MEAQGA_RD + PANAS_XN_Validation$MEAQGA_DE_R
+
 # =========================
 
 # BEAQ ==================== 
