@@ -4870,7 +4870,7 @@ WBSI_Validation$MEAQGA_DE <- WBSI_Validation$MEAQ_12 + WBSI_Validation$MEAQ_37 +
 
 WBSI_Validation$MEAQGA_DE_R <- WBSI_Validation$MEAQ_12_r + WBSI_Validation$MEAQ_37_r + WBSI_Validation$MEAQ_43_r + WBSI_Validation$MEAQ_57_r + WBSI_Validation$MEAQ_62_r
 
-WBSI_Validation$MEAQGA_Total <- WBSI_Validation$MEAQGA_BA + WBSI_Validation$MEAQGA_DA + WBSI_Validation$MEAQGA_PR + WBSI_Validation$MEAQGA_DS + WBSI_Validation$MEAQGA_RD + WBSI_Validation$MEAQGA_DE_R
+WBSI_Validation$MEAQGA_Total <- WBSI_Validation$MEAQGA_BA + WBSI_Validation$MEAQGA_DA + WBSI_Validation$MEAQGA_PR + WBSI_Validation$MEAQGA_DS + WBSI_Validation$MEAQGA_RD + WBSI_Validation$MEAQGA_DE
 
 # =========================
 
@@ -4981,7 +4981,8 @@ ggplot(WBSI_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = wbsi_STDZ, color = fac
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
   labs(x = "MEAQ Total Score (Standardized)", y = "WBSI Total Score (Standardized)") + 
-  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) 
+  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
+  theme(legend.justification = "top")
 ```
 
 ```{r}
@@ -7096,7 +7097,7 @@ BFAS_Validation$MEAQGA_DE <- BFAS_Validation$MEAQ_12 + BFAS_Validation$MEAQ_37 +
 
 BFAS_Validation$MEAQGA_DE_R <- BFAS_Validation$MEAQ_12_r + BFAS_Validation$MEAQ_37_r + BFAS_Validation$MEAQ_43_r + BFAS_Validation$MEAQ_57_r + BFAS_Validation$MEAQ_62_r
 
-BFAS_Validation$MEAQGA_Total <- BFAS_Validation$MEAQGA_BA + BFAS_Validation$MEAQGA_DA + BFAS_Validation$MEAQGA_PR + BFAS_Validation$MEAQGA_DS + BFAS_Validation$MEAQGA_RD + BFAS_Validation$MEAQGA_DE_R
+BFAS_Validation$MEAQGA_Total <- BFAS_Validation$MEAQGA_BA + BFAS_Validation$MEAQGA_DA + BFAS_Validation$MEAQGA_PR + BFAS_Validation$MEAQGA_DS + BFAS_Validation$MEAQGA_RD + BFAS_Validation$MEAQGA_DE
 
 # =========================
 
