@@ -45,7 +45,6 @@ knitr::knit_hooks$set(output = function(x, options){
 
 # loading packages 
 
-lapply(c("corrplot"),pkgTest)
 lapply(c("data.table"),pkgTest)
 lapply(c("foreign"),pkgTest)
 lapply(c("ggplot2"),pkgTest)
@@ -74,7 +73,6 @@ remove.packages("ltm")
 install.packages("ltm")
 library(ltm)
 library(expm)
-library(corrplot)
 library(data.table)
 library(foreign)
 library(ggplot2)
@@ -4987,6 +4985,8 @@ ggplot(WBSI_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = wbsi_STDZ, color = fac
   labs(x = "MEAQ Total Score (Standardized)", y = "WBSI Total Score (Standardized)") + 
   scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
   theme(legend.justification = "top")  
+
+ggsave("wbsicor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
