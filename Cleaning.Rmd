@@ -69,6 +69,7 @@ lapply(c("naniar"),pkgTest)
 lapply(c("ggridges"),pkgTest)
 lapply(c("reshape2"),pkgTest)
 lapply(c("ggstatsplot"),pkgTest)
+lapply(c("latex2exp"),pkgTest)
 remove.packages("ltm")
 install.packages("ltm")
 library(ltm)
@@ -98,6 +99,7 @@ library(naniar)
 library(ggridges)
 library(reshape2)
 library(ggstatsplot)
+library(latex2exp)
 
 # install.packages("devtools")
 devtools::install_github("MateusPsi/esemComp", build_vignettes = TRUE)
@@ -4974,7 +4976,9 @@ WBSI_Total_62SF_Wide$ID <- 1:nrow(WBSI_Total_62SF_Wide)
 
 # Reshape data from wide to long format
 WBSI_Total_62SF_Long <- melt(WBSI_Total_62SF_Wide, id.vars = c("ID", "wbsi_STDZ"), variable.name = "MEAQ", value.name = "MEAQ_Score_STDZ")
-  
+```
+
+```{r}
 ggplot(WBSI_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = wbsi_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
@@ -4982,7 +4986,7 @@ ggplot(WBSI_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = wbsi_STDZ, color = fac
   theme(axis.line = element_line(color = "grey70")) + 
   labs(x = "MEAQ Total Score (Standardized)", y = "WBSI Total Score (Standardized)") + 
   scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
-  theme(legend.justification = "top")
+  theme(legend.justification = "top")  
 ```
 
 ```{r}
@@ -4999,6 +5003,12 @@ rcorr(as.matrix(WBSI_Validation3),type="pearson")
 
 ```{r}
 rcorr(as.matrix(WBSI_Validation4),type="pearson") 
+```
+
+```{r}
+WBSI_Validation_Cor <- WBSI_Validation[,c("wbsi", "MEAQ62_Total_STDZ", "MEAQGA_Total_STDZ", "BEAQ_Total_STDZ",   "MEAQSF_Total_STDZ", "MEAQBF_Total_STDZ")]
+
+rcorr(as.matrix(WBSI_Validation_Cor),type="pearson") 
 ```
 
 ### Neuroticism Measures 
