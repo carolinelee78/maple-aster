@@ -4977,16 +4977,16 @@ WBSI_Total_62SF_Long <- melt(WBSI_Total_62SF_Wide, id.vars = c("ID", "wbsi_STDZ"
 ```
 
 ```{r}
-ggplot(WBSI_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = wbsi_STDZ, color = factor(MEAQ))) +
+p1 <- ggplot(WBSI_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = wbsi_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
-  labs(x = "MEAQ Total Score (Standardized)", y = "WBSI Total Score (Standardized)") + 
+  labs(x = "MEAQ Total Score ", y = "WBSI Total Score ") + 
   scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
-  theme(legend.justification = "top")  
+  xlim(-4, 4)
 
-ggsave("wbsicor.png", width = 20, height = 10, units = "cm")
+#ggsave("wbsicor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
@@ -6629,7 +6629,7 @@ BFI2N_Validation$MEAQGA_DE <- BFI2N_Validation$MEAQ_12 + BFI2N_Validation$MEAQ_3
 
 BFI2N_Validation$MEAQGA_DE_R <- BFI2N_Validation$MEAQ_12_r + BFI2N_Validation$MEAQ_37_r + BFI2N_Validation$MEAQ_43_r + BFI2N_Validation$MEAQ_57_r + BFI2N_Validation$MEAQ_62_r
 
-BFI2N_Validation$MEAQGA_Total <- BFI2N_Validation$MEAQGA_BA + BFI2N_Validation$MEAQGA_DA + BFI2N_Validation$MEAQGA_PR + BFI2N_Validation$MEAQGA_DS + BFI2N_Validation$MEAQGA_RD + BFI2N_Validation$MEAQGA_DE_R
+BFI2N_Validation$MEAQGA_Total <- BFI2N_Validation$MEAQGA_BA + BFI2N_Validation$MEAQGA_DA + BFI2N_Validation$MEAQGA_PR + BFI2N_Validation$MEAQGA_DS + BFI2N_Validation$MEAQGA_RD + BFI2N_Validation$MEAQGA_DE
 
 # =========================
 
@@ -6711,14 +6711,16 @@ BFI2N_Total_62SF_Wide$ID <- 1:nrow(BFI2N_Total_62SF_Wide)
 # Reshape data from wide to long format
 BFI2N_Total_62SF_Long <- melt(BFI2N_Total_62SF_Wide, id.vars = c("ID", "BFI2_NE_STDZ"), variable.name = "MEAQ", value.name = "MEAQ_Score_STDZ")
   
-ggplot(BFI2N_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = BFI2_NE_STDZ, color = factor(MEAQ))) +
+p2 <- ggplot(BFI2N_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = BFI2_NE_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
-  labs(x = "MEAQ Total Score (Standardized)", y = "BFI-2 Neuroticism Total Score (Standardized)") + 
-  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) 
+  labs(x = "MEAQ Total Score ", y = "BFI-2 Neuroticism Total Score ") + 
+  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
+  xlim(-4, 4)
 
+#ggsave("bfi2ncor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
@@ -7189,13 +7191,16 @@ BFAS_Total_62SF_Wide$ID <- 1:nrow(BFAS_Total_62SF_Wide)
 # Reshape data from wide to long format
 BFAS_Total_62SF_Long <- melt(BFAS_Total_62SF_Wide, id.vars = c("ID", "BFAS_N_STDZ"), variable.name = "MEAQ", value.name = "MEAQ_Score_STDZ")
   
-ggplot(BFAS_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = BFAS_N_STDZ, color = factor(MEAQ))) +
+p3 <- ggplot(BFAS_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = BFAS_N_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
-  labs(x = "MEAQ Total Score (Standardized)", y = "BFAS Total Score (Standardized)") + 
-  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) 
+  labs(x = "MEAQ Total Score ", y = "BFAS Total Score ") + 
+  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
+  xlim(-4, 4)
+
+#ggsave("bfascor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
@@ -7613,7 +7618,7 @@ PANAS_SFN_Validation$MEAQGA_DE <- PANAS_SFN_Validation$MEAQ_12 + PANAS_SFN_Valid
 
 PANAS_SFN_Validation$MEAQGA_DE_R <- PANAS_SFN_Validation$MEAQ_12_r + PANAS_SFN_Validation$MEAQ_37_r + PANAS_SFN_Validation$MEAQ_43_r + PANAS_SFN_Validation$MEAQ_57_r + PANAS_SFN_Validation$MEAQ_62_r
 
-PANAS_SFN_Validation$MEAQGA_Total <- PANAS_SFN_Validation$MEAQGA_BA + PANAS_SFN_Validation$MEAQGA_DA + PANAS_SFN_Validation$MEAQGA_PR + PANAS_SFN_Validation$MEAQGA_DS + PANAS_SFN_Validation$MEAQGA_RD + PANAS_SFN_Validation$MEAQGA_DE_R
+PANAS_SFN_Validation$MEAQGA_Total <- PANAS_SFN_Validation$MEAQGA_BA + PANAS_SFN_Validation$MEAQGA_DA + PANAS_SFN_Validation$MEAQGA_PR + PANAS_SFN_Validation$MEAQGA_DS + PANAS_SFN_Validation$MEAQGA_RD + PANAS_SFN_Validation$MEAQGA_DE
 
 # =========================
 
@@ -7692,13 +7697,16 @@ PANAS_SFN_Total_62SF_Wide$ID <- 1:nrow(PANAS_SFN_Total_62SF_Wide)
 # Reshape data from wide to long format
 PANAS_SFN_Total_62SF_Long <- melt(PANAS_SFN_Total_62SF_Wide, id.vars = c("ID", "PANAS_NA_STDZ"), variable.name = "MEAQ", value.name = "MEAQ_Score_STDZ")
   
-ggplot(PANAS_SFN_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = PANAS_NA_STDZ, color = factor(MEAQ))) +
+p4 <- ggplot(PANAS_SFN_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = PANAS_NA_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
-  labs(x = "MEAQ Total Score (Standardized)", y = "PANAS-SF Negative Affect Total Score (Standardized)") + 
-  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) 
+  labs(x = "MEAQ Total Score ", y = "PANAS-SF Negative Affect Total Score ") + 
+  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
+  xlim(-4, 4)
+
+# ggsave("panassfncor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
@@ -8112,13 +8120,16 @@ PANAS_XN_Total_62SF_Wide$ID <- 1:nrow(PANAS_XN_Total_62SF_Wide)
 # Reshape data from wide to long format
 PANAS_XN_Total_62SF_Long <- melt(PANAS_XN_Total_62SF_Wide, id.vars = c("ID", "PANAS_NA_STDZ"), variable.name = "MEAQ", value.name = "MEAQ_Score_STDZ")
   
-ggplot(PANAS_XN_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = PANAS_NA_STDZ, color = factor(MEAQ))) +
+p5 <- ggplot(PANAS_XN_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = PANAS_NA_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
-  labs(x = "MEAQ Total Score (Standardized)", y = "PANAS-X Negative Affect Total Score (Standardized)") + 
-  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) 
+  labs(x = "MEAQ Total Score ", y = "PANAS-X Negative Affect Total Score ") + 
+  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
+  xlim(-4, 4)
+
+#ggsave("panasxncor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
@@ -8528,7 +8539,7 @@ PANAS_SFP_Validation$MEAQGA_DE <- PANAS_SFP_Validation$MEAQ_12 + PANAS_SFP_Valid
 
 PANAS_SFP_Validation$MEAQGA_DE_R <- PANAS_SFP_Validation$MEAQ_12_r + PANAS_SFP_Validation$MEAQ_37_r + PANAS_SFP_Validation$MEAQ_43_r + PANAS_SFP_Validation$MEAQ_57_r + PANAS_SFP_Validation$MEAQ_62_r
 
-PANAS_SFP_Validation$MEAQGA_Total <- PANAS_SFP_Validation$MEAQGA_BA + PANAS_SFP_Validation$MEAQGA_DA + PANAS_SFP_Validation$MEAQGA_PR + PANAS_SFP_Validation$MEAQGA_DS + PANAS_SFP_Validation$MEAQGA_RD + PANAS_SFP_Validation$MEAQGA_DE_R
+PANAS_SFP_Validation$MEAQGA_Total <- PANAS_SFP_Validation$MEAQGA_BA + PANAS_SFP_Validation$MEAQGA_DA + PANAS_SFP_Validation$MEAQGA_PR + PANAS_SFP_Validation$MEAQGA_DS + PANAS_SFP_Validation$MEAQGA_RD + PANAS_SFP_Validation$MEAQGA_DE
 # =========================
 
 # BEAQ ==================== 
@@ -8606,13 +8617,16 @@ PANAS_SFP_Total_62SF_Wide$ID <- 1:nrow(PANAS_SFP_Total_62SF_Wide)
 # Reshape data from wide to long format
 PANAS_SFP_Total_62SF_Long <- melt(PANAS_SFP_Total_62SF_Wide, id.vars = c("ID", "PANAS_PA_STDZ"), variable.name = "MEAQ", value.name = "MEAQ_Score_STDZ")
   
-ggplot(PANAS_SFP_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = PANAS_PA_STDZ, color = factor(MEAQ))) +
+p6 <- ggplot(PANAS_SFP_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = PANAS_PA_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
-  labs(x = "MEAQ Total Score (Standardized)", y = "PANAS-SF Positive Affect Total Score (Standardized)") + 
-  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) 
+  labs(x = "MEAQ Total Score ", y = "PANAS-SF Positive Affect Total Score ") + 
+  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
+  xlim(-4, 4)
+
+# ggsave("panassfpcor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
@@ -8905,7 +8919,7 @@ PANAS_XP_Validation$MEAQGA_DE <- PANAS_XP_Validation$MEAQ_12 + PANAS_XP_Validati
 
 PANAS_XP_Validation$MEAQGA_DE_R <- PANAS_XP_Validation$MEAQ_12_r + PANAS_XP_Validation$MEAQ_37_r + PANAS_XP_Validation$MEAQ_43_r + PANAS_XP_Validation$MEAQ_57_r + PANAS_XP_Validation$MEAQ_62_r
 
-PANAS_XP_Validation$MEAQGA_Total <- PANAS_XP_Validation$MEAQGA_BA + PANAS_XP_Validation$MEAQGA_DA + PANAS_XP_Validation$MEAQGA_PR + PANAS_XP_Validation$MEAQGA_DS + PANAS_XP_Validation$MEAQGA_RD + PANAS_XP_Validation$MEAQGA_DE_R
+PANAS_XP_Validation$MEAQGA_Total <- PANAS_XP_Validation$MEAQGA_BA + PANAS_XP_Validation$MEAQGA_DA + PANAS_XP_Validation$MEAQGA_PR + PANAS_XP_Validation$MEAQGA_DS + PANAS_XP_Validation$MEAQGA_RD + PANAS_XP_Validation$MEAQGA_DE
 
 # =========================
 
@@ -8984,13 +8998,16 @@ PANAS_XP_Total_62SF_Wide$ID <- 1:nrow(PANAS_XP_Total_62SF_Wide)
 # Reshape data from wide to long format
 PANAS_XP_Total_62SF_Long <- melt(PANAS_XP_Total_62SF_Wide, id.vars = c("ID", "PANAS_PA_STDZ"), variable.name = "MEAQ", value.name = "MEAQ_Score_STDZ")
   
-ggplot(PANAS_XP_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = PANAS_PA_STDZ, color = factor(MEAQ))) +
+p7 <- ggplot(PANAS_XP_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = PANAS_PA_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
-  labs(x = "MEAQ Total Score (Standardized)", y = "PANAS-X Positive Affect Total Score (Standardized)") + 
-  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) 
+  labs(x = "MEAQ Total Score ", y = "PANAS-X Positive Affect Total Score ") + 
+  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
+  xlim(-4, 4)
+
+#ggsave("panasxpcor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
@@ -9360,7 +9377,7 @@ SWLS_Validation$MEAQGA_DE <- SWLS_Validation$MEAQ_12 + SWLS_Validation$MEAQ_37 +
 
 SWLS_Validation$MEAQGA_DE_R <- SWLS_Validation$MEAQ_12_r + SWLS_Validation$MEAQ_37_r + SWLS_Validation$MEAQ_43_r + SWLS_Validation$MEAQ_57_r + SWLS_Validation$MEAQ_62_r
 
-SWLS_Validation$MEAQGA_Total <- SWLS_Validation$MEAQGA_BA + SWLS_Validation$MEAQGA_DA + SWLS_Validation$MEAQGA_PR + SWLS_Validation$MEAQGA_DS + SWLS_Validation$MEAQGA_RD + SWLS_Validation$MEAQGA_DE_R
+SWLS_Validation$MEAQGA_Total <- SWLS_Validation$MEAQGA_BA + SWLS_Validation$MEAQGA_DA + SWLS_Validation$MEAQGA_PR + SWLS_Validation$MEAQGA_DS + SWLS_Validation$MEAQGA_RD + SWLS_Validation$MEAQGA_DE
 
 # =========================
 
@@ -9438,13 +9455,16 @@ SWLS_Total_62SF_Wide$ID <- 1:nrow(SWLS_Total_62SF_Wide)
 # Reshape data from wide to long format
 SWLS_Total_62SF_Long <- melt(SWLS_Total_62SF_Wide, id.vars = c("ID", "SWLS_STDZ"), variable.name = "MEAQ", value.name = "MEAQ_Score_STDZ")
   
-ggplot(SWLS_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = SWLS_STDZ, color = factor(MEAQ))) +
+p8 <- ggplot(SWLS_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = SWLS_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
-  labs(x = "MEAQ Total Score (Standardized)", y = "SWLS Total Score (Standardized)") + 
-  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) 
+  labs(x = "MEAQ Total Score ", y = "SWLS Total Score ") + 
+  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
+  xlim(-4,4)
+
+# ggsave("swlscor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
@@ -9746,7 +9766,7 @@ IDASGD_Validation$MEAQGA_DE <- IDASGD_Validation$MEAQ_12 + IDASGD_Validation$MEA
 
 IDASGD_Validation$MEAQGA_DE_R <- IDASGD_Validation$MEAQ_12_r + IDASGD_Validation$MEAQ_37_r + IDASGD_Validation$MEAQ_43_r + IDASGD_Validation$MEAQ_57_r + IDASGD_Validation$MEAQ_62_r
 
-IDASGD_Validation$MEAQGA_Total <- IDASGD_Validation$MEAQGA_BA + IDASGD_Validation$MEAQGA_DA + IDASGD_Validation$MEAQGA_PR + IDASGD_Validation$MEAQGA_DS + IDASGD_Validation$MEAQGA_RD + IDASGD_Validation$MEAQGA_DE_R
+IDASGD_Validation$MEAQGA_Total <- IDASGD_Validation$MEAQGA_BA + IDASGD_Validation$MEAQGA_DA + IDASGD_Validation$MEAQGA_PR + IDASGD_Validation$MEAQGA_DS + IDASGD_Validation$MEAQGA_RD + IDASGD_Validation$MEAQGA_DE
 
 # =========================
 
@@ -9825,13 +9845,16 @@ IDASGD_Total_62SF_Wide$ID <- 1:nrow(IDASGD_Total_62SF_Wide)
 # Reshape data from wide to long format
 IDASGD_Total_62SF_Long <- melt(IDASGD_Total_62SF_Wide, id.vars = c("ID", "IDASGD_STDZ"), variable.name = "MEAQ", value.name = "MEAQ_Score_STDZ")
   
-ggplot(IDASGD_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = IDASGD_STDZ, color = factor(MEAQ))) +
+p9 <- ggplot(IDASGD_Total_62SF_Long, aes(x = MEAQ_Score_STDZ, y = IDASGD_STDZ, color = factor(MEAQ))) +
   geom_point(alpha = 0.2) +
   geom_smooth(method = "lm", se = F, na.rm=T) +
   theme_minimal() +
   theme(axis.line = element_line(color = "grey70")) + 
-  labs(x = "MEAQ Total Score (Standardized)", y = "IDASGD Total Score (Standardized)") + 
-  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) 
+  labs(x = "MEAQ Total Score ", y = "IDASGD Total Score ") + 
+  scale_color_manual(name = "MEAQ Scale", values = c("#332288", "#CC6677", "#DDCC77", "#117733", "#88CCEE"), labels = c("MEAQ-62 (Full Form)", "MEAQ-GA (Short Form)", "BEAQ (Short Form)", "MEAQ-SF (Short Form)", "MEAQ-BF (Short Form)")) + 
+  xlim(-4,4)
+
+#ggsave("idasgdcor.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r}
@@ -9898,5 +9921,50 @@ HISP/TOTAL
 NHPI/TOTAL
 ```
 
- 
+```{r, warning=FALSE}
+library(grid)
+grid_arrange_shared_legend <-
+  function(...,
+           ncol = length(list(...)),
+           nrow = 1,
+           position = c("bottom", "right")) {
+    
+    plots <- list(...)
+    position <- match.arg(position)
+    g <-
+      ggplotGrob(plots[[1]] + theme(legend.position = position))$grobs
+    legend <- g[[which(sapply(g, function(x)
+      x$name) == "guide-box")]]
+    lheight <- sum(legend$height)
+    lwidth <- sum(legend$width)
+    gl <- lapply(plots, function(x)
+      x + theme(legend.position = "none"))
+    gl <- c(gl, ncol = ncol, nrow = nrow)
+    
+    combined <- switch(
+      position,
+      "bottom" = arrangeGrob(
+        do.call(arrangeGrob, gl),
+        legend,
+        ncol = 1,
+        heights = unit.c(unit(1, "npc") - lheight, lheight)
+      ),
+      "right" = arrangeGrob(
+        do.call(arrangeGrob, gl),
+        legend,
+        ncol = 2,
+        widths = unit.c(unit(1, "npc") - lwidth, lwidth)
+      )
+    )
+    
+    grid.newpage()
+    grid.draw(combined)
+    
+    # return gtable invisibly
+    invisible(combined)
+    
+  }
 
+grobby <- grid_arrange_shared_legend(p1, p2, p3, p4, p5, p6, p7, p8, p9, ncol=3, nrow=3)
+ggsave("grobs.png", grobby, width = 30, height = 15, units = "in", limitsize=FALSE)
+```
