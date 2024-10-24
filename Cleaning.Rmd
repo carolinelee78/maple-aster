@@ -71,6 +71,7 @@ lapply(c("ggstatsplot"),pkgTest)
 lapply(c("latex2exp"),pkgTest)
 remove.packages("ltm")
 install.packages("ltm")
+lapply(c("pheatmap"),pkgTest)
 library(ltm)
 library(expm)
 library(data.table)
@@ -98,6 +99,7 @@ library(ggridges)
 library(reshape2)
 library(ggstatsplot)
 library(latex2exp)
+library(pheatmap)
 
 # install.packages("devtools")
 devtools::install_github("MateusPsi/esemComp", build_vignettes = TRUE)
@@ -9970,5 +9972,59 @@ ggsave("grobs3.png", grobby3, width = 30, height = 15, units = "in", limitsize=F
 
 ```{r}
 grid_arrange_shared_legend(p6, p7, p8, p9, ncol=2, nrow=2)
+```
+
+# =======================================================
+
+```{r}
+load("MEAQSF_MMAS.RData")
+
+run1_df <- run1[["log"]][,3:6]
+
+# order by fatalities and generate air_order value
+run1_df <- run1_df[order(run1_df$pheromone, decreasing = TRUE),]
+
+run1_df$row_id <- seq_len(nrow(run1_df))
+
+run1_df_long <- melt(setDT(run1_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run1_pheromone <- run1_df[,c(1,5)]
+
+ggplot(run1_pheromone, aes(x = 1, y = row_id, fill = pheromone)) +
+  scale_fill_distiller(palette = "YlGn", direction = 1) +
+  geom_tile() + 
+  theme_minimal() +
+  theme( axis.text.x=element_blank(),
+         axis.text.y=element_blank())
+
+run1_rmsea <- run1_df[,c(2,5)]
+
+ggplot(run1_rmsea, aes(x = 1, y = row_id, fill = rmsea)) +
+  scale_fill_distiller(palette = "RdPu", direction = 1) +
+  geom_tile() + 
+  theme_minimal() +
+  theme( axis.text.x=element_blank(),
+         axis.text.y=element_blank())
+
+run1_srmr <- run1_df[,c(3,5)]
+
+ggplot(run1_srmr, aes(x = 1, y = row_id, fill = srmr)) +
+  scale_fill_distiller(palette = "GnBu", direction = 1) +
+  geom_tile() + 
+  theme_minimal() +
+  theme( axis.text.x=element_blank(),
+         axis.text.y=element_blank())
+
+run1_crel <- run1_df[,c(4,5)]
+
+ggplot(run1_crel, aes(x = 1, y = row_id, fill = crel)) +
+  scale_fill_distiller(palette = "OrRd", direction = 1) +
+  geom_tile() + 
+  theme_minimal() +
+  theme( axis.text.x=element_blank(),
+         axis.text.y=element_blank())
+
+
+
 ```
 
