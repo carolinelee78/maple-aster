@@ -9979,14 +9979,144 @@ grid_arrange_shared_legend(p6, p7, p8, p9, ncol=2, nrow=2)
 ```{r}
 load("MEAQSF_MMAS.RData")
 
+# run 1 wide to long 
+
 run1_df <- run1[["log"]][,3:6]
 
-# order by fatalities and generate air_order value
 run1_df <- run1_df[order(run1_df$pheromone, decreasing = TRUE),]
 
 run1_df$row_id <- seq_len(nrow(run1_df))
 
 run1_df_long <- melt(setDT(run1_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run1_df_long$run <- rep(1, 190400)
+
+# run 2 wide to long 
+
+run2_df <- run2[["log"]][,3:6]
+
+run2_df <- run2_df[order(run2_df$pheromone, decreasing = TRUE),]
+
+run2_df$row_id <- seq_len(nrow(run2_df))
+
+run2_df_long <- melt(setDT(run2_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run2_df_long$run <- rep(2, 184000)
+
+# run 3 wide to long 
+
+run3_df <- run3[["log"]][,3:6]
+
+run3_df <- run3_df[order(run3_df$pheromone, decreasing = TRUE),]
+
+run3_df$row_id <- seq_len(nrow(run3_df))
+
+run3_df_long <- melt(setDT(run3_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run3_df_long$run <- rep(3, 176800)
+
+# run 4 wide to long 
+
+run4_df <- run4[["log"]][,3:6]
+
+run4_df <- run4_df[order(run4_df$pheromone, decreasing = TRUE),]
+
+run4_df$row_id <- seq_len(nrow(run4_df))
+
+run4_df_long <- melt(setDT(run4_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run4_df_long$run <- rep(4, 160800)
+
+# run 5 wide to long 
+
+run5_df <- run5[["log"]][,3:6]
+
+run5_df <- run5_df[order(run5_df$pheromone, decreasing = TRUE),]
+
+run5_df$row_id <- seq_len(nrow(run5_df))
+
+run5_df_long <- melt(setDT(run5_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run5_df_long$run <- rep(5, 174400)
+
+# run 6 wide to long 
+
+run6_df <- run6[["log"]][,3:6]
+
+run6_df <- run6_df[order(run6_df$pheromone, decreasing = TRUE),]
+
+run6_df$row_id <- seq_len(nrow(run6_df))
+
+run6_df_long <- melt(setDT(run6_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run6_df_long$run <- rep(6, 182400)
+
+# run 7 wide to long 
+
+run7_df <- run7[["log"]][,3:6]
+
+run7_df <- run7_df[order(run7_df$pheromone, decreasing = TRUE),]
+
+run7_df$row_id <- seq_len(nrow(run7_df))
+
+run7_df_long <- melt(setDT(run7_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run7_df_long$run <- rep(7, 162400)
+
+# run 8 wide to long 
+
+run8_df <- run8[["log"]][,3:6]
+
+run8_df <- run8_df[order(run8_df$pheromone, decreasing = TRUE),]
+
+run8_df$row_id <- seq_len(nrow(run8_df))
+
+run8_df_long <- melt(setDT(run8_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run8_df_long$run <- rep(8, 169600)
+
+# run 9 wide to long 
+
+run9_df <- run9[["log"]][,3:6]
+
+run9_df <- run9_df[order(run9_df$pheromone, decreasing = TRUE),]
+
+run9_df$row_id <- seq_len(nrow(run9_df))
+
+run9_df_long <- melt(setDT(run9_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run9_df_long$run <- rep(9, 185600)
+
+# run 10 wide to long 
+
+run10_df <- run10[["log"]][,3:6]
+
+run10_df <- run10_df[order(run10_df$pheromone, decreasing = TRUE),]
+
+run10_df$row_id <- seq_len(nrow(run10_df))
+
+run10_df_long <- melt(setDT(run10_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+
+run10_df_long$run <- rep(10, 167200)
+
+# rbind long dfs 
+
+total_df_long <- rbind(run1_df_long, run2_df_long, run3_df_long, run4_df_long, run5_df_long, run6_df_long, run7_df_long, run8_df_long, run9_df_long, run10_df_long)
+
+# subset long df 
+
+total_df_long$fitmeasure <- factor(total_df_long$fitmeasure, levels = c("pheromone", "rmsea", "srmr", "crel"))
+
+d1 <- total_df_long %>%
+  subset(row_id, fitmeasure, value) %>%
+  mutate(name = "pheromone",
+         name = factor(name, levels = c("")))
+
+# create graph
+
+geom_raster(data = filter(total_df_long, fitmeasure))
+
+# draft =============================
 
 run1_pheromone <- run1_df[,c(1,5)]
 
