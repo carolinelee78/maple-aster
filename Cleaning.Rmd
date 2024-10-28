@@ -72,6 +72,7 @@ lapply(c("latex2exp"),pkgTest)
 remove.packages("ltm")
 install.packages("ltm")
 lapply(c("pheatmap"),pkgTest)
+lapply(c("ggnewscale"),pkgTest)
 library(ltm)
 library(expm)
 library(data.table)
@@ -100,6 +101,7 @@ library(reshape2)
 library(ggstatsplot)
 library(latex2exp)
 library(pheatmap)
+library(ggnewscale)
 
 # install.packages("devtools")
 devtools::install_github("MateusPsi/esemComp", build_vignettes = TRUE)
@@ -9987,10 +9989,6 @@ run1_df <- run1_df[order(run1_df$pheromone, decreasing = TRUE),]
 
 run1_df$row_id <- seq_len(nrow(run1_df))
 
-run1_df_long <- melt(setDT(run1_df), id.vars = c("row_id"), variable.name = "fitmeasure")
-
-run1_df_long$run <- rep(1, 190400)
-
 # run 2 wide to long 
 
 run2_df <- run2[["log"]][,3:6]
@@ -9998,10 +9996,6 @@ run2_df <- run2[["log"]][,3:6]
 run2_df <- run2_df[order(run2_df$pheromone, decreasing = TRUE),]
 
 run2_df$row_id <- seq_len(nrow(run2_df))
-
-run2_df_long <- melt(setDT(run2_df), id.vars = c("row_id"), variable.name = "fitmeasure")
-
-run2_df_long$run <- rep(2, 184000)
 
 # run 3 wide to long 
 
@@ -10011,10 +10005,6 @@ run3_df <- run3_df[order(run3_df$pheromone, decreasing = TRUE),]
 
 run3_df$row_id <- seq_len(nrow(run3_df))
 
-run3_df_long <- melt(setDT(run3_df), id.vars = c("row_id"), variable.name = "fitmeasure")
-
-run3_df_long$run <- rep(3, 176800)
-
 # run 4 wide to long 
 
 run4_df <- run4[["log"]][,3:6]
@@ -10022,10 +10012,6 @@ run4_df <- run4[["log"]][,3:6]
 run4_df <- run4_df[order(run4_df$pheromone, decreasing = TRUE),]
 
 run4_df$row_id <- seq_len(nrow(run4_df))
-
-run4_df_long <- melt(setDT(run4_df), id.vars = c("row_id"), variable.name = "fitmeasure")
-
-run4_df_long$run <- rep(4, 160800)
 
 # run 5 wide to long 
 
@@ -10035,10 +10021,6 @@ run5_df <- run5_df[order(run5_df$pheromone, decreasing = TRUE),]
 
 run5_df$row_id <- seq_len(nrow(run5_df))
 
-run5_df_long <- melt(setDT(run5_df), id.vars = c("row_id"), variable.name = "fitmeasure")
-
-run5_df_long$run <- rep(5, 174400)
-
 # run 6 wide to long 
 
 run6_df <- run6[["log"]][,3:6]
@@ -10046,10 +10028,6 @@ run6_df <- run6[["log"]][,3:6]
 run6_df <- run6_df[order(run6_df$pheromone, decreasing = TRUE),]
 
 run6_df$row_id <- seq_len(nrow(run6_df))
-
-run6_df_long <- melt(setDT(run6_df), id.vars = c("row_id"), variable.name = "fitmeasure")
-
-run6_df_long$run <- rep(6, 182400)
 
 # run 7 wide to long 
 
@@ -10059,10 +10037,6 @@ run7_df <- run7_df[order(run7_df$pheromone, decreasing = TRUE),]
 
 run7_df$row_id <- seq_len(nrow(run7_df))
 
-run7_df_long <- melt(setDT(run7_df), id.vars = c("row_id"), variable.name = "fitmeasure")
-
-run7_df_long$run <- rep(7, 162400)
-
 # run 8 wide to long 
 
 run8_df <- run8[["log"]][,3:6]
@@ -10070,10 +10044,6 @@ run8_df <- run8[["log"]][,3:6]
 run8_df <- run8_df[order(run8_df$pheromone, decreasing = TRUE),]
 
 run8_df$row_id <- seq_len(nrow(run8_df))
-
-run8_df_long <- melt(setDT(run8_df), id.vars = c("row_id"), variable.name = "fitmeasure")
-
-run8_df_long$run <- rep(8, 169600)
 
 # run 9 wide to long 
 
@@ -10083,10 +10053,6 @@ run9_df <- run9_df[order(run9_df$pheromone, decreasing = TRUE),]
 
 run9_df$row_id <- seq_len(nrow(run9_df))
 
-run9_df_long <- melt(setDT(run9_df), id.vars = c("row_id"), variable.name = "fitmeasure")
-
-run9_df_long$run <- rep(9, 185600)
-
 # run 10 wide to long 
 
 run10_df <- run10[["log"]][,3:6]
@@ -10094,67 +10060,48 @@ run10_df <- run10[["log"]][,3:6]
 run10_df <- run10_df[order(run10_df$pheromone, decreasing = TRUE),]
 
 run10_df$row_id <- seq_len(nrow(run10_df))
+```
 
-run10_df_long <- melt(setDT(run10_df), id.vars = c("row_id"), variable.name = "fitmeasure")
+```{r}
+total_df <- rbind(run1_df, run2_df, run3_df, run4_df, run5_df, run6_df, run7_df, run8_df, run9_df, run10_df)
 
-run10_df_long$run <- rep(10, 167200)
+total_df <- total_df[order(total_df$pheromone),]
 
-# rbind long dfs 
-
-total_df_long <- rbind(run1_df_long, run2_df_long, run3_df_long, run4_df_long, run5_df_long, run6_df_long, run7_df_long, run8_df_long, run9_df_long, run10_df_long)
-
-# subset long df 
+total_df_long <- melt(setDT(total_df), id.vars = c("row_id"), variable.name = "fitmeasure")
 
 total_df_long$fitmeasure <- factor(total_df_long$fitmeasure, levels = c("pheromone", "rmsea", "srmr", "crel"))
 
-d1 <- total_df_long %>%
-  subset(row_id, fitmeasure, value) %>%
-  mutate(name = "pheromone",
-         name = factor(name, levels = c("")))
+d1 <- total_df_long %>% 
+  filter(fitmeasure == "pheromone")
 
-# create graph
+d2 <- total_df_long %>% 
+  filter(fitmeasure == "rmsea")
 
-geom_raster(data = filter(total_df_long, fitmeasure))
+d3 <- total_df_long %>% 
+  filter(fitmeasure == "srmr")
 
-# draft =============================
+d4 <- total_df_long %>% 
+  filter(fitmeasure == "crel")
 
-run1_pheromone <- run1_df[,c(1,5)]
-
-ggplot(run1_pheromone, aes(x = 1, y = row_id, fill = pheromone)) +
-  scale_fill_distiller(palette = "YlGn", direction = 1) +
-  geom_tile() + 
-  theme_minimal() +
-  theme( axis.text.x=element_blank(),
-         axis.text.y=element_blank())
-
-run1_rmsea <- run1_df[,c(2,5)]
-
-ggplot(run1_rmsea, aes(x = 1, y = row_id, fill = rmsea)) +
-  scale_fill_distiller(palette = "RdPu", direction = 1) +
-  geom_tile() + 
-  theme_minimal() +
-  theme( axis.text.x=element_blank(),
-         axis.text.y=element_blank())
-
-run1_srmr <- run1_df[,c(3,5)]
-
-ggplot(run1_srmr, aes(x = 1, y = row_id, fill = srmr)) +
-  scale_fill_distiller(palette = "GnBu", direction = 1) +
-  geom_tile() + 
-  theme_minimal() +
-  theme( axis.text.x=element_blank(),
-         axis.text.y=element_blank())
-
-run1_crel <- run1_df[,c(4,5)]
-
-ggplot(run1_crel, aes(x = 1, y = row_id, fill = crel)) +
-  scale_fill_distiller(palette = "OrRd", direction = 1) +
-  geom_tile() + 
-  theme_minimal() +
-  theme( axis.text.x=element_blank(),
-         axis.text.y=element_blank())
-
-
-
+ggplot(mapping = aes(x = fitmeasure, y = row_id)) +
+  geom_tile(data = d1, aes(fill = value)) +
+  scale_fill_distiller(palette = "YlGn", direction = 1, guide = guide_colorbar(title.position = "top"), name = "pheromone") + 
+  ggnewscale::new_scale_fill() +
+  geom_tile(data = d2, aes(fill = value)) +
+  scale_fill_distiller(palette = "RdPu", direction = 1, guide = guide_colorbar(title.position = "top"), name = "rmsea") +
+  ggnewscale::new_scale_fill() +
+  geom_tile(data = d3, aes(fill = value)) +
+  scale_fill_distiller(palette = "GnBu", direction = 1, guide = guide_colorbar(title.position = "top"), name = "srmr") +
+  ggnewscale::new_scale_fill() +
+  geom_tile(data = d4, aes(fill = value)) +
+  scale_fill_distiller(palette = "OrRd", direction = 1, guide = guide_colorbar(title.position = "top"), name = "crel") +
+  theme_classic() +
+  theme(strip.text = element_blank(),
+        legend.position = "right",
+        axis.ticks = element_blank(),
+        axis.line = element_blank(),
+        axis.text.y = element_blank()) +
+  labs(x = NULL, y = NULL) 
 ```
+
 
