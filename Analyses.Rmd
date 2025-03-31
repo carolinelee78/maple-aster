@@ -10119,7 +10119,7 @@ rcorr(as.matrix(WBSI_Validation2),type="pearson")
 cor.test(WBSI_Validation$MEAQ62_Total, WBSI_Validation$MEAQGA_Total)
 
 require(cocor) # load package
-cocor.dep.groups.overlap(r.jk=+0.53, r.jh=+0.55, r.kh=+0.97, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+meng1 <- cocor.dep.groups.overlap(r.jk=+0.53, r.jh=+0.55, r.kh=+0.97, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 OUTPUT:
@@ -10189,7 +10189,7 @@ cor.test(WBSI_Validation$BEAQ, WBSI_Validation$wbsi)
 cor.test(WBSI_Validation$MEAQ62_Total, WBSI_Validation$BEAQ)
 
 require(cocor) # load package
-cocor.dep.groups.overlap(r.jk=+0.53, r.jh=+0.55, r.kh=+0.88, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+meng2 <- cocor.dep.groups.overlap(r.jk=+0.53, r.jh=+0.55, r.kh=+0.88, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 OUTPUT:
@@ -10259,7 +10259,7 @@ rcorr(as.matrix(WBSI_Validation3),type="pearson")
 cor.test(WBSI_Validation$MEAQ62_Total, WBSI_Validation$MEAQSF_Total)
 
 require(cocor) # load package
-cocor.dep.groups.overlap(r.jk=+0.53, r.jh=+0.52, r.kh=+0.96, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+meng3 <- cocor.dep.groups.overlap(r.jk=+0.53, r.jh=+0.52, r.kh=+0.96, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 OUTPUT:
@@ -10314,5 +10314,509 @@ Null hypothesis retained
 zou2007: Zou's (2007) confidence interval
 95% confidence interval for r.jk - r.jh: -0.0144 0.0350
 Null hypothesis retained (Interval includes 0)
+
+```{r}
+# r MEAQ-62,WBSI vs. r MEAQ-BF,WBSI
+## j = WBSI, k = MEAQ-62, h = MEAQ-BF, n = 399
+
+### r.jk = .53 
+rcorr(as.matrix(WBSI_Validation1),type="pearson") 
+ 
+### r.jk = .46
+rcorr(as.matrix(WBSI_Validation4),type="pearson") 
+
+### r.kh = .90
+cor.test(WBSI_Validation$MEAQ62_Total, WBSI_Validation$MEAQBF_Total)
+
+require(cocor) # load package
+meng4 <- cocor.dep.groups.overlap(r.jk=+0.53, r.jh=+0.46, r.kh=+0.90, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+```
+
+OUTPUT:
+Results of a comparison of two overlapping correlations based on dependent groups
+
+Comparison between r.jk = 0.53 and r.jh = 0.46
+Difference: r.jk - r.jh = 0.07
+Related correlation: r.kh = 0.9
+Group size: n = 399
+Null hypothesis: r.jk is equal to r.jh
+Alternative hypothesis: r.jk is not equal to r.jh (two-sided)
+Alpha: 0.05
+
+pearson1898: Pearson and Filon's z (1898)
+z = 3.5932, p-value = 0.0003
+Null hypothesis rejected
+
+hotelling1940: Hotelling's t (1940)
+t = 3.6770, df = 396, p-value = 0.0003
+Null hypothesis rejected
+
+williams1959: Williams' t (1959)
+t = 3.6754, df = 396, p-value = 0.0003
+Null hypothesis rejected
+
+olkin1967: Olkin's z (1967)
+z = 3.5932, p-value = 0.0003
+Null hypothesis rejected
+
+dunn1969: Dunn and Clark's z (1969)
+z = 3.6326, p-value = 0.0003
+Null hypothesis rejected
+
+hendrickson1970: Hendrickson, Stanley, and Hills' (1970) modification of Williams' t (1959)
+t = 3.6770, df = 396, p-value = 0.0003
+Null hypothesis rejected
+
+steiger1980: Steiger's (1980) modification of Dunn and Clark's z (1969) using average correlations
+z = 3.6187, p-value = 0.0003
+Null hypothesis rejected
+
+meng1992: Meng, Rosenthal, and Rubin's z (1992)
+z = 3.6160, p-value = 0.0003
+Null hypothesis rejected
+95% confidence interval for r.jk - r.jh: 0.0425 0.1432
+Null hypothesis rejected (Interval does not include 0)
+
+hittner2003: Hittner, May, and Silver's (2003) modification of Dunn and Clark's z (1969) using a backtransformed average Fisher's (1921) Z procedure
+z = 3.6170, p-value = 0.0003
+Null hypothesis rejected
+
+zou2007: Zou's (2007) confidence interval
+95% confidence interval for r.jk - r.jh: 0.0322 0.1100
+Null hypothesis rejected (Interval does not include 0)
+
+```{r}
+# r MEAQ-62,BFI2N vs. r MEAQ-GA,BFI2N
+## j = BFI2N, k = MEAQ-62, h = MEAQ-GA, n = 1306
+
+### r.jk = .43
+rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
+ 
+### r.jk = .41
+rcorr(as.matrix(BFI2N_Validation2),type="pearson") 
+
+### r.kh = .98
+cor.test(BFI2N_Validation$MEAQ62_Total, BFI2N_Validation$MEAQGA_Total)
+
+require(cocor) # load package
+meng5 <- cocor.dep.groups.overlap(r.jk=+0.43, r.jh=+0.41, r.kh=+0.98, n=1306, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+```
+
+OUTPUT:
+Results of a comparison of two overlapping correlations based on dependent groups
+
+Comparison between r.jk = 0.43 and r.jh = 0.41
+Difference: r.jk - r.jh = 0.02
+Related correlation: r.kh = 0.98
+Group size: n = 1306
+Null hypothesis: r.jk is equal to r.jh
+Alternative hypothesis: r.jk is not equal to r.jh (two-sided)
+Alpha: 0.05
+
+pearson1898: Pearson and Filon's z (1898)
+z = 3.9743, p-value = 0.0001
+Null hypothesis rejected
+
+hotelling1940: Hotelling's t (1940)
+t = 4.0063, df = 1303, p-value = 0.0001
+Null hypothesis rejected
+
+williams1959: Williams' t (1959)
+t = 4.0063, df = 1303, p-value = 0.0001
+Null hypothesis rejected
+
+olkin1967: Olkin's z (1967)
+z = 3.9743, p-value = 0.0001
+Null hypothesis rejected
+
+dunn1969: Dunn and Clark's z (1969)
+z = 3.9864, p-value = 0.0001
+Null hypothesis rejected
+
+hendrickson1970: Hendrickson, Stanley, and Hills' (1970) modification of Williams' t (1959)
+t = 4.0063, df = 1303, p-value = 0.0001
+Null hypothesis rejected
+
+steiger1980: Steiger's (1980) modification of Dunn and Clark's z (1969) using average correlations
+z = 3.9821, p-value = 0.0001
+Null hypothesis rejected
+
+meng1992: Meng, Rosenthal, and Rubin's z (1992)
+z = 3.9819, p-value = 0.0001
+Null hypothesis rejected
+95% confidence interval for r.jk - r.jh: 0.0123 0.0362
+Null hypothesis rejected (Interval does not include 0)
+
+hittner2003: Hittner, May, and Silver's (2003) modification of Dunn and Clark's z (1969) using a backtransformed average Fisher's (1921) Z procedure
+z = 3.9820, p-value = 0.0001
+Null hypothesis rejected
+
+zou2007: Zou's (2007) confidence interval
+95% confidence interval for r.jk - r.jh: 0.0101 0.0303
+Null hypothesis rejected (Interval does not include 0)
+
+```{r}
+# r MEAQ-62,BFI2N vs. r BEAQ,BFI2N
+## j = BFI2N, k = MEAQ-62, h = BEAQ, n = 1306
+
+### r.jk = .43
+rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
+ 
+### r.jk = .37
+cor.test(BFI2N_Validation$BEAQ, BFI2N_Validation$BFI2_NE)
+
+### r.kh = .93
+cor.test(BFI2N_Validation$MEAQ62_Total, BFI2N_Validation$BEAQ)
+
+require(cocor) # load package
+meng6 <- cocor.dep.groups.overlap(r.jk=+0.43, r.jh=+0.37, r.kh=+0.93, n=1306, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+```
+
+OUTPUT:
+Results of a comparison of two overlapping correlations based on dependent groups
+
+Comparison between r.jk = 0.43 and r.jh = 0.37
+Difference: r.jk - r.jh = 0.06
+Related correlation: r.kh = 0.93
+Group size: n = 1306
+Null hypothesis: r.jk is equal to r.jh
+Alternative hypothesis: r.jk is not equal to r.jh (two-sided)
+Alpha: 0.05
+
+pearson1898: Pearson and Filon's z (1898)
+z = 6.3076, p-value = 0.0000
+Null hypothesis rejected
+
+hotelling1940: Hotelling's t (1940)
+t = 6.4376, df = 1303, p-value = 0.0000
+Null hypothesis rejected
+
+williams1959: Williams' t (1959)
+t = 6.4368, df = 1303, p-value = 0.0000
+Null hypothesis rejected
+
+olkin1967: Olkin's z (1967)
+z = 6.3076, p-value = 0.0000
+Null hypothesis rejected
+
+dunn1969: Dunn and Clark's z (1969)
+z = 6.3572, p-value = 0.0000
+Null hypothesis rejected
+
+hendrickson1970: Hendrickson, Stanley, and Hills' (1970) modification of Williams' t (1959)
+t = 6.4376, df = 1303, p-value = 0.0000
+Null hypothesis rejected
+
+steiger1980: Steiger's (1980) modification of Dunn and Clark's z (1969) using average correlations
+z = 6.3408, p-value = 0.0000
+Null hypothesis rejected
+
+meng1992: Meng, Rosenthal, and Rubin's z (1992)
+z = 6.3376, p-value = 0.0000
+Null hypothesis rejected
+95% confidence interval for r.jk - r.jh: 0.0494 0.0936
+Null hypothesis rejected (Interval does not include 0)
+
+hittner2003: Hittner, May, and Silver's (2003) modification of Dunn and Clark's z (1969) using a backtransformed average Fisher's (1921) Z procedure
+z = 6.3396, p-value = 0.0000
+Null hypothesis rejected
+
+zou2007: Zou's (2007) confidence interval
+95% confidence interval for r.jk - r.jh: 0.0415 0.0790
+Null hypothesis rejected (Interval does not include 0)
+
+```{r}
+# r MEAQ-62,BFI2N vs. r MEAQ-SF,BFI2N
+## j = BFI2N, k = MEAQ-62, h = MEAQ-SF, n = 1306
+
+### r.jk = .43
+rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
+ 
+### r.jk = .34
+rcorr(as.matrix(BFI2N_Validation3),type="pearson") 
+
+### r.kh = .89
+cor.test(BFI2N_Validation$MEAQ62_Total, BFI2N_Validation$MEAQSF_Total)
+
+require(cocor) # load package
+meng7 <- cocor.dep.groups.overlap(r.jk=+0.43, r.jh=+0.34, r.kh=+0.89, n=1306, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+```
+
+OUTPUT:
+Results of a comparison of two overlapping correlations based on dependent groups
+
+Comparison between r.jk = 0.43 and r.jh = 0.34
+Difference: r.jk - r.jh = 0.09
+Related correlation: r.kh = 0.89
+Group size: n = 1306
+Null hypothesis: r.jk is equal to r.jh
+Alternative hypothesis: r.jk is not equal to r.jh (two-sided)
+Alpha: 0.05
+
+pearson1898: Pearson and Filon's z (1898)
+z = 7.5032, p-value = 0.0000
+Null hypothesis rejected
+
+hotelling1940: Hotelling's t (1940)
+t = 7.7134, df = 1303, p-value = 0.0000
+Null hypothesis rejected
+
+williams1959: Williams' t (1959)
+t = 7.7112, df = 1303, p-value = 0.0000
+Null hypothesis rejected
+
+olkin1967: Olkin's z (1967)
+z = 7.5032, p-value = 0.0000
+Null hypothesis rejected
+
+dunn1969: Dunn and Clark's z (1969)
+z = 7.5781, p-value = 0.0000
+Null hypothesis rejected
+
+hendrickson1970: Hendrickson, Stanley, and Hills' (1970) modification of Williams' t (1959)
+t = 7.7134, df = 1303, p-value = 0.0000
+Null hypothesis rejected
+
+steiger1980: Steiger's (1980) modification of Dunn and Clark's z (1969) using average correlations
+z = 7.5512, p-value = 0.0000
+Null hypothesis rejected
+
+meng1992: Meng, Rosenthal, and Rubin's z (1992)
+z = 7.5428, p-value = 0.0000
+Null hypothesis rejected
+95% confidence interval for r.jk - r.jh: 0.0783 0.1333
+Null hypothesis rejected (Interval does not include 0)
+
+hittner2003: Hittner, May, and Silver's (2003) modification of Dunn and Clark's z (1969) using a backtransformed average Fisher's (1921) Z procedure
+z = 7.5482, p-value = 0.0000
+Null hypothesis rejected
+
+zou2007: Zou's (2007) confidence interval
+95% confidence interval for r.jk - r.jh: 0.0667 0.1138
+Null hypothesis rejected (Interval does not include 0)
+
+```{r}
+# r MEAQ-62,BFI2N vs. r MEAQ-BF,BFI2N
+## j = BFI2N, k = MEAQ-62, h = MEAQ-BF, n = 1306
+
+### r.jk = .43
+rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
+ 
+### r.jk = .41
+rcorr(as.matrix(BFI2N_Validation4),type="pearson") 
+
+### r.kh = .94
+cor.test(BFI2N_Validation$MEAQ62_Total, BFI2N_Validation$MEAQBF_Total)
+
+require(cocor) # load package
+meng8 <- cocor.dep.groups.overlap(r.jk=+0.43, r.jh=+0.41, r.kh=+0.94, n=1306, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+```
+
+OUTPUT:
+Results of a comparison of two overlapping correlations based on dependent groups
+
+Comparison between r.jk = 0.43 and r.jh = 0.41
+Difference: r.jk - r.jh = 0.02
+Related correlation: r.kh = 0.94
+Group size: n = 1306
+Null hypothesis: r.jk is equal to r.jh
+Alternative hypothesis: r.jk is not equal to r.jh (two-sided)
+Alpha: 0.05
+
+pearson1898: Pearson and Filon's z (1898)
+z = 2.3044, p-value = 0.0212
+Null hypothesis rejected
+
+hotelling1940: Hotelling's t (1940)
+t = 2.3088, df = 1303, p-value = 0.0211
+Null hypothesis rejected
+
+williams1959: Williams' t (1959)
+t = 2.3086, df = 1303, p-value = 0.0211
+Null hypothesis rejected
+
+olkin1967: Olkin's z (1967)
+z = 2.3044, p-value = 0.0212
+Null hypothesis rejected
+
+dunn1969: Dunn and Clark's z (1969)
+z = 2.3049, p-value = 0.0212
+Null hypothesis rejected
+
+hendrickson1970: Hendrickson, Stanley, and Hills' (1970) modification of Williams' t (1959)
+t = 2.3088, df = 1303, p-value = 0.0211
+Null hypothesis rejected
+
+steiger1980: Steiger's (1980) modification of Dunn and Clark's z (1969) using average correlations
+z = 2.3040, p-value = 0.0212
+Null hypothesis rejected
+
+meng1992: Meng, Rosenthal, and Rubin's z (1992)
+z = 2.3039, p-value = 0.0212
+Null hypothesis rejected
+95% confidence interval for r.jk - r.jh: 0.0036 0.0449
+Null hypothesis rejected (Interval does not include 0)
+
+hittner2003: Hittner, May, and Silver's (2003) modification of Dunn and Clark's z (1969) using a backtransformed average Fisher's (1921) Z procedure
+z = 2.3040, p-value = 0.0212
+Null hypothesis rejected
+
+zou2007: Zou's (2007) confidence interval
+95% confidence interval for r.jk - r.jh: 0.0030 0.0372
+Null hypothesis rejected (Interval does not include 0)
+
+```{r}
+# r MEAQ-62,BFASN vs. r MEAQ-GA,BFASN
+## j = BFASN, k = MEAQ-62, h = MEAQ-GA, n = 1164
+
+### r.jk = .55
+rcorr(as.matrix(BFAS_Validation1),type="pearson") 
+ 
+### r.jk = .56
+rcorr(as.matrix(BFAS_Validation2),type="pearson") 
+
+### r.kh = .98
+cor.test(BFAS_Validation$MEAQ62_Total, BFAS_Validation$MEAQGA_Total)
+
+require(cocor) # load package
+meng9 <- cocor.dep.groups.overlap(r.jk=+0.55, r.jh=+0.56, r.kh=+0.98, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+```
+
+OUTPUT:
+Results of a comparison of two overlapping correlations based on dependent groups
+
+Comparison between r.jk = 0.55 and r.jh = 0.56
+Difference: r.jk - r.jh = -0.01
+Related correlation: r.kh = 0.98
+Group size: n = 1164
+Null hypothesis: r.jk is equal to r.jh
+Alternative hypothesis: r.jk is not equal to r.jh (two-sided)
+Alpha: 0.05
+
+pearson1898: Pearson and Filon's z (1898)
+z = -2.0519, p-value = 0.0402
+Null hypothesis rejected
+
+hotelling1940: Hotelling's t (1940)
+t = -2.0564, df = 1161, p-value = 0.0400
+Null hypothesis rejected
+
+williams1959: Williams' t (1959)
+t = -2.0564, df = 1161, p-value = 0.0400
+Null hypothesis rejected
+
+olkin1967: Olkin's z (1967)
+z = -2.0519, p-value = 0.0402
+Null hypothesis rejected
+
+dunn1969: Dunn and Clark's z (1969)
+z = -2.0538, p-value = 0.0400
+Null hypothesis rejected
+
+hendrickson1970: Hendrickson, Stanley, and Hills' (1970) modification of Williams' t (1959)
+t = -2.0564, df = 1161, p-value = 0.0400
+Null hypothesis rejected
+
+steiger1980: Steiger's (1980) modification of Dunn and Clark's z (1969) using average correlations
+z = -2.0527, p-value = 0.0401
+Null hypothesis rejected
+
+meng1992: Meng, Rosenthal, and Rubin's z (1992)
+z = -2.0527, p-value = 0.0401
+Null hypothesis rejected
+95% confidence interval for r.jk - r.jh: -0.0283 -0.0007
+Null hypothesis rejected (Interval does not include 0)
+
+hittner2003: Hittner, May, and Silver's (2003) modification of Dunn and Clark's z (1969) using a backtransformed average Fisher's (1921) Z procedure
+z = -2.0527, p-value = 0.0401
+Null hypothesis rejected
+
+zou2007: Zou's (2007) confidence interval
+95% confidence interval for r.jk - r.jh: -0.0200 -0.0003
+Null hypothesis rejected (Interval does not include 0)
+
+```{r}
+# r MEAQ-62,BFASN vs. r BEAQ,BFASN
+## j = BFASN, k = MEAQ-62, h = BEAQ, n = 1164
+
+### r.jk = .55
+rcorr(as.matrix(BFAS_Validation1),type="pearson") 
+ 
+### r.jk = .44
+cor.test(BFAS_Validation$BFAS_N, BFAS_Validation$BEAQ)
+
+### r.kh = .93
+cor.test(BFAS_Validation$MEAQ62_Total, BFAS_Validation$BEAQ)
+
+require(cocor) # load package
+cocor.dep.groups.overlap(r.jk=+0.55, r.jh=+0.44, r.kh=+0.93, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+```
+
+OUTPUT:
+Results of a comparison of two overlapping correlations based on dependent groups
+
+Comparison between r.jk = 0.55 and r.jh = 0.44
+Difference: r.jk - r.jh = 0.11
+Related correlation: r.kh = 0.93
+Group size: n = 1164
+Null hypothesis: r.jk is equal to r.jh
+Alternative hypothesis: r.jk is not equal to r.jh (two-sided)
+Alpha: 0.05
+
+pearson1898: Pearson and Filon's z (1898)
+z = 11.2054, p-value = 0.0000
+Null hypothesis rejected
+
+hotelling1940: Hotelling's t (1940)
+t = 12.3335, df = 1161, p-value = 0.0000
+Null hypothesis rejected
+
+williams1959: Williams' t (1959)
+t = 12.3306, df = 1161, p-value = 0.0000
+Null hypothesis rejected
+
+olkin1967: Olkin's z (1967)
+z = 11.2054, p-value = 0.0000
+Null hypothesis rejected
+
+dunn1969: Dunn and Clark's z (1969)
+z = 11.7920, p-value = 0.0000
+Null hypothesis rejected
+
+hendrickson1970: Hendrickson, Stanley, and Hills' (1970) modification of Williams' t (1959)
+t = 12.3335, df = 1161, p-value = 0.0000
+Null hypothesis rejected
+
+steiger1980: Steiger's (1980) modification of Dunn and Clark's z (1969) using average correlations
+z = 11.6305, p-value = 0.0000
+Null hypothesis rejected
+
+meng1992: Meng, Rosenthal, and Rubin's z (1992)
+z = 11.6083, p-value = 0.0000
+Null hypothesis rejected
+95% confidence interval for r.jk - r.jh: 0.1215 0.1708
+Null hypothesis rejected (Interval does not include 0)
+
+hittner2003: Hittner, May, and Silver's (2003) modification of Dunn and Clark's z (1969) using a backtransformed average Fisher's (1921) Z procedure
+z = 11.6160, p-value = 0.0000
+Null hypothesis rejected
+
+zou2007: Zou's (2007) confidence interval
+95% confidence interval for r.jk - r.jh: 0.0913 0.1301
+Null hypothesis rejected (Interval does not include 0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
