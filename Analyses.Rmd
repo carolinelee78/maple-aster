@@ -4924,14 +4924,34 @@ cronbach.alpha(WBSI_alpha_df)
 ```{r}
 WBSI_Validation1 <- WBSI_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "wbsi")]
 
+rcorr(as.matrix(WBSI_Validation1),type="pearson") 
+```
+
+```{r}
 WBSI_Validation2 <- WBSI_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "MEAQGA_Total", "wbsi")]
 
+rcorr(as.matrix(WBSI_Validation2),type="pearson") 
+```
+
+```{r}
 WBSI_Validation3 <- WBSI_Validation[,c("MEAQSF_BA", "MEAQSF_DA", "MEAQSF_PR", "MEAQSF_DS", "MEAQSF_RD", "MEAQSF_DE", "MEAQSF_Total", "wbsi")]
 
+rcorr(as.matrix(WBSI_Validation3),type="pearson") 
+```
+
+```{r}
 WBSI_Validation4 <- WBSI_Validation[,c("MEAQBF_BA", "MEAQBF_DA", "MEAQBF_PR", "MEAQBF_DS", "MEAQBF_RD", "MEAQBF_DE", "MEAQBF_Total", "wbsi")]
 
+rcorr(as.matrix(WBSI_Validation4),type="pearson") 
+```
+
+```{r}
 WBSI_Validation5 <- WBSI_Validation[,c("BEAQ", "wbsi")]
 
+rcorr(as.matrix(WBSI_Validation5),type="pearson") 
+```
+
+```{r}
 cor.test(WBSI_Validation$BEAQ, WBSI_Validation$wbsi)
 ```
 
@@ -6646,12 +6666,28 @@ BFI2N_Validation <- na.omit(BFI2N_Validation)
 ```{r}
 BFI2N_Validation1 <- BFI2N_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "BFI2_NE")]
 
+rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
+```
+
+```{r}
 BFI2N_Validation2 <- BFI2N_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "MEAQGA_Total", "BFI2_NE")]
 
+rcorr(as.matrix(BFI2N_Validation2),type="pearson") 
+```
+
+```{r}
 BFI2N_Validation3 <- BFI2N_Validation[,c("MEAQSF_BA", "MEAQSF_DA", "MEAQSF_PR", "MEAQSF_DS", "MEAQSF_RD", "MEAQSF_DE", "MEAQSF_Total", "BFI2_NE")]
 
+rcorr(as.matrix(BFI2N_Validation3),type="pearson") 
+```
+
+```{r}
 BFI2N_Validation4 <- BFI2N_Validation[,c("MEAQBF_BA", "MEAQBF_DA", "MEAQBF_PR", "MEAQBF_DS", "MEAQBF_RD", "MEAQBF_DE", "MEAQBF_Total", "BFI2_NE")]
 
+rcorr(as.matrix(BFI2N_Validation4),type="pearson") 
+```
+
+```{r}
 cor.test(BFI2N_Validation$BEAQ, BFI2N_Validation$BFI2_NE)
 ```
 
@@ -7128,12 +7164,28 @@ BFAS_Validation$MEAQBF_Total <- BFAS_Validation$MEAQBF_BA + BFAS_Validation$MEAQ
 ```{r}
 BFAS_Validation1 <- BFAS_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "BFAS_N", "BFAS_N_Volatility", "BFAS_N_Withdrawal")]
 
+rcorr(as.matrix(BFAS_Validation1),type="pearson") 
+```
+
+```{r}
 BFAS_Validation2 <- BFAS_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "MEAQGA_Total", "BFAS_N", "BFAS_N_Volatility", "BFAS_N_Withdrawal")]
 
+rcorr(as.matrix(BFAS_Validation2),type="pearson") 
+```
+
+```{r}
 BFAS_Validation3 <- BFAS_Validation[,c("MEAQSF_BA", "MEAQSF_DA", "MEAQSF_PR", "MEAQSF_DS", "MEAQSF_RD", "MEAQSF_DE", "MEAQSF_Total", "BFAS_N", "BFAS_N_Volatility", "BFAS_N_Withdrawal")]
 
+rcorr(as.matrix(BFAS_Validation3),type="pearson") 
+```
+
+```{r}
 BFAS_Validation4 <- BFAS_Validation[,c("MEAQBF_BA", "MEAQBF_DA", "MEAQBF_PR", "MEAQBF_DS", "MEAQBF_RD", "MEAQBF_DE", "MEAQBF_Total", "BFAS_N", "BFAS_N_Volatility", "BFAS_N_Withdrawal")]
 
+rcorr(as.matrix(BFAS_Validation4),type="pearson") 
+```
+
+```{r}
 cor.test(BFAS_Validation$BEAQ, BFAS_Validation$BFAS_N)
 
 cor.test(BFAS_Validation$BEAQ, BFAS_Validation$BFAS_N_Volatility)
@@ -7644,12 +7696,28 @@ PANAS_SFN_Validation$MEAQBF_Total <- PANAS_SFN_Validation$MEAQBF_BA + PANAS_SFN_
 ```{r}
 PANAS_SFN_Validation1 <- PANAS_SFN_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "PANAS_NA")]
 
+rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
+```
+
+```{r}
 PANAS_SFN_Validation2 <- PANAS_SFN_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "MEAQGA_Total", "PANAS_NA")]
 
+rcorr(as.matrix(PANAS_SFN_Validation2),type="pearson") 
+```
+
+```{r}
 PANAS_SFN_Validation3 <- PANAS_SFN_Validation[,c("MEAQSF_BA", "MEAQSF_DA", "MEAQSF_PR", "MEAQSF_DS", "MEAQSF_RD", "MEAQSF_DE", "MEAQSF_Total", "PANAS_NA")]
 
+rcorr(as.matrix(PANAS_SFN_Validation3),type="pearson") 
+```
+
+```{r}
 PANAS_SFN_Validation4 <- PANAS_SFN_Validation[,c("MEAQBF_BA", "MEAQBF_DA", "MEAQBF_PR", "MEAQBF_DS", "MEAQBF_RD", "MEAQBF_DE", "MEAQBF_Total", "PANAS_NA")]
 
+rcorr(as.matrix(PANAS_SFN_Validation4),type="pearson") 
+```
+
+```{r}
 cor.test(PANAS_SFN_Validation$BEAQ, PANAS_SFN_Validation$PANAS_NA)
 ```
 
@@ -8067,12 +8135,28 @@ cronbach.alpha(PANAS_XN_alpha_df)
 ```{r}
 PANAS_XN_Validation1 <- PANAS_XN_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "PANASX_NA")]
 
+rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
+```
+
+```{r}
 PANAS_XN_Validation2 <- PANAS_XN_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "MEAQGA_Total", "PANASX_NA")]
 
+rcorr(as.matrix(PANAS_XN_Validation2),type="pearson") 
+```
+
+```{r}
 PANAS_XN_Validation3 <- PANAS_XN_Validation[,c("MEAQSF_BA", "MEAQSF_DA", "MEAQSF_PR", "MEAQSF_DS", "MEAQSF_RD", "MEAQSF_DE", "MEAQSF_Total", "PANASX_NA")]
 
+rcorr(as.matrix(PANAS_XN_Validation3),type="pearson") 
+```
+
+```{r}
 PANAS_XN_Validation4 <- PANAS_XN_Validation[,c("MEAQBF_BA", "MEAQBF_DA", "MEAQBF_PR", "MEAQBF_DS", "MEAQBF_RD", "MEAQBF_DE", "MEAQBF_Total", "PANASX_NA")]
 
+rcorr(as.matrix(PANAS_XN_Validation4),type="pearson") 
+```
+
+```{r}
 cor.test(PANAS_XN_Validation$BEAQ, PANAS_XN_Validation$PANASX_NA)
 ```
 
@@ -8564,12 +8648,28 @@ PANAS_SFP_Validation$MEAQBF_Total <- PANAS_SFP_Validation$MEAQBF_BA + PANAS_SFP_
 ```{r}
 PANAS_SFP_Validation1 <- PANAS_SFP_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "PANAS_PA")]
 
+rcorr(as.matrix(PANAS_SFP_Validation1),type="pearson") 
+```
+
+```{r}
 PANAS_SFP_Validation2 <- PANAS_SFP_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "MEAQGA_Total", "PANAS_PA")]
 
+rcorr(as.matrix(PANAS_SFP_Validation2),type="pearson") 
+```
+
+```{r}
 PANAS_SFP_Validation3 <- PANAS_SFP_Validation[,c("MEAQSF_BA", "MEAQSF_DA", "MEAQSF_PR", "MEAQSF_DS", "MEAQSF_RD", "MEAQSF_DE", "MEAQSF_Total", "PANAS_PA")]
 
+rcorr(as.matrix(PANAS_SFP_Validation3),type="pearson") 
+```
+
+```{r}
 PANAS_SFP_Validation4 <- PANAS_SFP_Validation[,c("MEAQBF_BA", "MEAQBF_DA", "MEAQBF_PR", "MEAQBF_DS", "MEAQBF_RD", "MEAQBF_DE", "MEAQBF_Total", "PANAS_PA")]
 
+rcorr(as.matrix(PANAS_SFP_Validation4),type="pearson") 
+```
+
+```{r}
 cor.test(PANAS_SFP_Validation$BEAQ, PANAS_SFP_Validation$PANAS_PA)
 ```
 
@@ -8945,12 +9045,28 @@ PANAS_XP_Validation$MEAQBF_Total <- PANAS_XP_Validation$MEAQBF_BA + PANAS_XP_Val
 ```{r}
 PANAS_XP_Validation1 <- PANAS_XP_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "PANASX_PA")]
 
+rcorr(as.matrix(PANAS_XP_Validation1),type="pearson") 
+```
+
+```{r}
 PANAS_XP_Validation2 <- PANAS_XP_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "MEAQGA_Total", "PANASX_PA")]
 
+rcorr(as.matrix(PANAS_XP_Validation2),type="pearson") 
+```
+
+```{r}
 PANAS_XP_Validation3 <- PANAS_XP_Validation[,c("MEAQSF_BA", "MEAQSF_DA", "MEAQSF_PR", "MEAQSF_DS", "MEAQSF_RD", "MEAQSF_DE", "MEAQSF_Total", "PANASX_PA")]
 
+rcorr(as.matrix(PANAS_XP_Validation3),type="pearson") 
+```
+
+```{r}
 PANAS_XP_Validation4 <- PANAS_XP_Validation[,c("MEAQBF_BA", "MEAQBF_DA", "MEAQBF_PR", "MEAQBF_DS", "MEAQBF_RD", "MEAQBF_DE", "MEAQBF_Total", "PANASX_PA")]
 
+rcorr(as.matrix(PANAS_XP_Validation4),type="pearson") 
+```
+
+```{r}
 cor.test(PANAS_XP_Validation$BEAQ, PANAS_XP_Validation$PANASX_PA)
 ```
 
@@ -9402,12 +9518,28 @@ SWLS_Validation$MEAQBF_Total <- SWLS_Validation$MEAQBF_BA + SWLS_Validation$MEAQ
 ```{r}
 SWLS_Validation1 <- SWLS_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "SWLS_Total")]
 
+rcorr(as.matrix(SWLS_Validation1),type="pearson") 
+```
+
+```{r}
 SWLS_Validation2 <- SWLS_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "MEAQGA_Total", "SWLS_Total")]
 
+rcorr(as.matrix(SWLS_Validation2),type="pearson") 
+```
+
+```{r}
 SWLS_Validation3 <- SWLS_Validation[,c("MEAQSF_BA", "MEAQSF_DA", "MEAQSF_PR", "MEAQSF_DS", "MEAQSF_RD", "MEAQSF_DE", "MEAQSF_Total", "SWLS_Total")]
 
+rcorr(as.matrix(SWLS_Validation3),type="pearson") 
+```
+
+```{r}
 SWLS_Validation4 <- SWLS_Validation[,c("MEAQBF_BA", "MEAQBF_DA", "MEAQBF_PR", "MEAQBF_DS", "MEAQBF_RD", "MEAQBF_DE", "MEAQBF_Total", "SWLS_Total")]
 
+rcorr(as.matrix(SWLS_Validation4),type="pearson") 
+```
+
+```{r}
 cor.test(SWLS_Validation$BEAQ, SWLS_Validation$SWLS_Total)
 ```
 
@@ -9792,12 +9924,28 @@ IDASGD_Validation$MEAQBF_Total <- IDASGD_Validation$MEAQBF_BA + IDASGD_Validatio
 ```{r}
 IDASGD_Validation1 <- IDASGD_Validation[,c("MEAQ62_BA", "MEAQ62_DA", "MEAQ62_PR", "MEAQ62_DS", "MEAQ62_RD", "MEAQ62_DE", "MEAQ62_Total", "idas_gd")]
 
+rcorr(as.matrix(IDASGD_Validation1),type="pearson") 
+```
+
+```{r}
 IDASGD_Validation2 <- IDASGD_Validation[,c("MEAQGA_BA", "MEAQGA_DA", "MEAQGA_PR", "MEAQGA_DS", "MEAQGA_RD", "MEAQGA_DE", "MEAQGA_Total", "idas_gd")]
 
+rcorr(as.matrix(IDASGD_Validation2),type="pearson") 
+```
+
+```{r}
 IDASGD_Validation3 <- IDASGD_Validation[,c("MEAQSF_BA", "MEAQSF_DA", "MEAQSF_PR", "MEAQSF_DS", "MEAQSF_RD", "MEAQSF_DE", "MEAQSF_Total", "idas_gd")]
 
+rcorr(as.matrix(IDASGD_Validation3),type="pearson") 
+```
+
+```{r}
 IDASGD_Validation4 <- IDASGD_Validation[,c("MEAQBF_BA", "MEAQBF_DA", "MEAQBF_PR", "MEAQBF_DS", "MEAQBF_RD", "MEAQBF_DE", "MEAQBF_Total", "idas_gd")]
 
+rcorr(as.matrix(IDASGD_Validation4),type="pearson") 
+```
+
+```{r}
 cor.test(IDASGD_Validation$BEAQ, IDASGD_Validation$idas_gd)
 ```
 
