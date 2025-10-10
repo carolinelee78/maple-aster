@@ -60,6 +60,7 @@ lapply(c("naniar"),pkgTest)
 lapply(c("ggstatsplot"),pkgTest)
 lapply(c("corrplot"),pkgTest)
 lapply(c("lavaanPlot"),pkgTest)
+lapply(c("cocor"),pkgTest)
 
 library(data.table)
 library(ggplot2)
@@ -76,6 +77,7 @@ library(naniar)
 library(ggstatsplot)
 library(corrplot)
 library(lavaanPlot)
+library(cocor)
 
 # install.packages("devtools")
 devtools::install_github("MateusPsi/esemComp", build_vignettes = TRUE)
@@ -10480,465 +10482,465 @@ require(cocor) # load package
 corcomp27 <- cocor.dep.groups.overlap(r.jk=0.32, r.jh=0.25, r.kh=0.79, n=282, alternative="two.sided", alpha=0.05)
 ```
 
-## Distress Avoidance 
+## Distress Aversion 
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, WBSI vs. r MEAQ-GA Distress Avoidance, WBSI
-## j = WBSI, k = MEAQ-62 Distress Avoidance, h = MEAQ-GA Distress Avoidance, n = 399
+# r MEAQ-62 Distress Aversion, WBSI vs. r MEAQ-GA Distress Aversion, WBSI
+## j = WBSI, k = MEAQ-62 Distress Aversion, h = MEAQ-GA Distress Aversion, n = 399
 
-### r.jk = 
+### r.jk = .43
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
  
-### r.jh = 
+### r.jh = .41
 rcorr(as.matrix(WBSI_Validation2),type="pearson") 
 
-### r.kh =
+### r.kh = .90
 cor.test(WBSI_Validation$MEAQ62_DA, WBSI_Validation$MEAQGA_DA)
 
 require(cocor) # load package
-corcomp1 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp1 <- cocor.dep.groups.overlap(r.jk=+0.43, r.jh=+0.41, r.kh=+0.90, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, WBSI vs. r MEAQ-SF Distress Avoidance, WBSI
-## j = WBSI, k = MEAQ-62 Distress Avoidance, h = MEAQ-SF Distress Avoidance, n = 399
+# r MEAQ-62 Distress Aversion, WBSI vs. r MEAQ-SF Distress Aversion, WBSI
+## j = WBSI, k = MEAQ-62 Distress Aversion, h = MEAQ-SF Distress Aversion, n = 399
 
-### r.jk = .
+### r.jk = .43
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .41
 rcorr(as.matrix(WBSI_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .91
 cor.test(WBSI_Validation$MEAQ62_DA, WBSI_Validation$MEAQSF_DA)
 
 require(cocor) # load package
-corcomp2 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp2 <- cocor.dep.groups.overlap(r.jk=+0.43, r.jh=+0.41, r.kh=+0.91, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, WBSI vs. r MEAQ-BF Distress Avoidance, WBSI
-## j = WBSI, k = MEAQ-62 Distress Avoidance, h = MEAQ-BF Distress Avoidance, n = 399
+# r MEAQ-62 Distress Aversion, WBSI vs. r MEAQ-BF Distress Aversion, WBSI
+## j = WBSI, k = MEAQ-62 Distress Aversion, h = MEAQ-BF Distress Aversion, n = 399
 
-### r.jk = .
+### r.jk = .43
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .18
 rcorr(as.matrix(WBSI_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .78
 cor.test(WBSI_Validation$MEAQ62_DA, WBSI_Validation$MEAQBF_DA)
 
 require(cocor) # load package
-corcomp3 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp3 <- cocor.dep.groups.overlap(r.jk=+0.43, r.jh=+0.18, r.kh=+0.78, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, BFI-2-N vs. r MEAQ-GA Distress Avoidance, BFI-2-N
-## j = BFI-2-N, k = MEAQ-62 Distress Avoidance, h = MEAQ-GA Distress Avoidance, n = 466
+# r MEAQ-62 Distress Aversion, BFI-2-N vs. r MEAQ-GA Distress Aversion, BFI-2-N
+## j = BFI-2-N, k = MEAQ-62 Distress Aversion, h = MEAQ-GA Distress Aversion, n = 466
 
-### r.jk = 
+### r.jk = .28
 rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .33
 rcorr(as.matrix(BFI2N_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .95
 cor.test(BFI2N_Validation$MEAQ62_DA, BFI2N_Validation$MEAQGA_DA)
 
 require(cocor) # load package
-corcomp4 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp4 <- cocor.dep.groups.overlap(r.jk=+0.28, r.jh=+0.33, r.kh=+0.95, n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, BFI-2-N vs. r MEAQ-SF Distress Avoidance, BFI-2-N
-## j = BFI-2-N, k = MEAQ-62 Distress Avoidance, h = MEAQ-SF Distress Avoidance, n = 466
+# r MEAQ-62 Distress Aversion, BFI-2-N vs. r MEAQ-SF Distress Aversion, BFI-2-N
+## j = BFI-2-N, k = MEAQ-62 Distress Aversion, h = MEAQ-SF Distress Aversion, n = 466
 
-### r.jk = .
+### r.jk = .28
 rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .22
 rcorr(as.matrix(BFI2N_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .95
 cor.test(BFI2N_Validation$MEAQ62_DA, BFI2N_Validation$MEAQSF_DA)
 
 require(cocor) # load package
-corcomp5 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp5 <- cocor.dep.groups.overlap(r.jk=+0.28, r.jh=+0.22, r.kh=+0.95, n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, BFI-2-N vs. r MEAQ-BF Distress Avoidance, BFI-2-N
-## j = BFI-2-N, k = MEAQ-62 Distress Avoidance, h = MEAQ-BF Distress Avoidance, n = 466
+# r MEAQ-62 Distress Aversion, BFI-2-N vs. r MEAQ-BF Distress Aversion, BFI-2-N
+## j = BFI-2-N, k = MEAQ-62 Distress Aversion, h = MEAQ-BF Distress Aversion, n = 466
 
-### r.jk = .
+### r.jk = .28
 rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .11
 rcorr(as.matrix(BFI2N_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .76
 cor.test(BFI2N_Validation$MEAQ62_DA, BFI2N_Validation$MEAQBF_DA)
 
 require(cocor) # load package
-corcomp6 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp6 <- cocor.dep.groups.overlap(r.jk=+0.28, r.jh=+0.11, r.kh=+0.76, n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, BFAS-N vs. r MEAQ-GA Distress Avoidance, BFAS-N
-## j = BFAS-N, k = MEAQ-62 Distress Avoidance, h = MEAQ-GA Distress Avoidance, n = 1164
+# r MEAQ-62 Distress Aversion, BFAS-N vs. r MEAQ-GA Distress Aversion, BFAS-N
+## j = BFAS-N, k = MEAQ-62 Distress Aversion, h = MEAQ-GA Distress Aversion, n = 1164
 
-### r.jk = .
+### r.jk = .38
 rcorr(as.matrix(BFAS_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .39
 rcorr(as.matrix(BFAS_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .95
 cor.test(BFAS_Validation$MEAQ62_DA, BFAS_Validation$MEAQGA_DA)
 
 require(cocor) # load package
-corcomp7 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp7 <- cocor.dep.groups.overlap(r.jk=+0.38, r.jh=+0.39, r.kh=+0.95, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, BFASN vs. r MEAQ-SF Distress Avoidance, BFASN
-## j = BFASN, k = MEAQ-62 Distress Avoidance, h = MEAQ-SF Distress Avoidance, n = 1164
+# r MEAQ-62 Distress Aversion, BFASN vs. r MEAQ-SF Distress Aversion, BFASN
+## j = BFASN, k = MEAQ-62 Distress Aversion, h = MEAQ-SF Distress Aversion, n = 1164
 
-### r.jk = .
+### r.jk = .38
 rcorr(as.matrix(BFAS_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .30
 rcorr(as.matrix(BFAS_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .95
 cor.test(BFAS_Validation$MEAQ62_DA, BFAS_Validation$MEAQSF_DA)
 
 require(cocor) # load package
-corcomp8 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp8 <- cocor.dep.groups.overlap(r.jk=+0.38, r.jh=+0.30, r.kh=+0.95, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, BFASN vs. r MEAQ-BF Distress Avoidance, BFASN
-## j = BFASN, k = MEAQ-62 Distress Avoidance, h = MEAQ-BF Distress Avoidance, n = 1164
+# r MEAQ-62 Distress Aversion, BFASN vs. r MEAQ-BF Distress Aversion, BFASN
+## j = BFASN, k = MEAQ-62 Distress Aversion, h = MEAQ-BF Distress Aversion, n = 1164
 
-### r.jk = .
+### r.jk = .38
 rcorr(as.matrix(BFAS_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .16
 rcorr(as.matrix(BFAS_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .71
 cor.test(BFAS_Validation$MEAQ62_DA, BFAS_Validation$MEAQBF_DA)
 
 require(cocor) # load package
-corcomp9 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp9 <- cocor.dep.groups.overlap(r.jk=+0.38, r.jh=+0.16, r.kh=+0.71, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-SF-NA vs. r MEAQ-GA Distress Avoidance, PANAS-SF-NA
-## j = PANAS-SF-NA, k = MEAQ-62 Distress Avoidance, h = MEAQ-GA Distress Avoidance, n = 515
+# r MEAQ-62 Distress Aversion, PANAS-SF-NA vs. r MEAQ-GA Distress Aversion, PANAS-SF-NA
+## j = PANAS-SF-NA, k = MEAQ-62 Distress Aversion, h = MEAQ-GA Distress Aversion, n = 515
 
-### r.jk = .
+### r.jk = .46
 rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .47
 rcorr(as.matrix(PANAS_SFN_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .93
 cor.test(PANAS_SFN_Validation$MEAQ62_DA, PANAS_SFN_Validation$MEAQGA_DA)
 
 require(cocor) # load package
-corcomp10 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp10 <- cocor.dep.groups.overlap(r.jk=+0.46, r.jh=+0.47, r.kh=+0.93, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-SF-NA vs. r MEAQ-SF Distress Avoidance, PANAS-SF-NA
-## j = PANAS-SF-NA, k = MEAQ-62 Distress Avoidance, h = MEAQ-SF Distress Avoidance, n = 515
+# r MEAQ-62 Distress Aversion, PANAS-SF-NA vs. r MEAQ-SF Distress Aversion, PANAS-SF-NA
+## j = PANAS-SF-NA, k = MEAQ-62 Distress Aversion, h = MEAQ-SF Distress Aversion, n = 515
 
-### r.jk = .
+### r.jk = .46
 rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .38
 rcorr(as.matrix(PANAS_SFN_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .93
 cor.test(PANAS_SFN_Validation$MEAQ62_DA, PANAS_SFN_Validation$MEAQSF_DA)
 
 require(cocor) # load package
-corcomp11 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp11 <- cocor.dep.groups.overlap(r.jk=+0.46, r.jh=+0.38, r.kh=+0.93, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-SF-NA vs. r MEAQ-BF Distress Avoidance, PANAS-SF-NA
-## j = PANAS-SF-NA, k = MEAQ-62 Distress Avoidance, h = MEAQ-BF Distress Avoidance, n = 515
+# r MEAQ-62 Distress Aversion, PANAS-SF-NA vs. r MEAQ-BF Distress Aversion, PANAS-SF-NA
+## j = PANAS-SF-NA, k = MEAQ-62 Distress Aversion, h = MEAQ-BF Distress Aversion, n = 515
 
-### r.jk = .
+### r.jk = .46
 rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .24
 rcorr(as.matrix(PANAS_SFN_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .67
 cor.test(PANAS_SFN_Validation$MEAQ62_DA, PANAS_SFN_Validation$MEAQBF_DA)
 
 require(cocor) # load package
-corcomp12 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp12 <- cocor.dep.groups.overlap(r.jk=+0.46, r.jh=+0.24, r.kh=+0.67, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-X-NA vs. r MEAQ-GA Distress Avoidance, PANAS-X-NA
-## j = PANAS-X-NA, k = MEAQ-62 Distress Avoidance, h = MEAQ-GA Distress Avoidance, n = 1173
+# r MEAQ-62 Distress Aversion, PANAS-X-NA vs. r MEAQ-GA Distress Aversion, PANAS-X-NA
+## j = PANAS-X-NA, k = MEAQ-62 Distress Aversion, h = MEAQ-GA Distress Aversion, n = 1173
 
-### r.jk = .
+### r.jk = .28
 rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .30
 rcorr(as.matrix(PANAS_XN_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .95
 cor.test(PANAS_XN_Validation$MEAQ62_DA, PANAS_XN_Validation$MEAQGA_DA)
 
 require(cocor) # load package
-corcomp13 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp13 <- cocor.dep.groups.overlap(r.jk=+0.28, r.jh=+0.30, r.kh=+0.95, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-X-NA vs. r MEAQ-SF Distress Avoidance, PANAS-X-NA
-## j = PANAS-X-NA, k = MEAQ-62 Distress Avoidance, h = MEAQ-SF Distress Avoidance, n = 1173
+# r MEAQ-62 Distress Aversion, PANAS-X-NA vs. r MEAQ-SF Distress Aversion, PANAS-X-NA
+## j = PANAS-X-NA, k = MEAQ-62 Distress Aversion, h = MEAQ-SF Distress Aversion, n = 1173
 
-### r.jk = .
+### r.jk = .28
 rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .20
 rcorr(as.matrix(PANAS_XN_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .95
 cor.test(PANAS_XN_Validation$MEAQ62_DA, PANAS_XN_Validation$MEAQSF_DA)
 
 require(cocor) # load package
-corcomp14 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp14 <- cocor.dep.groups.overlap(r.jk=+0.28, r.jh=+0.20, r.kh=+0.95, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-X-NA vs. r MEAQ-BF Distress Avoidance, PANAS-X-NA
-## j = PANAS-X-NA, k = MEAQ-62 Distress Avoidance, h = MEAQ-BF Distress Avoidance, n = 1173
+# r MEAQ-62 Distress Aversion, PANAS-X-NA vs. r MEAQ-BF Distress Aversion, PANAS-X-NA
+## j = PANAS-X-NA, k = MEAQ-62 Distress Aversion, h = MEAQ-BF Distress Aversion, n = 1173
 
-### r.jk = .
+### r.jk = .28
 rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .18
 rcorr(as.matrix(PANAS_XN_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .70
 cor.test(PANAS_XN_Validation$MEAQ62_DA, PANAS_XN_Validation$MEAQBF_DA)
 
 require(cocor) # load package
-corcomp15 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp15 <- cocor.dep.groups.overlap(r.jk=+0.28, r.jh=+0.18, r.kh=+0.70, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, SWLS vs. r MEAQ-GA Distress Avoidance, SWLS
-## j = SWLS, k = MEAQ-62 Distress Avoidance, h = MEAQ-GA Distress Avoidance, n = 1811
+# r MEAQ-62 Distress Aversion, SWLS vs. r MEAQ-GA Distress Aversion, SWLS
+## j = SWLS, k = MEAQ-62 Distress Aversion, h = MEAQ-GA Distress Aversion, n = 1811
 
-### r.jk = -.
+### r.jk = -.24
 rcorr(as.matrix(SWLS_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.26
 rcorr(as.matrix(SWLS_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .94
 cor.test(SWLS_Validation$MEAQ62_DA, SWLS_Validation$MEAQGA_DA)
 
 require(cocor) # load package
-corcomp16 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1811, alternative="two.sided", alpha=0.05)
+corcomp16 <- cocor.dep.groups.overlap(r.jk=-0.24, r.jh=-0.26, r.kh=+0.94, n=1811, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, SWLS vs. r MEAQ-SF Distress Avoidance, SWLS
-## j = SWLS, k = MEAQ-62 Distress Avoidance, h = MEAQ-SF Distress Avoidance, n = 1811
+# r MEAQ-62 Distress Aversion, SWLS vs. r MEAQ-SF Distress Aversion, SWLS
+## j = SWLS, k = MEAQ-62 Distress Aversion, h = MEAQ-SF Distress Aversion, n = 1811
 
-### r.jk = -.
+### r.jk = -.24
 rcorr(as.matrix(SWLS_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.21
 rcorr(as.matrix(SWLS_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .94
 cor.test(SWLS_Validation$MEAQ62_DA, SWLS_Validation$MEAQSF_DA)
 
 require(cocor) # load package
-corcomp17 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1811, alternative="two.sided", alpha=0.05)
+corcomp17 <- cocor.dep.groups.overlap(r.jk=-0.24, r.jh=-0.21, r.kh=+0., n=1811, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, SWLS vs. r MEAQ-BF Distress Avoidance, SWLS
-## j = SWLS, k = MEAQ-62 Distress Avoidance, h = MEAQ-BF Distress Avoidance, n = 1811
+# r MEAQ-62 Distress Aversion, SWLS vs. r MEAQ-BF Distress Aversion, SWLS
+## j = SWLS, k = MEAQ-62 Distress Aversion, h = MEAQ-BF Distress Aversion, n = 1811
 
-### r.jk = -.
+### r.jk = -.24
 rcorr(as.matrix(SWLS_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.18
 rcorr(as.matrix(SWLS_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .89
 cor.test(SWLS_Validation$MEAQ62_DA, SWLS_Validation$MEAQBF_DA)
 
 require(cocor) # load package
-corcomp18 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1811, alternative="two.sided", alpha=0.05)
+corcomp18 <- cocor.dep.groups.overlap(r.jk=-0.24, r.jh=-0.18, r.kh=+0.89, n=1811, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-SF-PA vs. r MEAQ-GA Distress Avoidance, PANAS-SF-PA
-## j = PANAS-SF-PA, k = MEAQ-62 Distress Avoidance, h = MEAQ-GA Distress Avoidance, n = 515
+# r MEAQ-62 Distress Aversion, PANAS-SF-PA vs. r MEAQ-GA Distress Aversion, PANAS-SF-PA
+## j = PANAS-SF-PA, k = MEAQ-62 Distress Aversion, h = MEAQ-GA Distress Aversion, n = 515
 
-### r.jk = -.
+### r.jk = -.40
 rcorr(as.matrix(PANAS_SFP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.44
 rcorr(as.matrix(PANAS_SFP_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .93
 cor.test(PANAS_SFP_Validation$MEAQ62_DA, PANAS_SFP_Validation$MEAQGA_DA)
 
 require(cocor) # load package
-corcomp19 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=0., n=515, alternative="two.sided", alpha=0.05)
+corcomp19 <- cocor.dep.groups.overlap(r.jk=-0.40, r.jh=-0.44, r.kh=0.93, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-SF-PA vs. r MEAQ-SF Distress Avoidance, PANAS-SF-PA
-## j = PANAS-SF-PA, k = MEAQ-62 Distress Avoidance, h = MEAQ-SF Distress Avoidance, n = 515
+# r MEAQ-62 Distress Aversion, PANAS-SF-PA vs. r MEAQ-SF Distress Aversion, PANAS-SF-PA
+## j = PANAS-SF-PA, k = MEAQ-62 Distress Aversion, h = MEAQ-SF Distress Aversion, n = 515
 
-### r.jk = -.
+### r.jk = -.40
 rcorr(as.matrix(PANAS_SFP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.33
 rcorr(as.matrix(PANAS_SFP_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .93
 cor.test(PANAS_SFP_Validation$MEAQ62_DA, PANAS_SFP_Validation$MEAQSF_DA)
 
 require(cocor) # load package
-corcomp20 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp20 <- cocor.dep.groups.overlap(r.jk=-0.40, r.jh=-0.33, r.kh=+0.93, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-SF-PA vs. r MEAQ-BF Distress Avoidance, PANAS-SF-PA
-## j = PANAS-SF-PA, k = MEAQ-62 Distress Avoidance, h = MEAQ-BF Distress Avoidance, n = 515
+# r MEAQ-62 Distress Aversion, PANAS-SF-PA vs. r MEAQ-BF Distress Aversion, PANAS-SF-PA
+## j = PANAS-SF-PA, k = MEAQ-62 Distress Aversion, h = MEAQ-BF Distress Aversion, n = 515
 
-### r.jk = -.
+### r.jk = -.40
 rcorr(as.matrix(PANAS_SFP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.28
 rcorr(as.matrix(PANAS_SFP_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .67
 cor.test(PANAS_SFP_Validation$MEAQ62_DA, PANAS_SFP_Validation$MEAQBF_DA)
 
 require(cocor) # load package
-corcomp21 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp21 <- cocor.dep.groups.overlap(r.jk=-0.40, r.jh=-0.28, r.kh=+0.67, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-X-PA vs. r MEAQ-GA Distress Avoidance, PANAS-X-PA
-## j = PANAS-X-PA, k = MEAQ-62 Distress Avoidance, h = MEAQ-GA Distress Avoidance, n = 1173
+# r MEAQ-62 Distress Aversion, PANAS-X-PA vs. r MEAQ-GA Distress Aversion, PANAS-X-PA
+## j = PANAS-X-PA, k = MEAQ-62 Distress Aversion, h = MEAQ-GA Distress Aversion, n = 1173
 
-### r.jk = -.
+### r.jk = -.14
 rcorr(as.matrix(PANAS_XP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.14
 rcorr(as.matrix(PANAS_XP_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .95
 cor.test(PANAS_XP_Validation$MEAQ62_DA, PANAS_XP_Validation$MEAQGA_DA)
 
 require(cocor) # load package
-corcomp22 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp22 <- cocor.dep.groups.overlap(r.jk=-0.14, r.jh=-0.14, r.kh=0.95, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-X-PA vs. r MEAQ-SF Distress Avoidance, PANAS-X-PA
-## j = PANAS-X-PA, k = MEAQ-62 Distress Avoidance, h = MEAQ-SF Distress Avoidance, n = 1173
+# r MEAQ-62 Distress Aversion, PANAS-X-PA vs. r MEAQ-SF Distress Aversion, PANAS-X-PA
+## j = PANAS-X-PA, k = MEAQ-62 Distress Aversion, h = MEAQ-SF Distress Aversion, n = 1173
 
-### r.jk = -.
+### r.jk = -.14
 rcorr(as.matrix(PANAS_XP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.10
 rcorr(as.matrix(PANAS_XP_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .95
 cor.test(PANAS_XP_Validation$MEAQ62_DA, PANAS_XP_Validation$MEAQSF_DA)
 
 require(cocor) # load package
-corcomp23 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp23 <- cocor.dep.groups.overlap(r.jk=-0.14, r.jh=-0.10, r.kh=+0.95, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, PANAS-X-PA vs. r MEAQ-BF Distress Avoidance, PANAS-X-PA
-## j = PANAS-X-PA, k = MEAQ-62 Distress Avoidance, h = MEAQ-BF Distress Avoidance, n = 1173
+# r MEAQ-62 Distress Aversion, PANAS-X-PA vs. r MEAQ-BF Distress Aversion, PANAS-X-PA
+## j = PANAS-X-PA, k = MEAQ-62 Distress Aversion, h = MEAQ-BF Distress Aversion, n = 1173
 
-### r.jk = -.
+### r.jk = -.14
 rcorr(as.matrix(PANAS_XP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.09
 rcorr(as.matrix(PANAS_XP_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .70
 cor.test(PANAS_XP_Validation$MEAQ62_DA, PANAS_XP_Validation$MEAQBF_DA)
 
 require(cocor) # load package
-corcomp24 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp24 <- cocor.dep.groups.overlap(r.jk=-0.14, r.jh=-0.09, r.kh=+0.70, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, IDAS-GD vs. r MEAQ-GA Distress Avoidance, IDAS-GD
-## j = IDAS-GD, k = MEAQ-62 Distress Avoidance, h = MEAQ-GA Distress Avoidance, n = 282
+# r MEAQ-62 Distress Aversion, IDAS-GD vs. r MEAQ-GA Distress Aversion, IDAS-GD
+## j = IDAS-GD, k = MEAQ-62 Distress Aversion, h = MEAQ-GA Distress Aversion, n = 282
 
-### r.jk = .
+### r.jk = .39
 rcorr(as.matrix(IDASGD_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .40
 rcorr(as.matrix(IDASGD_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .91
 cor.test(IDASGD_Validation$MEAQ62_DA, IDASGD_Validation$MEAQGA_DA)
 
 require(cocor) # load package
-corcomp25 <- cocor.dep.groups.overlap(r.jk=0., r.jh=0., r.kh=0., n=282, alternative="two.sided", alpha=0.05)
+corcomp25 <- cocor.dep.groups.overlap(r.jk=0.39, r.jh=0.40, r.kh=0.91, n=282, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, IDAS-GD vs. r MEAQ-SF Distress Avoidance, IDAS-GD
-## j = IDAS-GD, k = MEAQ-62 Distress Avoidance, h = MEAQ-SF Distress Avoidance, n = 282
+# r MEAQ-62 Distress Aversion, IDAS-GD vs. r MEAQ-SF Distress Aversion, IDAS-GD
+## j = IDAS-GD, k = MEAQ-62 Distress Aversion, h = MEAQ-SF Distress Aversion, n = 282
 
-### r.jk = .
+### r.jk = .39
 rcorr(as.matrix(IDASGD_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .34
 rcorr(as.matrix(IDASGD_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .91
 cor.test(IDASGD_Validation$MEAQ62_DA, IDASGD_Validation$MEAQSF_DA)
 
 require(cocor) # load package
-corcomp26 <- cocor.dep.groups.overlap(r.jk=0., r.jh=0., r.kh=0., n=282, alternative="two.sided", alpha=0.05)
+corcomp26 <- cocor.dep.groups.overlap(r.jk=0.39, r.jh=0.34, r.kh=0.91, n=282, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
-# r MEAQ-62 Distress Avoidance, IDAS-GD vs. r MEAQ-BF Distress Avoidance, IDAS-GD
-## j = IDAS-GD, k = MEAQ-62 Distress Avoidance, h = MEAQ-BF Distress Avoidance, n = 282
+# r MEAQ-62 Distress Aversion, IDAS-GD vs. r MEAQ-BF Distress Aversion, IDAS-GD
+## j = IDAS-GD, k = MEAQ-62 Distress Aversion, h = MEAQ-BF Distress Aversion, n = 282
 
-### r.jk = .
+### r.jk = .39
 rcorr(as.matrix(IDASGD_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .27
 rcorr(as.matrix(IDASGD_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .78
 cor.test(IDASGD_Validation$MEAQ62_DA, IDASGD_Validation$MEAQBF_DA)
 
 require(cocor) # load package
-corcomp27 <- cocor.dep.groups.overlap(r.jk=0., r.jh=0., r.kh=0., n=282, alternative="two.sided", alpha=0.05)
+corcomp27 <- cocor.dep.groups.overlap(r.jk=0.39, r.jh=0.27, r.kh=0.78, n=282, alternative="two.sided", alpha=0.05)
 ```
 
 ## Procrastination 
@@ -10947,459 +10949,459 @@ corcomp27 <- cocor.dep.groups.overlap(r.jk=0., r.jh=0., r.kh=0., n=282, alternat
 # r MEAQ-62 Procrastination, WBSI vs. r MEAQ-GA Procrastination, WBSI
 ## j = WBSI, k = MEAQ-62 Procrastination, h = MEAQ-GA Procrastination, n = 399
 
-### r.jk = 
+### r.jk = .36
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
  
-### r.jh = 
+### r.jh = .35
 rcorr(as.matrix(WBSI_Validation2),type="pearson") 
 
-### r.kh =
+### r.kh = .96
 cor.test(WBSI_Validation$MEAQ62_PR, WBSI_Validation$MEAQGA_PR)
 
 require(cocor) # load package
-corcomp1 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp1 <- cocor.dep.groups.overlap(r.jk=+0.36, r.jh=+0.35, r.kh=+0.96, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, WBSI vs. r MEAQ-SF Procrastination, WBSI
 ## j = WBSI, k = MEAQ-62 Procrastination, h = MEAQ-SF Procrastination, n = 399
 
-### r.jk = .
+### r.jk = .36
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .32
 rcorr(as.matrix(WBSI_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .87
 cor.test(WBSI_Validation$MEAQ62_PR, WBSI_Validation$MEAQSF_PR)
 
 require(cocor) # load package
-corcomp2 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp2 <- cocor.dep.groups.overlap(r.jk=+0.36, r.jh=+0.32, r.kh=+0.87, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, WBSI vs. r MEAQ-BF Procrastination, WBSI
 ## j = WBSI, k = MEAQ-62 Procrastination, h = MEAQ-BF Procrastination, n = 399
 
-### r.jk = .
+### r.jk = .36
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .37
 rcorr(as.matrix(WBSI_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .83
 cor.test(WBSI_Validation$MEAQ62_PR, WBSI_Validation$MEAQBF_PR)
 
 require(cocor) # load package
-corcomp3 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp3 <- cocor.dep.groups.overlap(r.jk=+0.36, r.jh=+0.37, r.kh=+0.83, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, BFI-2-N vs. r MEAQ-GA Procrastination, BFI-2-N
 ## j = BFI-2-N, k = MEAQ-62 Procrastination, h = MEAQ-GA Procrastination, n = 466
 
-### r.jk = 
+### r.jk = .49
 rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .50
 rcorr(as.matrix(BFI2N_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .98
 cor.test(BFI2N_Validation$MEAQ62_PR, BFI2N_Validation$MEAQGA_PR)
 
 require(cocor) # load package
-corcomp4 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp4 <- cocor.dep.groups.overlap(r.jk=+0.49, r.jh=+0.50, r.kh=+0.98, n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, BFI-2-N vs. r MEAQ-SF Procrastination, BFI-2-N
 ## j = BFI-2-N, k = MEAQ-62 Procrastination, h = MEAQ-SF Procrastination, n = 466
 
-### r.jk = .
+### r.jk = .49
 rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .41
 rcorr(as.matrix(BFI2N_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .93
 cor.test(BFI2N_Validation$MEAQ62_PR, BFI2N_Validation$MEAQSF_PR)
 
 require(cocor) # load package
-corcomp5 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp5 <- cocor.dep.groups.overlap(r.jk=+0.49, r.jh=+0.41, r.kh=+0.93, n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, BFI-2-N vs. r MEAQ-BF Procrastination, BFI-2-N
 ## j = BFI-2-N, k = MEAQ-62 Procrastination, h = MEAQ-BF Procrastination, n = 466
 
-### r.jk = .
+### r.jk = .49
 rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .45
 rcorr(as.matrix(BFI2N_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .89
 cor.test(BFI2N_Validation$MEAQ62_PR, BFI2N_Validation$MEAQBF_PR)
 
 require(cocor) # load package
-corcomp6 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp6 <- cocor.dep.groups.overlap(r.jk=+0.49, r.jh=+0.45, r.kh=+0.89, n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, BFAS-N vs. r MEAQ-GA Procrastination, BFAS-N
 ## j = BFAS-N, k = MEAQ-62 Procrastination, h = MEAQ-GA Procrastination, n = 1164
 
-### r.jk = .
+### r.jk = .51
 rcorr(as.matrix(BFAS_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .50
 rcorr(as.matrix(BFAS_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .98
 cor.test(BFAS_Validation$MEAQ62_PR, BFAS_Validation$MEAQGA_PR)
 
 require(cocor) # load package
-corcomp7 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp7 <- cocor.dep.groups.overlap(r.jk=+0.51, r.jh=+0.50, r.kh=+0.98, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, BFASN vs. r MEAQ-SF Procrastination, BFASN
 ## j = BFASN, k = MEAQ-62 Procrastination, h = MEAQ-SF Procrastination, n = 1164
 
-### r.jk = .
+### r.jk = .51
 rcorr(as.matrix(BFAS_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .45
 rcorr(as.matrix(BFAS_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .93
 cor.test(BFAS_Validation$MEAQ62_PR, BFAS_Validation$MEAQSF_PR)
 
 require(cocor) # load package
-corcomp8 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp8 <- cocor.dep.groups.overlap(r.jk=+0.51, r.jh=+0.45, r.kh=+0.93, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, BFASN vs. r MEAQ-BF Procrastination, BFASN
 ## j = BFASN, k = MEAQ-62 Procrastination, h = MEAQ-BF Procrastination, n = 1164
 
-### r.jk = .
+### r.jk = .51
 rcorr(as.matrix(BFAS_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .41
 rcorr(as.matrix(BFAS_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .91
 cor.test(BFAS_Validation$MEAQ62_PR, BFAS_Validation$MEAQBF_PR)
 
 require(cocor) # load package
-corcomp9 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp9 <- cocor.dep.groups.overlap(r.jk=+0.51, r.jh=+0.41, r.kh=+0.91, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-SF-NA vs. r MEAQ-GA Procrastination, PANAS-SF-NA
 ## j = PANAS-SF-NA, k = MEAQ-62 Procrastination, h = MEAQ-GA Procrastination, n = 515
 
-### r.jk = .
+### r.jk = .34
 rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .32
 rcorr(as.matrix(PANAS_SFN_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .97
 cor.test(PANAS_SFN_Validation$MEAQ62_PR, PANAS_SFN_Validation$MEAQGA_PR)
 
 require(cocor) # load package
-corcomp10 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp10 <- cocor.dep.groups.overlap(r.jk=+0.34, r.jh=+0.32, r.kh=+0.97, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-SF-NA vs. r MEAQ-SF Procrastination, PANAS-SF-NA
 ## j = PANAS-SF-NA, k = MEAQ-62 Procrastination, h = MEAQ-SF Procrastination, n = 515
 
-### r.jk = .
+### r.jk = .34
 rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .31
 rcorr(as.matrix(PANAS_SFN_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .90
 cor.test(PANAS_SFN_Validation$MEAQ62_PR, PANAS_SFN_Validation$MEAQSF_PR)
 
 require(cocor) # load package
-corcomp11 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp11 <- cocor.dep.groups.overlap(r.jk=+0.34, r.jh=+0.31, r.kh=+0.90, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-SF-NA vs. r MEAQ-BF Procrastination, PANAS-SF-NA
 ## j = PANAS-SF-NA, k = MEAQ-62 Procrastination, h = MEAQ-BF Procrastination, n = 515
 
-### r.jk = .
+### r.jk = .34
 rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .23
 rcorr(as.matrix(PANAS_SFN_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .85
 cor.test(PANAS_SFN_Validation$MEAQ62_PR, PANAS_SFN_Validation$MEAQBF_PR)
 
 require(cocor) # load package
-corcomp12 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp12 <- cocor.dep.groups.overlap(r.jk=+0.34, r.jh=+0.23, r.kh=+0.85, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-X-NA vs. r MEAQ-GA Procrastination, PANAS-X-NA
 ## j = PANAS-X-NA, k = MEAQ-62 Procrastination, h = MEAQ-GA Procrastination, n = 1173
 
-### r.jk = .
+### r.jk = .37
 rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .37
 rcorr(as.matrix(PANAS_XN_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .98
 cor.test(PANAS_XN_Validation$MEAQ62_PR, PANAS_XN_Validation$MEAQGA_PR)
 
 require(cocor) # load package
-corcomp13 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp13 <- cocor.dep.groups.overlap(r.jk=+0.37, r.jh=+0.37, r.kh=+0.98, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-X-NA vs. r MEAQ-SF Procrastination, PANAS-X-NA
 ## j = PANAS-X-NA, k = MEAQ-62 Procrastination, h = MEAQ-SF Procrastination, n = 1173
 
-### r.jk = .
+### r.jk = .37
 rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .37
 rcorr(as.matrix(PANAS_XN_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .93
 cor.test(PANAS_XN_Validation$MEAQ62_PR, PANAS_XN_Validation$MEAQSF_PR)
 
 require(cocor) # load package
-corcomp14 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp14 <- cocor.dep.groups.overlap(r.jk=+0.37, r.jh=+0.37, r.kh=+0.93, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-X-NA vs. r MEAQ-BF Procrastination, PANAS-X-NA
 ## j = PANAS-X-NA, k = MEAQ-62 Procrastination, h = MEAQ-BF Procrastination, n = 1173
 
-### r.jk = .
+### r.jk = .37
 rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .31
 rcorr(as.matrix(PANAS_XN_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .91
 cor.test(PANAS_XN_Validation$MEAQ62_PR, PANAS_XN_Validation$MEAQBF_PR)
 
 require(cocor) # load package
-corcomp15 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp15 <- cocor.dep.groups.overlap(r.jk=+0.37, r.jh=+0.31, r.kh=+0.91, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, SWLS vs. r MEAQ-GA Procrastination, SWLS
 ## j = SWLS, k = MEAQ-62 Procrastination, h = MEAQ-GA Procrastination, n = 1811
 
-### r.jk = -.
+### r.jk = -.31
 rcorr(as.matrix(SWLS_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.30
 rcorr(as.matrix(SWLS_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .98
 cor.test(SWLS_Validation$MEAQ62_PR, SWLS_Validation$MEAQGA_PR)
 
 require(cocor) # load package
-corcomp16 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1811, alternative="two.sided", alpha=0.05)
+corcomp16 <- cocor.dep.groups.overlap(r.jk=-0.31, r.jh=-0.30, r.kh=+0.98, n=1811, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, SWLS vs. r MEAQ-SF Procrastination, SWLS
 ## j = SWLS, k = MEAQ-62 Procrastination, h = MEAQ-SF Procrastination, n = 1811
 
-### r.jk = -.
+### r.jk = -.31
 rcorr(as.matrix(SWLS_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.23
 rcorr(as.matrix(SWLS_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .93
 cor.test(SWLS_Validation$MEAQ62_PR, SWLS_Validation$MEAQSF_PR)
 
 require(cocor) # load package
-corcomp17 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1811, alternative="two.sided", alpha=0.05)
+corcomp17 <- cocor.dep.groups.overlap(r.jk=-0.31, r.jh=-0.23, r.kh=+0.93, n=1811, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, SWLS vs. r MEAQ-BF Procrastination, SWLS
 ## j = SWLS, k = MEAQ-62 Procrastination, h = MEAQ-BF Procrastination, n = 1811
 
-### r.jk = -.
+### r.jk = -.31
 rcorr(as.matrix(SWLS_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.26
 rcorr(as.matrix(SWLS_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .90
 cor.test(SWLS_Validation$MEAQ62_PR, SWLS_Validation$MEAQBF_PR)
 
 require(cocor) # load package
-corcomp18 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1811, alternative="two.sided", alpha=0.05)
+corcomp18 <- cocor.dep.groups.overlap(r.jk=-0.31, r.jh=-0.26, r.kh=+0.90, n=1811, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-SF-PA vs. r MEAQ-GA Procrastination, PANAS-SF-PA
 ## j = PANAS-SF-PA, k = MEAQ-62 Procrastination, h = MEAQ-GA Procrastination, n = 515
 
-### r.jk = -.
+### r.jk = -.34
 rcorr(as.matrix(PANAS_SFP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.34
 rcorr(as.matrix(PANAS_SFP_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .97
 cor.test(PANAS_SFP_Validation$MEAQ62_PR, PANAS_SFP_Validation$MEAQGA_PR)
 
 require(cocor) # load package
-corcomp19 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=0., n=515, alternative="two.sided", alpha=0.05)
+corcomp19 <- cocor.dep.groups.overlap(r.jk=-0.34, r.jh=-0.34, r.kh=0.97, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-SF-PA vs. r MEAQ-SF Procrastination, PANAS-SF-PA
 ## j = PANAS-SF-PA, k = MEAQ-62 Procrastination, h = MEAQ-SF Procrastination, n = 515
 
-### r.jk = -.
+### r.jk = -.34
 rcorr(as.matrix(PANAS_SFP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.28
 rcorr(as.matrix(PANAS_SFP_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .90
 cor.test(PANAS_SFP_Validation$MEAQ62_PR, PANAS_SFP_Validation$MEAQSF_PR)
 
 require(cocor) # load package
-corcomp20 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp20 <- cocor.dep.groups.overlap(r.jk=-0.34, r.jh=-0.28, r.kh=+0.90, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-SF-PA vs. r MEAQ-BF Procrastination, PANAS-SF-PA
 ## j = PANAS-SF-PA, k = MEAQ-62 Procrastination, h = MEAQ-BF Procrastination, n = 515
 
-### r.jk = -.
+### r.jk = -.34
 rcorr(as.matrix(PANAS_SFP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.23
 rcorr(as.matrix(PANAS_SFP_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .85
 cor.test(PANAS_SFP_Validation$MEAQ62_PR, PANAS_SFP_Validation$MEAQBF_PR)
 
 require(cocor) # load package
-corcomp21 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp21 <- cocor.dep.groups.overlap(r.jk=-0.34, r.jh=-0.23, r.kh=+0.85, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-X-PA vs. r MEAQ-GA Procrastination, PANAS-X-PA
 ## j = PANAS-X-PA, k = MEAQ-62 Procrastination, h = MEAQ-GA Procrastination, n = 1173
 
-### r.jk = -.
+### r.jk = -.35
 rcorr(as.matrix(PANAS_XP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.36
 rcorr(as.matrix(PANAS_XP_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .98
 cor.test(PANAS_XP_Validation$MEAQ62_PR, PANAS_XP_Validation$MEAQGA_PR)
 
 require(cocor) # load package
-corcomp22 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp22 <- cocor.dep.groups.overlap(r.jk=-0.35, r.jh=-0.36, r.kh=0.98, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-X-PA vs. r MEAQ-SF Procrastination, PANAS-X-PA
 ## j = PANAS-X-PA, k = MEAQ-62 Procrastination, h = MEAQ-SF Procrastination, n = 1173
 
-### r.jk = -.
+### r.jk = -.35
 rcorr(as.matrix(PANAS_XP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.30
 rcorr(as.matrix(PANAS_XP_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .93
 cor.test(PANAS_XP_Validation$MEAQ62_PR, PANAS_XP_Validation$MEAQSF_PR)
 
 require(cocor) # load package
-corcomp23 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp23 <- cocor.dep.groups.overlap(r.jk=-0.35, r.jh=-0.30, r.kh=+0.93, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, PANAS-X-PA vs. r MEAQ-BF Procrastination, PANAS-X-PA
 ## j = PANAS-X-PA, k = MEAQ-62 Procrastination, h = MEAQ-BF Procrastination, n = 1173
 
-### r.jk = -.
+### r.jk = -.35
 rcorr(as.matrix(PANAS_XP_Validation1),type="pearson") 
  
-### r.jh = -.
+### r.jh = -.27
 rcorr(as.matrix(PANAS_XP_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .91
 cor.test(PANAS_XP_Validation$MEAQ62_PR, PANAS_XP_Validation$MEAQBF_PR)
 
 require(cocor) # load package
-corcomp24 <- cocor.dep.groups.overlap(r.jk=-0., r.jh=-0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp24 <- cocor.dep.groups.overlap(r.jk=-0.35, r.jh=-0.27, r.kh=+0.91, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, IDAS-GD vs. r MEAQ-GA Procrastination, IDAS-GD
 ## j = IDAS-GD, k = MEAQ-62 Procrastination, h = MEAQ-GA Procrastination, n = 282
 
-### r.jk = .
+### r.jk = .39
 rcorr(as.matrix(IDASGD_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .39
 rcorr(as.matrix(IDASGD_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .96
 cor.test(IDASGD_Validation$MEAQ62_PR, IDASGD_Validation$MEAQGA_PR)
 
 require(cocor) # load package
-corcomp25 <- cocor.dep.groups.overlap(r.jk=0., r.jh=0., r.kh=0., n=282, alternative="two.sided", alpha=0.05)
+corcomp25 <- cocor.dep.groups.overlap(r.jk=0.39, r.jh=0.39, r.kh=0.96, n=282, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, IDAS-GD vs. r MEAQ-SF Procrastination, IDAS-GD
 ## j = IDAS-GD, k = MEAQ-62 Procrastination, h = MEAQ-SF Procrastination, n = 282
 
-### r.jk = .
+### r.jk = .39
 rcorr(as.matrix(IDASGD_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .38
 rcorr(as.matrix(IDASGD_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .94
 cor.test(IDASGD_Validation$MEAQ62_PR, IDASGD_Validation$MEAQSF_PR)
 
 require(cocor) # load package
-corcomp26 <- cocor.dep.groups.overlap(r.jk=0., r.jh=0., r.kh=0., n=282, alternative="two.sided", alpha=0.05)
+corcomp26 <- cocor.dep.groups.overlap(r.jk=0.39, r.jh=0.38, r.kh=0.94, n=282, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Procrastination, IDAS-GD vs. r MEAQ-BF Procrastination, IDAS-GD
 ## j = IDAS-GD, k = MEAQ-62 Procrastination, h = MEAQ-BF Procrastination, n = 282
 
-### r.jk = .
+### r.jk = .39
 rcorr(as.matrix(IDASGD_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .37
 rcorr(as.matrix(IDASGD_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .84
 cor.test(IDASGD_Validation$MEAQ62_PR, IDASGD_Validation$MEAQBF_PR)
 
 require(cocor) # load package
-corcomp27 <- cocor.dep.groups.overlap(r.jk=0., r.jh=0., r.kh=0., n=282, alternative="two.sided", alpha=0.05)
+corcomp27 <- cocor.dep.groups.overlap(r.jk=0.39, r.jh=0.37, r.kh=0.84, n=282, alternative="two.sided", alpha=0.05)
 ```
 
 ## Distraction & Suppression 
@@ -11408,255 +11410,255 @@ corcomp27 <- cocor.dep.groups.overlap(r.jk=0., r.jh=0., r.kh=0., n=282, alternat
 # r MEAQ-62 Distraction & Suppression, WBSI vs. r MEAQ-GA Distraction & Suppression, WBSI
 ## j = WBSI, k = MEAQ-62 Distraction & Suppression, h = MEAQ-GA Distraction & Suppression, n = 399
 
-### r.jk = 
+### r.jk = .32
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
  
-### r.jh = 
+### r.jh = .30
 rcorr(as.matrix(WBSI_Validation2),type="pearson") 
 
-### r.kh =
+### r.kh = .97
 cor.test(WBSI_Validation$MEAQ62_DS, WBSI_Validation$MEAQGA_DS)
 
 require(cocor) # load package
-corcomp1 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp1 <- cocor.dep.groups.overlap(r.jk=+0.32, r.jh=+0.30, r.kh=+0.97, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, WBSI vs. r MEAQ-SF Distraction & Suppression, WBSI
 ## j = WBSI, k = MEAQ-62 Distraction & Suppression, h = MEAQ-SF Distraction & Suppression, n = 399
 
-### r.jk = .
+### r.jk = .32
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .33
 rcorr(as.matrix(WBSI_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .92
 cor.test(WBSI_Validation$MEAQ62_DS, WBSI_Validation$MEAQSF_DS)
 
 require(cocor) # load package
-corcomp2 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp2 <- cocor.dep.groups.overlap(r.jk=+0.32, r.jh=+0.33, r.kh=+0.92, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, WBSI vs. r MEAQ-BF Distraction & Suppression, WBSI
 ## j = WBSI, k = MEAQ-62 Distraction & Suppression, h = MEAQ-BF Distraction & Suppression, n = 399
 
-### r.jk = .
+### r.jk = .32
 rcorr(as.matrix(WBSI_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .29
 rcorr(as.matrix(WBSI_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .88
 cor.test(WBSI_Validation$MEAQ62_DS, WBSI_Validation$MEAQBF_DS)
 
 require(cocor) # load package
-corcomp3 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp3 <- cocor.dep.groups.overlap(r.jk=+0.32, r.jh=+0.29, r.kh=+0.88, n=399, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, BFI-2-N vs. r MEAQ-GA Distraction & Suppression, BFI-2-N
 ## j = BFI-2-N, k = MEAQ-62 Distraction & Suppression, h = MEAQ-GA Distraction & Suppression, n = 466
 
-### r.jk = 
+### r.jk = .14
 rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .10
 rcorr(as.matrix(BFI2N_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .98
 cor.test(BFI2N_Validation$MEAQ62_DS, BFI2N_Validation$MEAQGA_DS)
 
 require(cocor) # load package
-corcomp4 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp4 <- cocor.dep.groups.overlap(r.jk=+0.14, r.jh=+0.10, r.kh=+0.98, n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, BFI-2-N vs. r MEAQ-SF Distraction & Suppression, BFI-2-N
 ## j = BFI-2-N, k = MEAQ-62 Distraction & Suppression, h = MEAQ-SF Distraction & Suppression, n = 466
 
-### r.jk = .
+### r.jk = .14
 rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .10
 rcorr(as.matrix(BFI2N_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .94
 cor.test(BFI2N_Validation$MEAQ62_DS, BFI2N_Validation$MEAQSF_DS)
 
 require(cocor) # load package
-corcomp5 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp5 <- cocor.dep.groups.overlap(r.jk=+0.14, r.jh=+0.10, r.kh=+0.94, n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, BFI-2-N vs. r MEAQ-BF Distraction & Suppression, BFI-2-N
 ## j = BFI-2-N, k = MEAQ-62 Distraction & Suppression, h = MEAQ-BF Distraction & Suppression, n = 466
 
-### r.jk = .
+### r.jk = .10
 rcorr(as.matrix(BFI2N_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .01
 rcorr(as.matrix(BFI2N_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .90
 cor.test(BFI2N_Validation$MEAQ62_DS, BFI2N_Validation$MEAQBF_DS)
 
 require(cocor) # load package
-corcomp6 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp6 <- cocor.dep.groups.overlap(r.jk=+0.10, r.jh=+0.01, r.kh=+0.90, n=466, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, BFAS-N vs. r MEAQ-GA Distraction & Suppression, BFAS-N
 ## j = BFAS-N, k = MEAQ-62 Distraction & Suppression, h = MEAQ-GA Distraction & Suppression, n = 1164
 
-### r.jk = .
+### r.jk = .10
 rcorr(as.matrix(BFAS_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .06
 rcorr(as.matrix(BFAS_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .98
 cor.test(BFAS_Validation$MEAQ62_DS, BFAS_Validation$MEAQGA_DS)
 
 require(cocor) # load package
-corcomp7 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp7 <- cocor.dep.groups.overlap(r.jk=+0.10, r.jh=+0.06, r.kh=+0.98, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, BFASN vs. r MEAQ-SF Distraction & Suppression, BFASN
 ## j = BFASN, k = MEAQ-62 Distraction & Suppression, h = MEAQ-SF Distraction & Suppression, n = 1164
 
-### r.jk = .
+### r.jk = .10
 rcorr(as.matrix(BFAS_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .07
 rcorr(as.matrix(BFAS_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .94
 cor.test(BFAS_Validation$MEAQ62_DS, BFAS_Validation$MEAQSF_DS)
 
 require(cocor) # load package
-corcomp8 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp8 <- cocor.dep.groups.overlap(r.jk=+0.10, r.jh=+0.07, r.kh=+0.94, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, BFASN vs. r MEAQ-BF Distraction & Suppression, BFASN
 ## j = BFASN, k = MEAQ-62 Distraction & Suppression, h = MEAQ-BF Distraction & Suppression, n = 1164
 
-### r.jk = .
+### r.jk = .10
 rcorr(as.matrix(BFAS_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .01
 rcorr(as.matrix(BFAS_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .90
 cor.test(BFAS_Validation$MEAQ62_DS, BFAS_Validation$MEAQBF_DS)
 
 require(cocor) # load package
-corcomp9 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
+corcomp9 <- cocor.dep.groups.overlap(r.jk=+0.10, r.jh=+0.01, r.kh=+0.90, n=1164, alternative="two.sided", alpha=0.05, conf.level=0.95, null.value=0)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, PANAS-SF-NA vs. r MEAQ-GA Distraction & Suppression, PANAS-SF-NA
 ## j = PANAS-SF-NA, k = MEAQ-62 Distraction & Suppression, h = MEAQ-GA Distraction & Suppression, n = 515
 
-### r.jk = .
+### r.jk = .22
 rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .22
 rcorr(as.matrix(PANAS_SFN_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .96
 cor.test(PANAS_SFN_Validation$MEAQ62_DS, PANAS_SFN_Validation$MEAQGA_DS)
 
 require(cocor) # load package
-corcomp10 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp10 <- cocor.dep.groups.overlap(r.jk=+0.22, r.jh=+0.22, r.kh=+0.96, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, PANAS-SF-NA vs. r MEAQ-SF Distraction & Suppression, PANAS-SF-NA
 ## j = PANAS-SF-NA, k = MEAQ-62 Distraction & Suppression, h = MEAQ-SF Distraction & Suppression, n = 515
 
-### r.jk = .
+### r.jk = .22
 rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .25
 rcorr(as.matrix(PANAS_SFN_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .91
 cor.test(PANAS_SFN_Validation$MEAQ62_DS, PANAS_SFN_Validation$MEAQSF_DS)
 
 require(cocor) # load package
-corcomp11 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp11 <- cocor.dep.groups.overlap(r.jk=+0.22, r.jh=+0.25, r.kh=+0.91, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, PANAS-SF-NA vs. r MEAQ-BF Distraction & Suppression, PANAS-SF-NA
 ## j = PANAS-SF-NA, k = MEAQ-62 Distraction & Suppression, h = MEAQ-BF Distraction & Suppression, n = 515
 
-### r.jk = .
+### r.jk = .22
 rcorr(as.matrix(PANAS_SFN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .25
 rcorr(as.matrix(PANAS_SFN_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .86
 cor.test(PANAS_SFN_Validation$MEAQ62_DS, PANAS_SFN_Validation$MEAQBF_DS)
 
 require(cocor) # load package
-corcomp12 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=515, alternative="two.sided", alpha=0.05)
+corcomp12 <- cocor.dep.groups.overlap(r.jk=+0.22, r.jh=+0.25, r.kh=+0.86, n=515, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, PANAS-X-NA vs. r MEAQ-GA Distraction & Suppression, PANAS-X-NA
 ## j = PANAS-X-NA, k = MEAQ-62 Distraction & Suppression, h = MEAQ-GA Distraction & Suppression, n = 1173
 
-### r.jk = .
+### r.jk = .07
 rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .04
 rcorr(as.matrix(PANAS_XN_Validation2),type="pearson") 
 
-### r.kh = .
+### r.kh = .98
 cor.test(PANAS_XN_Validation$MEAQ62_DS, PANAS_XN_Validation$MEAQGA_DS)
 
 require(cocor) # load package
-corcomp13 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp13 <- cocor.dep.groups.overlap(r.jk=+0.07, r.jh=+0.04, r.kh=+0.98, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, PANAS-X-NA vs. r MEAQ-SF Distraction & Suppression, PANAS-X-NA
 ## j = PANAS-X-NA, k = MEAQ-62 Distraction & Suppression, h = MEAQ-SF Distraction & Suppression, n = 1173
 
-### r.jk = .
+### r.jk = .07
 rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .06
 rcorr(as.matrix(PANAS_XN_Validation3),type="pearson") 
 
-### r.kh = .
+### r.kh = .94
 cor.test(PANAS_XN_Validation$MEAQ62_DS, PANAS_XN_Validation$MEAQSF_DS)
 
 require(cocor) # load package
-corcomp14 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp14 <- cocor.dep.groups.overlap(r.jk=+0.07, r.jh=+0.06, r.kh=+0.94, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
 # r MEAQ-62 Distraction & Suppression, PANAS-X-NA vs. r MEAQ-BF Distraction & Suppression, PANAS-X-NA
 ## j = PANAS-X-NA, k = MEAQ-62 Distraction & Suppression, h = MEAQ-BF Distraction & Suppression, n = 1173
 
-### r.jk = .
+### r.jk = .07
 rcorr(as.matrix(PANAS_XN_Validation1),type="pearson") 
  
-### r.jh = .
+### r.jh = .01
 rcorr(as.matrix(PANAS_XN_Validation4),type="pearson") 
 
-### r.kh = .
+### r.kh = .90
 cor.test(PANAS_XN_Validation$MEAQ62_DS, PANAS_XN_Validation$MEAQBF_DS)
 
 require(cocor) # load package
-corcomp15 <- cocor.dep.groups.overlap(r.jk=+0., r.jh=+0., r.kh=+0., n=1173, alternative="two.sided", alpha=0.05)
+corcomp15 <- cocor.dep.groups.overlap(r.jk=+0.07, r.jh=+0.01, r.kh=+0.90, n=1173, alternative="two.sided", alpha=0.05)
 ```
 
 ```{r}
